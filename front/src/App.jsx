@@ -13,21 +13,23 @@ import Mypage from "./Component/Mypage/Mypage";
 import Userinfofix from "./Component/Userinfofix/Userinfofix";
 
 function App() {
-    return (
-        <>
-            <BrowserRouter>
-                <Routes>
-                    {/* 수정할 예정 */}
-                    {/* <Route path="/" element={<Main />} /> */}
-                    <Route path="/" element={<Login />} />
-                    <Route path="/Signup" element={<Signup />} />
-                    <Route path="/Password_find" element={<Password_find />} />
-                    <Route path="/Mypage" element={<Mypage />} />
-                    <Route path="/Userinfofix" element={<Userinfofix />} />
-                </Routes>
-            </BrowserRouter>
-        </>
-    );
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          {/* 나도 성공? */}
+
+          {/* 수정할 예정 */}
+          {/* <Route path="/" element={<Main />} /> */}
+          <Route path="/" element={<Login />} />
+          <Route path="/Signup" element={<Signup />} />
+          <Route path="/Password_find" element={<Password_find />} />
+          <Route path="/Mypage" element={<Mypage />} />
+          <Route path="/Userinfofix" element={<Userinfofix />} />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;
