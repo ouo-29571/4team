@@ -1,0 +1,68 @@
+
+
+https://velog.io/@yeojining5/React-Spring-%EC%87%BC%ED%95%91%EB%AA%B0-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8
+
+공통
+회원가입
+상품목록
+이벤트
+인기검색어
+faq
+
+
+중고면
+지역별
+
+쇼핑몰 마트
+즐겨찾기기능
+지점 위치(현재위치 아마 지도api사용해서 하면 가능할지도, 운영시간)
+
+
+여행사
+    참고
+        - https://luppang.tistory.com/109
+예약기능
+데이터베이스
+    회원가입 목록   
+        - (갱신기간후 결정하여)
+        - 로그인시 마이페이지창 
+    비회원가입
+        - 회원안해도 조회가능하게
+        - 기간내외 데이터소멸 (ex. 여행기간)
+    예약 날짜
+        - 인원수 관련으로 품절
+        - 코드 참고:
+            https://velog.io/@hyoni/%EB%A6%AC%EC%95%A1%ED%8A%B8-%EC%BA%98%EB%A6%B0%EB%8D%94-%EC%8B%A4%EC%8B%9C%EA%B0%84-%EC%98%88%EC%95%BD-%EA%B8%B0%EB%8A%A5-%EA%B5%AC%ED%98%84-1
+
+구성
+    - 로그인:팝업창
+    - 메인: 이미지(관략하게)
+        - 상위: 현재 이벤트 페이지
+        - 상단:인기검색어 내비게이션
+    
+const pool 
+DB접근
+    host:192.168.0.191
+    user = "4team
+    password= 상위 동일
+    databace = 상위
+    port:3306
+
+figma 공유링크
+https://www.figma.com/design/G9D4Vzpyt1JLN4PwJ5sYfu/%EC%A0%9C%EB%AA%A9-%EC%97%86%EC%9D%8C?node-id=0-1&t=i7fqRoTYkozT6yIM-1
+
+깃허브 사용법
+https://devyihyun.tistory.com/28
+
+해야할거
+ - 로그인 (DB에서 찾아서 일치하면 로그인성공 (아닐시 일치하지 않다는 문구 작성
+ - 로그인 성공시 마이페이지에 유저정보 가져오기 (SELECT???)
+ - 회원가입 수정 시 input박스안에 자신이 입력한 정보 넣고 버튼 눌를경우 수정 ( 수정 UPDATE 테이블 SET 칼럼 = 변경값
+ - 아 쿠폰, 주문내역 애니메이션 수정
+ - 쿠폰 수 가져오기
+
+ - 또.. 더이상 모르겠어요 -
+
+번외
+ - 회원가입 관련 할거 없는지.. (더 이상 모르겠어요)
+

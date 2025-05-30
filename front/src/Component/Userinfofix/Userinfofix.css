@@ -1,0 +1,11 @@
+.submit_button {
+    display: flex;
+    margin-top: 30px;
+}
+
+.signup_fix_button {
+    width: 420px;
+    height: 40px;
+    border-radius: 10px;
+    font-weight: bolder;
+}
