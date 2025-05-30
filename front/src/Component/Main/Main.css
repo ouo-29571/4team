@@ -1,4 +1,5 @@
 .bigbox{                                   /* ✅큰 틀*/
+  margin-top: 300px;  {/* 잠간 내려놈놈*/}
   width:1920px;
   height:4980px;
   border:1px solid #333;
