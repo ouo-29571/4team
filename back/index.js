@@ -15,6 +15,8 @@ const pool = mariadb.createPool({
 app.use(cors());
 app.use(express.json());
 
+// ㅋㅋㅎㅇ
+
 //회원가입
 
 //이메일 중복확인
