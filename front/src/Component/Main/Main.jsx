@@ -6,6 +6,7 @@ import ScrollbarDs from '../ScrollbarDs/ScrollbarDs';
 import MarqueeText from '../MarqueeText/MarqueeText';
 import PopupModal from '../PopupModal/PopupModal';
 import { useNavigate } from "react-router-dom";
+import Footer from '../Menu/Footer';
 
 function Main() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function Main() {
 
   return (
     <div className="bigbox">
-       <button onClick={goToMenu}><p>메뉴</p></button>
+      <button onClick={goToMenu}><p>메뉴</p></button>
       <PopupModal />
 
       <div className="headerbox">                               {/* ✅ 헤더*/}
@@ -143,7 +144,7 @@ function Main() {
       </div>
 
       <div className="footerbox">                                 {/*✅푸터*/}
-        footer
+        <Footer />
       </div>
     </div>
 
