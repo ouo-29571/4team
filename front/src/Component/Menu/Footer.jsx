@@ -47,7 +47,7 @@ const Footer = () => {
                 </button>
                 <button
                     className="godownButton"
-                    onClick={() => window.scrollTo({ top: 4000, behavior: "smooth" })}
+                    onClick={() => window.scrollTo({ top: 6000, behavior: "smooth" })}
                 >
                     ⬇️
                 </button>

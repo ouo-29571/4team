@@ -23,7 +23,6 @@ function Main() {
 
   return (
     <div className="bigbox">
-      <button onClick={goToMenu}><p>메뉴</p></button>
       <PopupModal />
 
       <div className="headerbox">                               {/* ✅ 헤더*/}
@@ -31,7 +30,9 @@ function Main() {
       </div>
       <div className="navbox">
         <div className="nav-left">
-          <img className="icon" src="/img/메뉴.png" alt="menu" />
+        <button onClick={goToMenu}>
+        <img className="icon" src="/img/메뉴.png" alt="menu" />
+        </button>
         </div>
 
         <div className="nav-center">
@@ -143,9 +144,9 @@ function Main() {
         </div>
       </div>
 
-      <div className="footerbox">                                 {/*✅푸터*/}
-        <Footer />
-      </div>
+                                     
+        <Footer />  {/*✅푸터*/}
+      
     </div>
 
   )
