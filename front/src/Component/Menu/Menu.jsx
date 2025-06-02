@@ -1,13 +1,25 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import "./Menu.css";
 import Dropdown from "./product/Dropdown";
-import projectsData from "./product/data";
+//import projectsData from "./product/data";
 import ProductGrid from "./product/ProductGrid";
 import Footer from "./Footer";
 
 function Menu() {
   const [sortOption, setSortOption] = useState("like");
   const [category, setCategory] = useState("decoration");
+  const [productsData, setProductsData] = useState([]);
+    useEffect(() => {
+    fetch("http://localhost:8080/api/test")
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        setProductsData(data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);  // ⭐️ 한번만 실행
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
   };
@@ -17,15 +29,21 @@ function Menu() {
   };
   const filteredData = useMemo(() => {
     if (category === "decoration") {
-      return projectsData.filter((item) => item.id >= 1 && item.id <= 100);
+      return productsData.filter(
+        (item) => item.product_id >= 1 && item.product_id <= 100
+      ); // 👉 DB 데이터에 맞게 key 변경
     } else if (category === "furniture") {
-      return projectsData.filter((item) => item.id >= 101 && item.id <= 200);
+      return productsData.filter(
+        (item) => item.product_id >= 101 && item.product_id <= 200
+      );
     } else if (category === "kitchen") {
-      return projectsData.filter((item) => item.id >= 201 && item.id <= 300);
+      return productsData.filter(
+        (item) => item.product_id >= 201 && item.product_id <= 300
+      );
     }
-    return projectsData;
-  }, [category]);
-  // 🔴 필터된 데이터에서 정렬 + 9개씩 잘라내기
+    return productsData;
+  }, [category, productsData]); // 👉 productsData 추가
+
   const sortedData = useMemo(() => {
     const sorted = [...filteredData];
     if (sortOption === "like") {
@@ -35,7 +53,7 @@ function Menu() {
     } else if (sortOption === "highPrice") {
       sorted.sort((a, b) => b.price - a.price);
     }
-    return sorted.slice(0, 9); // 🔴 9개까지만 보여주기
+    return sorted.slice(0, 9);
   }, [filteredData, sortOption]);
   return (
     <div>
@@ -77,7 +95,7 @@ function Menu() {
             {/* 아래래네모 */}
 
             <div className="grid_Box">
-              <ProductGrid items={sortedData} /> {/* 그리드 배열 3 * 3 */}
+              <ProductGrid items={sortedData} /> {/* 그리드 배열 3 * ~ */}
             </div>
           </div>
         </div>
