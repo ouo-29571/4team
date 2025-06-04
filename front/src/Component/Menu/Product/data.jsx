@@ -1,27 +1,27 @@
-//장식구
-import Image1 from "./Object_Image/1.Kaws Small Lie Companion Vinyl Figure Brow.png";
-import Image2 from "./Object_Image/2.1000 베어브릭 오징어 게임 Squid Game Guard.png";
-import Image3 from "./Object_Image/3.Takashi Murakami x Uniqlo x Doraemon Plush Toy Multi.png";
-import Image4 from "./Object_Image/4.PumpkinYellow ,쿠사마 야요이Kusama Yayoi.png";
-import Image5 from "./Object_Image/5.마이센 스완 서비스 디너 플레이트 28cm.png";
-import Image6 from "./Object_Image/6.Marilyn Monroe 11.28.png";
-import Image7 from "./Object_Image/7.모네의 수련 C-02,Nympheas -  끌로드 모네  명화그림액자.png";
-import Image8 from "./Object_Image/8.장 미셸 바스키아.png";
-import Image9 from "./Object_Image/9.최재혁  Still life169백자대호.png";
+// //장식구
+// import Image1 from "./Object_Image/1.Kaws Small Lie Companion Vinyl Figure Brow.png";
+// import Image2 from "./Object_Image/2.1000 베어브릭 오징어 게임 Squid Game Guard.png";
+// import Image3 from "./Object_Image/3.Takashi Murakami x Uniqlo x Doraemon Plush Toy Multi.png";
+// import Image4 from "./Object_Image/4.PumpkinYellow ,쿠사마 야요이Kusama Yayoi.png";
+// import Image5 from "./Object_Image/5.마이센 스완 서비스 디너 플레이트 28cm.png";
+// import Image6 from "./Object_Image/6.Marilyn Monroe 11.28.png";
+// import Image7 from "./Object_Image/7.모네의 수련 C-02,Nympheas -  끌로드 모네  명화그림액자.png";
+// import Image8 from "./Object_Image/8.장 미셸 바스키아.png";
+// import Image9 from "./Object_Image/9.최재혁  Still life169백자대호.png";
 
-import Image101 from "./Furniture_Image/SKOGSTA 스콕스타 테이블 + 의자 6개 세트.png";
-import Image102 from "./Furniture_Image/빈티지 Arden 그릇장.png";
-import Image103 from "./Furniture_Image/빈티지 Arden 우드 프레임 침대.png";
-import Image104 from "./Furniture_Image/Cafe Lune 빈티지 체어.png";
-import Image105 from "./Furniture_Image/인테리어 빈티지 하우스 우편함 (화이트).png";
-import Image106 from "./Furniture_Image/오피언 HS 브레인타공 2인용 책걸상.png";
-import Image107 from "./Furniture_Image/LUNDA 옷장.png";
-import Image108 from "./Furniture_Image/철제 프레임 타공보드.png";
-import Image109 from "./Furniture_Image/철제 프레임 타공보드.png";
+// import Image101 from "./Furniture_Image/SKOGSTA 스콕스타 테이블 + 의자 6개 세트.png";
+// import Image102 from "./Furniture_Image/빈티지 Arden 그릇장.png";
+// import Image103 from "./Furniture_Image/빈티지 Arden 우드 프레임 침대.png";
+// import Image104 from "./Furniture_Image/Cafe Lune 빈티지 체어.png";
+// import Image105 from "./Furniture_Image/인테리어 빈티지 하우스 우편함 (화이트).png";
+// import Image106 from "./Furniture_Image/오피언 HS 브레인타공 2인용 책걸상.png";
+// import Image107 from "./Furniture_Image/LUNDA 옷장.png";
+// import Image108 from "./Furniture_Image/철제 프레임 타공보드.png";
+// import Image109 from "./Furniture_Image/철제 프레임 타공보드.png";
 
 
-//가구
-const productsData = [
+// //가구
+// const productsData = [
   
   
   

@@ -3,13 +3,13 @@ import "./Menu.css";
 import Dropdown from "./product/Dropdown";
 //import projectsData from "./product/data";
 import ProductGrid from "./product/ProductGrid";
-import Footer from "./Footer";
+import Footer from './Footer/Footer';
 
 function Menu() {
   const [sortOption, setSortOption] = useState("like");
   const [category, setCategory] = useState("decoration");
   const [productsData, setProductsData] = useState([]);
-    useEffect(() => {
+  useEffect(() => {
     fetch("http://localhost:8080/api/test")
       .then((res) => res.json())
       .then((data) => {
@@ -19,7 +19,7 @@ function Menu() {
       .catch((err) => {
         console.error(err);
       });
-  }, []);  // ⭐️ 한번만 실행
+  }, []); // ⭐️ 한번만 실행
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
   };
