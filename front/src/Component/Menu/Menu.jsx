@@ -3,7 +3,6 @@ import "./Menu.css";
 import Dropdown from "./product/Dropdown";
 //import projectsData from "./product/data";
 import ProductGrid from "./product/ProductGrid";
-import Footer from "./Footer/Footer";
 
 function Menu() {
   const [sortOption, setSortOption] = useState("like");
@@ -13,7 +12,6 @@ function Menu() {
     fetch("http://localhost:8080/api/test")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setProductsData(data);
       })
       .catch((err) => {
