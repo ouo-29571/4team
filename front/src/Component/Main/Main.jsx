@@ -6,7 +6,7 @@ import ScrollbarDs from "../ScrollbarDs/ScrollbarDs";
 import MarqueeText from "../MarqueeText/MarqueeText";
 import PopupModal from "../PopupModal/PopupModal";
 import { useNavigate } from "react-router-dom";
-import Footer from "../Menu/Footer/Footer";
+
 
 function Main() {
   const navigate = useNavigate();
@@ -15,35 +15,11 @@ function Main() {
   const handleChange = (e) => {
     setSelected(e.target.value);
   };
-  const goToMenu = () => {
-    navigate("/Menu"); // ✅ 메뉴 페이지 이동 함수
-  };
 
   return (
     <div className="bigbox">
       <PopupModal />
-      <div className="headerbox">
-        {" "}
-        {/* ✅ 헤더*/}
-        <p className="headertext">최대 50% 할인쿠폰</p>
-      </div>
-      <div className="navbox">
-        <div className="nav-left">
-          <button onClick={goToMenu}>
-            <img className="icon" src="/img/메뉴.png" alt="menu" />
-          </button>
-        </div>
 
-        <div className="nav-center">
-          <h1 className="logo">vintage haus</h1>
-        </div>
-
-        <div className="nav-right">
-          <img className="icon" src="/img/검색.png" alt="search" />
-          <img className="icon" src="/img/회원.png" alt="user" />
-          <img className="icon" src="/img/장바구니.png" alt="cart" />
-        </div>
-      </div>
       <div>
         <MainSlider /> {/* ✅ 메인*/}
       </div>
@@ -145,7 +121,7 @@ function Main() {
           <button className="ab-button">더 알아보기</button>
         </div>
       </div>
-      <Footer /> {/*✅푸터*/}
+      {/* <Footer /> ✅푸터 */}
     </div>
   );
 }

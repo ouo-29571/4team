@@ -3,7 +3,7 @@ import "./Menu.css";
 import Dropdown from "./product/Dropdown";
 //import projectsData from "./product/data";
 import ProductGrid from "./product/ProductGrid";
-import Footer from './Footer/Footer';
+import Footer from "./Footer/Footer";
 
 function Menu() {
   const [sortOption, setSortOption] = useState("like");
@@ -100,9 +100,6 @@ function Menu() {
           </div>
         </div>
       </main>
-      <footer>
-        <Footer />
-      </footer>
     </div>
   );
 }

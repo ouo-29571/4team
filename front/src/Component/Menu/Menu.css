@@ -12,7 +12,7 @@ main {
   align-items: center; /* 🔴 세로 가운데 정렬 */
   width: 1922px; /* 🔴 고정된 너비 (인터넷 창처럼 딱) */
   height: 2500px; /* 🔴 브라우저 전체 높이 */
-  margin-top: 500px; /* 🔴 아래로 밀기 (하지만 너무 크면 배치가 깨질 수 있음) */
+  margin-top: -110px; /* 🔴 아래로 밀기 (하지만 너무 크면 배치가 깨질 수 있음) */
   border: 1px solid black; /* 🔴 테두리 확인용 */
   background-color: #f1eada;
 }

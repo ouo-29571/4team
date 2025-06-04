@@ -1,0 +1,109 @@
+body {
+  margin-top: 200px;
+}
+.Product_Top {
+  margin-top: 300px;
+  background: #dcdcdc;
+  padding: 20px;
+  font-family: sans-serif;
+  display: flex;
+  width: 1881px;
+  justify-content: center;
+}
+
+.Product_Box {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  width: 1000px;
+  height: 1000px;
+}
+
+.Product_Image {
+  width: 800px;
+  height: 800px;
+  background: yellow;
+  text-align: center;
+  line-height: 150px;
+}
+
+.Product_Scroll {
+  display: flex;
+  gap: 50px;
+  margin: 20px;
+  justify-content: center;
+  background: red;
+  width: auto;
+  height: auto;
+}
+.Thumb_Button {
+  width: 100px;
+  height: 100px;
+}
+.Thumb {
+  width: 100px;
+  height: 100px;
+  background: yellow;
+  font-size: 40px;
+}
+
+.Product_Info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  left: 10px;
+}
+
+.Product_Name {
+  background: yellow;
+  padding: 10px;
+  font-size: 20px;
+}
+
+.Product_Price_Box {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: yellow;
+  padding: 10px;
+}
+
+.Product_Price {
+  font-size: 18px;
+}
+
+.Product_Quantity {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.Product_Buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.Product_Buttons Button {
+  background: yellow;
+  padding: 5px 10px;
+  border: none;
+  cursor: pointer;
+}
+
+
+
+.Product_Detail {
+  height: 200px;
+  background: yellow;
+  overflow-y: auto;
+  padding: 10px;
+}
+
+.footer {
+  margin-top: 10px;
+  color: gray;
+  text-align: center;
+}

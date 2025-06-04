@@ -1,0 +1,52 @@
+.headerbox {
+  /*✅헤더 틀*/
+  width: 1920px;
+  height: 90px;
+  border: 1px solid #333;
+  background-color: #f1eada;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: absolute;
+  top: -1px;
+  
+}
+.navbox {
+  /* ✅네비 큰 틀 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  width: 100%;
+  height: 160px;
+  background-color: #b5927d;
+  padding: 0 30px;
+  box-sizing: border-box;
+  top: -110px;
+}
+.nav-left {
+  /*ㄴ>네비 왼(메뉴) */
+  width: 20%;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+.icon {
+  /* ✅아이콘 (검색,회원가입,로그인) */
+  width: 20px;
+  height: 20px;
+}
+.nav-center {
+  /*ㄴ>네비 센터(로고) */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.nav-right {
+  /* ㄴ>네비 오(아이콘3개) */
+  display: flex;
+  gap: 20px;
+  margin-left: auto;
+  padding-right: 40px;
+}
