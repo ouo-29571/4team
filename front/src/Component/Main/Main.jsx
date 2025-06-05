@@ -7,6 +7,7 @@ import MarqueeText from "../MarqueeText/MarqueeText";
 import PopupModal from "../PopupModal/PopupModal";
 import { useNavigate } from "react-router-dom";
 
+//삭제
 
 function Main() {
   const navigate = useNavigate();
