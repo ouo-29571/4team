@@ -1,9 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./Mypage.css";
 
 const mypage = () => {
+    const navigate = useNavigate();
+
     //사용자 정보
     const [username, setUsername] = useState("user");
     const [coupon, setCoupon] = useState(0);
@@ -19,12 +21,39 @@ const mypage = () => {
 
     //쿠폰 상세보기
     const [showcoupon, setShowcoupon] = useState(false);
-    const [isFadingOut, setIsFadingOut] = useState(false);
+    const [userName, setUserName] = useState("");
+
+    async function set_Username(email) {
+        const response = await fetch("http://localhost:8080/Mypage_userName", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ User_email: email }),
+        });
+
+        const data = await response.json();
+        if (data.User_Name && response.ok) {
+            setUserName(data.User_Name);
+        } else {
+            console.log("이름이 없습니다.");
+        }
+    }
+
+    //마이페이지 클릭시 로그인상태가 아닐경우 로그인 페이지로
+    useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem("user"));
+
+        if (!user || !user.token) {
+            navigate("/Login");
+        } else {
+            set_Username(user.name);
+        }
+    }, [navigate]);
 
     //사용자주문 상세정보 열기
-    //페이드 인 아웃.. 별로인것 같기도
     const toggle_userorder = () => {
-        // setUserorder((prev) => !prev);
+        //setUserorder((prev) => !prev);
         if (!showuserorder) {
             setUserorder(true);
         }
@@ -32,12 +61,7 @@ const mypage = () => {
 
     //사용자주문 상세정보 닫기
     const toggle_userorder_close = () => {
-        // setUserorder((prev) => !prev);
-        setIsFadingOut(true);
-        setTimeout(() => {
-            setUserorder(false);
-            setIsFadingOut(false);
-        }, 500);
+        setUserorder((prev) => !prev);
     };
 
     //쿠폰 상세정보 열기
@@ -50,27 +74,28 @@ const mypage = () => {
 
     //쿠폰 상세정보 닫기
     const toggle_coupon_close = () => {
-        // setShowcoupon((prev) => !prev);
-        setIsFadingOut(true);
-        setTimeout(() => {
-            setShowcoupon(false);
-            setIsFadingOut(false);
-        }, 500);
+        setShowcoupon((prev) => !prev);
+    };
+
+    //찜 목록 클릭시 (수정할 목록 삭제할 수도)
+    const handle_bookmark = () => {
+        navigate("/Bookmark");
     };
 
     return (
         <>
             <div className="Mypage_page">
+                {/* 사용자 정보및 회원정보 수정 */}
                 <div className="userinfo_box">
                     <div className="username_box">
                         {/* 대충 사용자 이미지 */}
                         <div className="userinfo_box_img">
-                            <img src="../img/free-icon-profile-9344418.png" />
+                            <img src="../img/free-icon-logo-5448104.png" />
                         </div>
                         <div className="user_name">
                             <div>
                                 <span className="DB_input_username">
-                                    {username}
+                                    {userName}
                                 </span>
                                 <span>님</span>
                             </div>
@@ -84,16 +109,16 @@ const mypage = () => {
                     <div className="user_simpleinfo">
                         <div onClick={toggle_coupon}>
                             <div>
-                                <span>쿠폰:</span>
+                                <span>쿠폰</span>
                             </div>
                             <div>
                                 <span>{coupon}</span>
                             </div>
                         </div>
                         <div>
-                            {/* 수정사항 */}
-                            <div>
-                                <span>찜 목록:</span>
+                            {/* 수정사항 삭제할지도? */}
+                            <div onClick={handle_bookmark}>
+                                <span>찜 목록</span>
                             </div>
                             <div>
                                 <span>{bookmark}</span>
@@ -151,11 +176,7 @@ const mypage = () => {
                 {/* 주문목록 */}
                 <div>
                     {showuserorder && (
-                        <div
-                            className={`user_info_details ${
-                                isFadingOut ? "fade-out" : "fade-in"
-                            }`}
-                        >
+                        <div className="user_info_details">
                             <div>
                                 <div>
                                     {/* 주문목록 들어갈 예정 */}
@@ -178,12 +199,8 @@ const mypage = () => {
                 {/* 쿠폰 상세 내용 */}
                 <div>
                     {showcoupon && (
-                        <div
-                            className={`user_info_details ${
-                                isFadingOut ? "fade-out" : "fade-in"
-                            }`}
-                        >
-                            <div>
+                        <div className="user_info_details">
+                            <div className="user_info_details_header">
                                 <span>쿠폰</span>
                             </div>
                             <div>

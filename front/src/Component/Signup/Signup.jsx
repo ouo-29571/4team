@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./Signup.css";
 
 const Signup = () => {
+    const navigate = useNavigate();
+
     const [confirmPassword, setConfirmPassword] = useState("");
     //에러문구
     const [Signup_error, setSignup_error] = useState({
@@ -18,6 +20,11 @@ const Signup = () => {
         Signup_name: "",
         Signup_tel: "",
     });
+
+    //input태그 휠로 값 변경방지
+    const handlewheel_input = (e) => {
+        e.target.blur();
+    };
 
     //이메일 중복확인
     const handleBlurOrEnter_email = async (e) => {
@@ -67,16 +74,15 @@ const Signup = () => {
         }
     };
 
-    //DB에 전달한 form에 값 저장
+    //DB에 전달할 form에 값 저장
     function handleChange(e) {
         const { id, value } = e.target;
         setSignup_form((prev) => ({ ...prev, [id]: value }));
     }
 
-    const handleSignup_Submit = async (/*e*/) => {
-        //새로고침 방지용
-        //e.preventDefault();
-
+    //DB저장
+    const handleSignup_Submit = async (e) => {
+        e.preventDefault();
         //에러에 문구가 있으닌 true
         if (Signup_error.Signup_error_password) {
             alert("비밀번호가 일치하지 않습니다.");
@@ -91,9 +97,10 @@ const Signup = () => {
                 },
                 body: JSON.stringify(Signup_form),
             });
-            //fetch의 반환값(response.ok / response.json()) = 상태값 200-299이면 true / false(웹 개발자모드에서 http상태코드 오류)
-            if (response.ok) {
-                //회원가입 성공
+
+            const data = await response.json();
+            if (data.signup_check) {
+                navigate("/Login");
             }
         }
     };
@@ -219,11 +226,13 @@ const Signup = () => {
                                         type="number"
                                         id="Signup_tel"
                                         value={Signup_form.Signup_tel}
-                                        placeholder="전화번호를 입력하세요"
+                                        placeholder="전화번호를 입력하세요 (-제외)"
                                         required
                                         onChange={(e) => {
                                             handleChange(e);
                                         }}
+                                        //마우스 휠 이벤트
+                                        onWheel={handlewheel_input}
                                     />
                                 </div>
                             </div>

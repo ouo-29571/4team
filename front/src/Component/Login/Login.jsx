@@ -1,16 +1,18 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import "./Login.css";
 
 const Login = () => {
+    const navigate = useNavigate();
+
     const [login_form, setLogin_form] = useState({
         login_email: "",
         login_password: "",
     });
     const [login_error, setLogin_error] = useState("");
 
-    //form 값 업데이트
+    //login_form 값 업데이트
     const handleChange_Login = (e) => {
         const { id, value } = e.target;
         setLogin_form((prev) => ({ ...prev, [id]: value }));
@@ -18,9 +20,7 @@ const Login = () => {
     };
 
     //로그인버튼 클릭 시 수행
-    //비밀번호 해시화?
     const handleLogin_Submit = async (e) => {
-        //새로고침 삭제할 예정
         e.preventDefault();
 
         //입력이 없을경우
@@ -39,9 +39,15 @@ const Login = () => {
 
             //받은 값 활용
             const data = await response.json();
-            if (data.login_check === true) {
-                //로그인 성공
-                console.log("로그인 성공: ", data);
+            if (data.login_check && response.ok) {
+                //로그인 성공시 실행
+                const userData = {
+                    name: login_form.login_email,
+                    token: login_form.login_password,
+                };
+                sessionStorage.setItem("user", JSON.stringify(userData));
+
+                navigate("/");
             } else {
                 setLogin_error("이메일 또는 비밀번호가 일치하지 않습니다.");
             }
@@ -52,7 +58,7 @@ const Login = () => {
         <>
             <div className="login_page">
                 {/* 상단 헤더 */}
-                <div className="top_search"></div>
+                <div></div>
                 {/* 카테고리 */}
                 <div className="login">
                     <div className="login_logo">
@@ -99,13 +105,8 @@ const Login = () => {
                             <span>|</span>
                         </div>
                         <div>
-                            <Link to="/Password_find">비밀번호찾기</Link>
+                            <Link to="/Passwordfind">비밀번호찾기</Link>
                         </div>
-                        {/* 삭제용 */}
-                        <div>
-                            <Link to="/Mypage">마이페이지</Link>
-                        </div>
-                        {/*  */}
                     </div>
                 </div>
                 {/* 하단 */}
