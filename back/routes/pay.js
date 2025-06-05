@@ -11,17 +11,125 @@ const pool = mariadb.createPool({
     port: 3306,
 });
 
-// 회원가입 처리(이 부분 각자 수정 지우고 수정)
-// router.post('/', async (req, res) => {
-//    const { Signup_email, Signup_password, Signup_name, Signup_tel } = req.body;
-//    const conn = await pool.getConnection();
-//    const result = await conn.query(
-//        'INSERT INTO user(email, password, name, tel) VALUES(?, ?, ?, ?)',
-//        [Signup_email, Signup_password, Signup_name, Signup_tel]
-//    );
-//    conn.release();
-//    res.json({ signup_check: result.affectedRows > 0 });
-//});
+// ✅ 장바구니 전체 조회 + 요약 계산
+router.get('/cart', async (req, res) => {
+  try {
+    const conn = await pool.getConnection();
+
+    const cartRows = await conn.query(`
+      SELECT 
+        cart.cart_id AS id, 
+        cart.quantity, 
+        cart.price, 
+        product.product_name AS name,
+        product.product_id
+      FROM cart
+      JOIN product ON cart.product_id = product.product_id
+    `);
+
+    const totalPrice = cartRows.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const discount = cartRows.length > 0 ? 1000 : 0;
+    const delivery = totalPrice === 0 ? 0 : totalPrice < 30000 ? 3000 : 0;
+    const finalPrice = totalPrice - discount + delivery;
+
+    res.json({
+      cart: cartRows,
+      summary: { totalPrice, discount, delivery, finalPrice }
+    });
+
+    conn.release();
+  } catch (err) {
+    console.error('장바구니 조회 실패:', err);
+    res.status(500).send('서버 오류');
+  }
+});
+
+// ✅ 개별 삭제
+router.delete('/cart/:id', async (req, res) => {
+  const id = parseInt(req.params.id);
+  try {
+    const conn = await pool.getConnection();
+    await conn.query('DELETE FROM cart WHERE cart_id = ?', [id]);
+    conn.release();
+    res.send(`id=${id} 삭제 완료`);
+  } catch (err) {
+    console.error('삭제 실패:', err);
+    res.status(500).send('서버 오류');
+  }
+});
+
+// ✅ 선택 항목만 계산 요청
+router.post('/cart/summary', async (req, res) => {
+  const checkedItems = req.body; // [{ id, quantity, price }]
+  try {
+    const totalPrice = checkedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const discount = checkedItems.length > 0 ? 1000 : 0;
+    const delivery = checkedItems.length > 0 ? 3000 : 0;
+    const finalPrice = totalPrice - discount + delivery;
+
+    res.json({ totalPrice, discount, delivery, finalPrice });
+  } catch (err) {
+    console.error('요약 계산 실패:', err);
+    res.status(500).send('서버 오류');
+  }
+});
+
+
+
+
+// ✅ 주문 처리
+router.post('/order', async (req, res) => {
+  const { address, detailAddress, payment, discount_id, total_price, items } = req.body;
+
+  if (!address || !payment || !items || items.length === 0) {
+    return res.status(400).send("필수 정보 누락");
+  }
+
+  const fullAddress = `${address} ${detailAddress ?? ''}`;
+  const user_id = 1; // 임시 사용자 (로그인 기능 없다면 고정값)
+  
+  try {
+    const conn = await pool.getConnection();
+
+    // order 테이블에 삽입
+    const orderResult = await conn.query(
+      `INSERT INTO \`order\` (order_date, total_price, status, payment_method, user_id, address, discount_id)
+       VALUES (NOW(), ?, '결제완료', ?, ?, ?, ?)`,
+      [total_price, payment, user_id, fullAddress, discount_id || null]
+    );
+
+    const order_id = orderResult.insertId;
+
+    // order_detail 테이블에 삽입
+    for (const item of items) {
+      const subtotal = item.price * item.quantity;
+      const estimatedData = new Date();
+      estimatedData.setDate(estimatedData.getDate()+2);
+
+      await conn.query(
+        `INSERT INTO order_detail
+         (quantity, price, delivery, subtotal, product_id, order_id, estimated_date)
+         VALUES (?, ?, '배송준비', ?, ?, ?, ?)`,
+        [item.quantity, item.price, subtotal, item.product_id, order_id, estimatedData]
+      );
+    }
+    const productIds = items.map(item => item.product_id);
+    const placeholders = productIds.map(()=>'?').join(',');
+    await conn.query(
+       `DELETE FROM cart WHERE product_id IN (${placeholders}) AND user_id = ?`,
+      [...productIds, user_id]
+    );
+
+    conn.release();
+    res.send('주문 저장 완료');
+  } catch (err) {
+    console.error('주문 저장 실패:', err);
+    res.status(500).send('서버 오류');
+  }
+});
+
+
+
 
 
 module.exports = router;
