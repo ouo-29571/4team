@@ -13,18 +13,20 @@ function Cart() {
     finalPrice: 0
   });
 
-  // const {
-  //   cartItems,
-  //   setCartItems,
-  //   summary,
-  //   setSummary,
-  //   allCheck,
-  //   toggleCheck,
-  //   selected_Delete,
-  //   del_btn,
-  //   placeOrder,
-  // } = useCart()
+  const allCheck = (checked) => {
+    setCartItems(prev => prev.map(item => ({ ...item, checked })));
+  };
 
+    // 체크박스 토글 (개별 선택)
+  const toggleCheck = (index) => {
+    setCartItems(prev =>
+      prev.map((item, i) =>
+        i === index ? { ...item, checked: !item.checked } : item
+      )
+    );
+  };
+
+  // 선택 삭제
   const selected_Delete = () => {
     const toDelete = cartItems.filter(item => item.checked).map(item => item.id)
       fetch(`http://localhost:8080/cart/delete-multiple`,{
@@ -43,6 +45,27 @@ function Cart() {
     })
     .catch(err => console.error('선택 삭제 실패:', err));
   };
+
+  // 개별 삭제 버튼 (id 기준 삭제)
+  const del_btn = (id) => {
+    fetch(`http://localhost:8080/cart/${id}`,{
+      method: 'DELETE'
+    })
+    .then(() => {
+      setCartItems(prev => prev.filter(item => item.id !== id));
+    })
+    .catch(err => console.error('개별 삭제 실패:', err));
+  };
+
+  const placeOrder = (navigate) => {
+    const orderItems = cartItems.filter(item => item.checked);
+    if (orderItems.length === 0) return alert("주문할 항목을 선택하세요!");
+
+    navigate('/order', {state: {items: orderItems } });
+  };
+
+
+  
 
   // "전체 선택" 체크박스 상태 계산
   const isAllChecked =
