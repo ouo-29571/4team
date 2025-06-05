@@ -1,0 +1,111 @@
+/* ✅ 결제창 전체 감싸는 폼 */
+.order-form {
+  position: relative;
+  border: 1px solid #000;
+  width: 800px;
+  display: flex;
+  padding-left: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px;
+}
+
+.order-form-sticky {
+  position: sticky;
+  bottom: 0;
+  z-index: 1000;
+  background-color: #fff;
+  border: 1px solid #000;
+  width: 800px;
+  display: flex;
+  padding-left: 10px;
+  flex-direction: column;
+  align-items: flex-start;
+  margin: 20px;
+}
+
+
+
+/* ✅ 카카오 우편번호 찾기 embed iframe */
+.postcode-embed {
+  border: 1px solid #ccc;
+  width: 600px;
+  height: 500px;
+  position: fixed;
+  top: 100px;
+  left: 50%;
+  z-index: 5000;
+  background-color: #fff;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  transform: translateX(-50%);
+}
+
+/* ✅ 닫기 버튼 (X) 스타일 */
+.postcode-close-btn {
+  position: fixed;
+  top: 45px;
+  left: calc(50% + 276px); /* iframe 오른쪽 끝 기준 */
+  transform: translateX(-50%);
+  z-index: 1001;
+  background: transparent;
+  border: none;
+  font-size: 30px;
+  color: #666;
+  cursor: pointer;
+}
+
+/* ✅ 우편번호 영역 상단 줄 */
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: start;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+
+/* ✅ 우편번호 input, 버튼 높이 통일 */
+.row input[type="text"],
+.row button {
+  height: 36px;
+  padding: 5px 10px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.order-item-box {
+  border: 1px solid #ccc;
+  padding-left: 30px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-left: 30px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  background-color: #f9f9f9;
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.item-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 95%;
+  margin-bottom: 8px;
+}
+
+.item-row label {
+  width: 20%;
+  font-weight: bold;
+  text-align: left;
+}
+
+.item-box-input {
+  width: 75%;
+  padding: 8px;
+  box-sizing: border-box;
+  text-align: end;
+
+}

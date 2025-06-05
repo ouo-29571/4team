@@ -282,4 +282,37 @@ app.post("/update_signup", async (req, res) => {
     }
 
     res.json({ updata_signup_check });
+
+        // ✅ 장바구니 전체 조회 + 요약 계산
+    app.get('/cart', async (req, res) => {
+    try {
+        const conn = await pool.getConnection();
+
+        const cartRows = await conn.query(`
+        SELECT 
+            cart.cart_id AS id, 
+            cart.quantity, 
+            cart.price, 
+            product.product_name AS name,
+            product.product_id
+        FROM cart
+        JOIN product ON cart.product_id = product.product_id
+        `);
+
+        const totalPrice = cartRows.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        const discount = cartRows.length > 0 ? 1000 : 0;
+        const delivery = totalPrice === 0 ? 0 : totalPrice < 30000 ? 3000 : 0;
+        const finalPrice = totalPrice - discount + delivery;
+
+        res.json({
+        cart: cartRows,
+        summary: { totalPrice, discount, delivery, finalPrice }
+        });
+
+        conn.release();
+    } catch (err) {
+        console.error('장바구니 조회 실패:', err);
+        res.status(500).send('서버 오류');
+    }
+    });
 });
