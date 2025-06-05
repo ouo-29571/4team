@@ -23,7 +23,6 @@ body {
 .Product_Image {
   width: 600px;
   height: 600px;
-  background: yellow;
   text-align: center;
   line-height: 150px;
 }
@@ -46,7 +45,6 @@ body {
 .Thumb {
   width: 100px;
   height: 100px;
-  background: yellow;
   font-size: 40px;
 }
 /* -------------------------------------------------------*/
@@ -61,7 +59,6 @@ body {
 }
 
 .Product_Name {
-  background: yellow;
   width: 600px;
   padding: 10px;
   font-size: 20px;
@@ -73,13 +70,11 @@ body {
   display: flex;
   flex-direction: column;
   gap: 5px;
-  background: yellow;
 }
 
 .Product_Price {
   width: 600px;
   font-size: 50px;
-  background: yellow;
   display: flex;
   justify-content: space-between;
 }
@@ -89,7 +84,6 @@ body {
   align-items: center;
   font-size: 40px;
   gap: 350px;
-  background: yellow;
   text-indent: 10px;
 }
 .Product_Quantity_buttons {
@@ -97,7 +91,6 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  
 }
 .Product_Quantity_buttons button {
   width: 50px;
@@ -120,12 +113,10 @@ body {
 .Product_Buttons button {
   width: 200px;
   height: 100px;
-  background: yellow;
   font-size: 40px;
 }
 
 .Product_Buttons Button {
-  background: yellow;
   padding: 5px 10px;
   cursor: pointer;
 }
@@ -145,7 +136,6 @@ body {
   justify-content: center; /* 가로 가운데 */
   align-items: center; /* 가로축 중앙 */
   flex-direction: column; /* 세로로 정렬 */
-  background: yellow;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -155,7 +145,7 @@ body {
   width: 1600px;
   display: flex;
   justify-content: center;
-  background: yellow;
+  background: white;
   font-size: 18em;
   font-weight: 1000;
 }

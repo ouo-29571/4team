@@ -11,6 +11,33 @@ const pool = mariadb.createPool({
     port: 3306,
 });
 
+router.get("/api/products", async (req, res) => {
+  try {
+    const conn = await pool.getConnection();
+    const rows = await conn.query("SELECT * FROM product");
+    conn.release();
+    res.json(rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Database error" });
+  }
+});
+
+router.get("/api/products/:id", async (req, res) => {
+  const { id } = req.params;
+  const conn = await pool.getConnection();
+  const rows = await conn.query("SELECT * FROM product WHERE product_id = ?", [
+    id,
+  ]);
+  conn.release();
+
+  if (rows.length === 0) {
+    res.status(404).json({ error: "Product not found" });
+  } else {
+    res.json(rows[0]);
+  }
+});
+
 // 회원가입 처리(이 부분 각자 수정 지우고 수정)
 // router.post('/', async (req, res) => {
 //    const { Signup_email, Signup_password, Signup_name, Signup_tel } = req.body;

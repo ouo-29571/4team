@@ -29,7 +29,7 @@ function App() {
                     {/* <Route path="/" element={<Main />} /> */}
                     <Route path="/" element={<Main />} />
                     <Route path="/Menu" element={<Menu />} />
-                    <Route path="/DetailPage" element={<DetailPage />} />
+                    <Route path="/DetailPage/:id" element={<DetailPage />} />
                     <Route path="/Login" element={<Login />} />
                     <Route path="/Signup" element={<Signup />} />
                     <Route path="/Passwordfind" element={<Passwordfind />} />

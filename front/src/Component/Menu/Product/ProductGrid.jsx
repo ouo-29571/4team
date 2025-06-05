@@ -16,11 +16,22 @@ import Image104 from "./Object_Image/Image104.png";
 import Image105 from "./Object_Image/Image105.png";
 import Image106 from "./Object_Image/Image106.png";
 import Image107 from "./Object_Image/Image107.png";
+import Image108 from "./Object_Image/Image108.png";
 import Image109 from "./Object_Image/Image109.png";
+
+import Image201 from "./Object_Image/Image201.png";
+import Image202 from "./Object_Image/Image202.png";
+import Image203 from "./Object_Image/Image203.png";
+import Image204 from "./Object_Image/Image204.png";
+import Image205 from "./Object_Image/Image205.png";
+import Image206 from "./Object_Image/Image206.png";
+import Image207 from "./Object_Image/Image207.png";
+import Image208 from "./Object_Image/Image208.png";
+import Image209 from "./Object_Image/Image209.png";
 
 import Star from "./Star";
 import React, { useState, useEffect } from "react";
-
+import { Link } from "react-router-dom";
 // src/components/ProductGrid.jsx
 function ProductGrid({ items }) {
   const [likedItems, setLikedItems] = useState({});
@@ -42,7 +53,17 @@ function ProductGrid({ items }) {
     105: Image105,
     106: Image106,
     107: Image107,
+    108: Image108,
     109: Image109,
+    201: Image201,
+    202: Image202,
+    203: Image203,
+    204: Image204,
+    205: Image205,
+    206: Image206,
+    207: Image207,
+    208: Image208,
+    209: Image209,
   };
 
   const toggleLike = (id) => {
@@ -67,7 +88,9 @@ function ProductGrid({ items }) {
           <div className="inner_down">
             <div className="inner_left_text">
               <span style={{ fontSize: "20px", fontWeight: "bold" }}>
-                {item.product_name}
+                <Link to={`/DetailPage/${item.product_id}`}>
+                  {item.product_name}
+                </Link>
               </span>
               <br />
               가격 : {item.price.toLocaleString()}원
