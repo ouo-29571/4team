@@ -15,6 +15,7 @@ import Menu from "./Component/Menu/Menu";
 import DetailPage from "./Component/Menu/DetailPage/DetailPage";
 import Header from "./Component/Main/Header/Header";
 import Footer from "./Component/Menu/Footer/Footer";
+import Cart from "./Component/Cart/Cart"
 
 function App() {
     return (
@@ -34,6 +35,8 @@ function App() {
                     <Route path="/Passwordfind" element={<Passwordfind />} />
                     <Route path="/Mypage" element={<Mypage />} />
                     <Route path="/Userinfofix" element={<Userinfofix />} />
+                    <Route path="/Cart" element={<Cart />} />
+                    
                 </Routes>
                 <Footer />
             </BrowserRouter>

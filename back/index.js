@@ -11,10 +11,10 @@ const styleRouter = require('./routes/style');
 app.use(cors());
 app.use(express.json());
 
-app.use('/pay', payRouter);   
-app.use('/user', userRouter);     
-app.use('/product', productRouter);   
-app.use('/style', styleRouter);  
+app.use('/', payRouter);   
+app.use('/', userRouter);     
+app.use('/', productRouter);   
+app.use('/', styleRouter);   
 
 app.listen(8080, () => {
     console.log("서버 실행중");
