@@ -1,15 +1,14 @@
 /*사용자 이름*/
 .Mypage_page {
-    height: 100vh; /*세로 100%*/
     width: 100%; /*가로 100%*/
     display: flex;
-    margin-top: 50px;
     align-items: center; /*가로정렬*/
     flex-direction: column;
+    margin-bottom: 150px;
 }
 
 .userinfo_box {
-    width: 800px;
+    width: 1500px;
     height: auto;
     display: flex;
     background-color: rgb(165, 165, 165);
@@ -33,6 +32,7 @@
 .user_name > div {
     margin-bottom: 10px;
     margin-top: 10px;
+    margin-left: 20px;
 }
 
 .DB_input_username {
@@ -75,7 +75,7 @@
 
 /* 주문 / 배송조회 */
 .user_order_menu {
-    width: 800px;
+    width: 1500px;
     height: auto;
     display: flex;
     background-color: rgb(165, 165, 165);
@@ -125,7 +125,7 @@
 
 /*사용자주문 상세정보*/
 .userorder_info {
-    width: 800px;
+    width: 1500px;
     height: auto;
     background-color: rgb(165, 165, 165);
     padding: 20px;
@@ -136,7 +136,7 @@
 
 /* 상세정보 */
 .user_info_details {
-    width: 800px;
+    width: 1500px;
     height: auto;
     background-color: rgb(165, 165, 165);
     padding: 20px;

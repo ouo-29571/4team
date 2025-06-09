@@ -9,7 +9,7 @@ function Menu() {
   const [category, setCategory] = useState("decoration");
   const [productsData, setProductsData] = useState([]);
   useEffect(() => {
-    fetch("http://localhost:8080/api/test")
+    fetch("http://localhost:8080/api/products")
       .then((res) => res.json())
       .then((data) => {
         setProductsData(data);

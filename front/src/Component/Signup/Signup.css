@@ -1,9 +1,8 @@
 .signup_page {
-    height: 100vh; /*세로 100%*/
     width: 100%;
     display: flex;
     justify-content: center; /*가로정렬*/
-    align-items: center; /*세로정렬*/
+    margin-bottom: 150px;
 }
 
 /*메인*/
@@ -19,13 +18,13 @@
     margin-top: 30px;
     margin-left: 30%;
     margin-bottom: 100px;
-
     border-radius: 50px;
 }
 
 /*입력창*/
 .input-container {
     margin-bottom: 15px;
+    font-weight: bolder;
 }
 
 .input-container > div > input {
@@ -49,6 +48,7 @@
     height: 50px;
     margin-top: 20px;
     border-radius: 10px;
+    font-weight: bolder;
 }
 
 .signup_button:hover {
