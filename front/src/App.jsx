@@ -8,6 +8,7 @@ import "./App.css";
 import Login from "./Component/Login/Login";
 import Signup from "./Component/Signup/Signup";
 import Passwordfind from "./Component/Passwordfind/Passwordfind";
+import Passwordfix from "./Component/Passwordfix/Passwordfix";
 import Mypage from "./Component/Mypage/Mypage";
 import Userinfofix from "./Component/Userinfofix/Userinfofix";
 import Main from "./Component/Main/Main";
@@ -15,9 +16,15 @@ import Menu from "./Component/Menu/Menu";
 import DetailPage from "./Component/Menu/DetailPage/DetailPage";
 import Header from "./Component/Main/Header/Header";
 import Footer from "./Component/Menu/Footer/Footer";
+<<<<<<< HEAD
 import Cart from "./Component/Cart/Cart"
 import EventPage from "./Component/EventPage/EventPage";
 import ImageSlider from "./Component/Main/ImageSlider/ImageSlider";
+=======
+import Cart from "./Component/cart/Cart"
+import Order from "./Component/order/Order";
+import History from "./Component/history/History";
+>>>>>>> main
 
 function App() {
     return (
@@ -25,9 +32,6 @@ function App() {
             <BrowserRouter>
                 <Header />
                 <Routes>
-                    {/* 나도 성공? */}
-
-                    {/* 수정할 예정 */}
                     {/* <Route path="/" element={<Main />} /> */}
                     <Route path="/" element={<Main />} />
                     <Route path="/Menu" element={<Menu />} />
@@ -35,11 +39,17 @@ function App() {
                     <Route path="/Login" element={<Login />} />
                     <Route path="/Signup" element={<Signup />} />
                     <Route path="/Passwordfind" element={<Passwordfind />} />
+					<Route path="/Passwordfix" element={<Passwordfix />} />
                     <Route path="/Mypage" element={<Mypage />} />
                     <Route path="/Userinfofix" element={<Userinfofix />} />
                     <Route path="/Cart" element={<Cart />} />
+<<<<<<< HEAD
                     <Route path="/EventPage" element={<EventPage />} />
                     <Route path="/ImageSlider" element={<ImageSlider />} />
+=======
+                    <Route path="/Order" element={<Order />} />
+                    <Route path="/History" element={<History />} />
+>>>>>>> main
                     
                 </Routes>
                 <Footer />

@@ -19,7 +19,7 @@ function Order() {
 
   
   useEffect(() => {
-    fetch('http://localhost:8080/discounts')
+    fetch('http://localhost:8080/discount')
       .then(res => res.json())
       .then(data => {
         setDiscounts(data);
