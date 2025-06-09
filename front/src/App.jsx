@@ -16,6 +16,8 @@ import Menu from "./Component/Menu/Menu";
 import DetailPage from "./Component/Menu/DetailPage/DetailPage";
 import Header from "./Component/Main/Header/Header";
 import Footer from "./Component/Menu/Footer/Footer";
+import EventPage from "./Component/EventPage/EventPage";
+import ImageSlider from "./Component/Main/ImageSlider/ImageSlider";
 import Cart from "./Component/cart/Cart"
 import Order from "./Component/order/Order";
 import History from "./Component/history/History";
@@ -37,6 +39,8 @@ function App() {
                     <Route path="/Mypage" element={<Mypage />} />
                     <Route path="/Userinfofix" element={<Userinfofix />} />
                     <Route path="/Cart" element={<Cart />} />
+                    <Route path="/EventPage" element={<EventPage />} />
+                    <Route path="/ImageSlider" element={<ImageSlider />} />
                     <Route path="/Order" element={<Order />} />
                     <Route path="/History" element={<History />} />
                     

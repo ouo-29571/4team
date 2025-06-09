@@ -1,0 +1,133 @@
+/* html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+} */
+
+.eventpage-bigbox {
+  width:1920px;
+  height:4980px;
+  border: 1px solid #333;
+}
+
+/* 썸머 페스타 */
+.vintage-section {
+  background-color: #f2f2f2;
+  width: 1920px;
+  height: 1080px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.vt-textbox {
+  background-color: white;
+  width: 1200px;
+  height: 600px;
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  border-radius: 20px;
+  border: 1px solid #333;
+  overflow: hidden; /* 내부 둥글게 처리 */
+}
+
+.vt-text {
+  width: 50%;
+  padding: 50px 30px;
+  color: #333;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.vt-imgbox {
+  width: 80%;
+  background-color: thistle;
+  border-left: 1px solid #333;
+}
+
+
+
+/* 할인 추천 상품 */
+.discount-section {
+  background-color: #fafafa;
+  width:1920px;
+  height:1080px;
+  position: relative;
+  padding-top: 60px;
+  padding-bottom: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  
+  border: 1px solid #333;
+}
+
+.dc-title{
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom: 100px;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  border:#333 1px solid;
+  width: 1920px;
+  height: 70px;
+  background-color: #AAA396;
+  color: #333;
+  text-align: center;
+}
+
+/* 할인 추천상품 텍스트 */
+.ds-h3{
+  text-align: left;
+  position: relative;
+  left: 100px;
+  margin:20px 0;
+  padding: 0 20px;
+  color: #333;
+}
+
+.dc-items, .cp-items {
+  width:1920px;
+  height:600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #333;
+}
+
+.item-box {
+  background-color: #ddd;
+  width:490px;
+  height:600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #333;
+  border-radius: 20px;
+}
+
+/* 최대 50% 할인 쿠폰 */
+.coupon-section {
+  background-color: #AAA396;
+  width:1980px;
+  height: 1080px;
+  text-align: center;
+  margin-bottom: 20px;
+  border: 1px solid #333;
+}
+
+/* 출석체크 */
+.attendance-section {
+  background-color: #fafafa;
+  width:1980px;
+  height:1920px;
+  text-align: center;
+  border: 1px solid #333;
+}

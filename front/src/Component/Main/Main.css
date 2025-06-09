@@ -78,17 +78,57 @@
 }
 
 .bs-img, .ds-img{                                           /*베스트셀러, 할인상품 이미지*/
-  width: 100%;
-  height: 100%;
+  width: 490px;
+  height: 600px;
   object-fit: cover;
   border-radius: 20px;
+  background-size: cover;
+  background-position: center;
+  transition: background-image 0.3s ease;
+  cursor: pointer;
 }
+
+/* 가구 이미지 */
+.img-furniture {
+  background-image: url('/img/가구1.png');
+}
+
+/* 가구 호버 이미지 */
+.img-furniture:hover {
+  background-image: url('/img/가구1h.png');
+}
+
+/* 주방 이미지 */
+.img-kitchen {
+  background-image: url('/img/주방1.png');
+}
+
+/* 주방 호버 이미지 */
+.img-kitchen:hover {
+  background-image: url('/img/주방1h.png');
+}
+
+/* 인테리어오브제 이미지 */
+.img-interiorobj {
+  background-image: url('/img/인테리어오브제1.png');
+}
+
+/* 인테리어오브제 호버 이미지 */
+.img-interiorobj:hover {
+  background-image: url('/img/인테리어오브제1h.png');
+}
+
+
 
 .bs-button{                                                 /*베스트셀러 (#가구) 버튼*/
   background-color: #584738;    
   color: #fff;               
   padding: 16px 24px;            
-  border-radius: 30px;          
+  border-radius: 30px;
+
+  border: none;
+  background-color: #444;
+  cursor: pointer;        
   font-size: 18px;
   display: inline-block;
   position: relative;
@@ -137,7 +177,7 @@
   flex-direction: column;
 }
 
-.itr-box{                                       /* 인테리어 사진 넣을 박스 */ 
+/* .itr-box{                                       / 인테리어 사진 넣을 박스 / 
   width:800px;
   height:600px;
   border:1px solid #333;
@@ -148,7 +188,7 @@
   margin: 0 auto;
   position: relative;
   top: 60px;
-}
+} */
 
 .itr-text{              /* ㄴ>인테리어 - 감각적인..텍스트 */ 
   position: relative;
@@ -192,7 +232,9 @@
   height:410px;
   border:1px solid #333;
   background-color:#ffffff;
-  text-align:center; 
+  text-align:center;
+  position: relative;
+  bottom:100px;
 }
 
 .ab-text{                                             /*어바웃어스 텍스트*/
