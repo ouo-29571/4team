@@ -1,14 +1,14 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const mariadb = require('mariadb');
+const mariadb = require("mariadb");
 
 // DB 연결 풀
 const pool = mariadb.createPool({
-    host: '192.168.0.191',
-    user: '4team',
-    password: '4team',
-    database: '4team',
-    port: 3306,
+  host: "192.168.0.191",
+  user: "4team",
+  password: "4team",
+  database: "4team",
+  port: 3306,
 });
 
 router.get("/api/products", async (req, res) => {
@@ -49,6 +49,5 @@ router.get("/api/products/:id", async (req, res) => {
 //    conn.release();
 //    res.json({ signup_check: result.affectedRows > 0 });
 //});
-
 
 module.exports = router;
