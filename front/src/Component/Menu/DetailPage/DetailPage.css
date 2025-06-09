@@ -122,22 +122,35 @@ body {
 }
 /* 쿠폰 및 상세페이지 */
 .Product_DetailPage {
+  width: 1920px;
   background: #f1eada;
   display: flex;
   justify-content: center; /* 가로 가운데 */
   flex-direction: column; /* 세로로 정렬 */
   align-items: center; /* 세로 가운데 */
+  font-size: 50px;
 }
 
 .Product_Coupon {
-  height: 100px;
-  width: 1600px;
+  background-color: rgba(163, 111, 32, 0.404);
+  height: 180px;
+  width: 1800px;
   display: flex;
   justify-content: center; /* 가로 가운데 */
   align-items: center; /* 가로축 중앙 */
   flex-direction: column; /* 세로로 정렬 */
   margin-bottom: 20px;
   text-align: center;
+  padding-bottom: 20px;
+  border-bottom: 3px solid black;
+}
+.Product_Coupon_Button {
+  height: 100px;
+  width: 400px;
+  text-align: center;
+  font-size: 70px;
+  line-height: 100px; /* 세로 텍스트 정렬 height와 같게 */
+  border-radius: 35px; ;
 }
 
 .Product_Detail {
@@ -146,6 +159,9 @@ body {
   display: flex;
   justify-content: center;
   background: white;
-  font-size: 18em;
+  font-size: 45px;
   font-weight: 1000;
+  margin-bottom: 40px; /* div 밑에 16px 간격 */
+  background-color: transparent;
+  text-align: center;
 }

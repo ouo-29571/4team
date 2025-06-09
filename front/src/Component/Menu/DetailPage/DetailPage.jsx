@@ -1,4 +1,5 @@
 import Image1 from "../Product/Object_Image/Image1.png";
+import Image1_2 from "../Product/Object_Image/Image1_2.png";
 import Image2 from "../Product/Object_Image/Image2.png";
 import Image3 from "../Product/Object_Image/Image3.png";
 import Image4 from "../Product/Object_Image/Image4.png";
@@ -35,35 +36,36 @@ function DetailPage() {
   const [count, setCount] = useState(1);
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [mainImageIndex, setMainImageIndex] = useState(0);
 
   const images = {
-    1: Image1,
-    2: Image2,
-    3: Image3,
-    4: Image4,
-    5: Image5,
-    6: Image6,
-    7: Image7,
-    8: Image8,
-    9: Image9,
-    101: Image101,
-    102: Image102,
-    103: Image103,
-    104: Image104,
-    105: Image105,
-    106: Image106,
-    107: Image107,
-    108: Image108,
-    109: Image109,
-    201: Image201,
-    202: Image202,
-    203: Image203,
-    204: Image204,
-    205: Image205,
-    206: Image206,
-    207: Image207,
-    208: Image208,
-    209: Image209,
+    1: [Image1, Image1_2],
+    2: [Image2],
+    3: [Image3],
+    4: [Image4],
+    5: [Image5],
+    6: [Image6],
+    7: [Image7],
+    8: [Image8],
+    9: [Image9],
+    101: [Image101],
+    102: [Image102],
+    103: [Image103],
+    104: [Image104],
+    105: [Image105],
+    106: [Image106],
+    107: [Image107],
+    108: [Image108],
+    109: [Image109],
+    201: [Image201],
+    202: [Image202],
+    203: [Image203],
+    204: [Image204],
+    205: [Image205],
+    206: [Image206],
+    207: [Image207],
+    208: [Image208],
+    209: [Image209],
   };
 
   useEffect(() => {
@@ -75,7 +77,6 @@ function DetailPage() {
         return res.json();
       })
       .then((data) => {
-        console.log("서버에서 받아온 데이터 👉", data); // 👈 여기서 콘솔 찍힘
         setProduct(data);
       })
       .catch((err) => console.error("fetch 오류", err));
@@ -95,9 +96,11 @@ function DetailPage() {
         <div className="Product_Box">
           {/*이미지*/}
           <div className="Product_Image">
-            {product.product_id && images[product.product_id] ? (
+            {product.product_id &&
+            images[product.product_id] &&
+            images[product.product_id][mainImageIndex] ? (
               <img
-                src={images[product.product_id]}
+                src={images[product.product_id][mainImageIndex]}
                 alt={product.product_name}
                 style={{ width: "600px", height: "600px" }}
               />
@@ -106,10 +109,20 @@ function DetailPage() {
             )}
           </div>
 
-          <div className="Product_Scroll">
-            <div className="Thumb">DB사</div>
-            <div className="Thumb">DB진</div>
-            <div className="Thumb">DB첩</div>
+          <div className="Product_Scroll" style={{ cursor: "pointer" }}>
+            {images[product.product_id].map((imgSrc, index) => (
+              <div
+                className="Thumb"
+                key={index}
+                onClick={() => setMainImageIndex(index)}
+              >
+                <img
+                  src={imgSrc}
+                  alt={`제품 썸네일 ${index + 1}`}
+                  style={{ width: "100px", height: "100px" }}
+                />
+              </div>
+            ))}
           </div>
         </div>
         <div className="Product_Info">
@@ -140,9 +153,44 @@ function DetailPage() {
       <div className="Product_DetailPage">
         <div className="Product_Coupon">
           첫 구매 시 99% 할인
-          <button style={{ width: "100px" }}>쿠폰</button>
+          <button
+            className="Product_Coupon_Button"
+            onClick={() => alert("쿠폰이 발급되었습니다!")}
+          >
+            쿠폰
+          </button>
         </div>
-        <div className="Product_Detail">DB상세내용테스트중입니다</div>
+        <div
+          style={{
+            fontSize: "80px",
+            fontWeight: 900,
+            marginBottom: "40px",
+            textAlign: "center",
+          }}
+        >
+          {product.product_name}
+        </div>
+        <div
+          style={{ fontSize: "50px", fontWeight: 500, marginBottom: "80px" }}
+        >
+          “어디서도 볼 수 없는 특별한 디자인.”
+        </div>
+        <div style={{ marginBottom: "40px" }}>
+          {product.product_id &&
+          images[product.product_id] &&
+          images[product.product_id][0] ? (
+            <img
+              src={images[product.product_id][0]} // 배열의 첫 번째 이미지
+              alt={product.product_name}
+              style={{ width: "900px", height: "900px" }}
+            />
+          ) : (
+            <span>이미지 없음</span>
+          )}
+        </div>
+        <div className="Product_Detail">{product.field1}</div>
+        <div className="Product_Detail">{product.field2}</div>
+        <div className="Product_Detail">{product.field3}</div>
       </div>
     </>
   );
