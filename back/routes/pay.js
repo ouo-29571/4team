@@ -4,11 +4,11 @@ const mariadb = require('mariadb');
 
 // DB 연결 풀
 const pool = mariadb.createPool({
-    host: '192.168.0.191',
-    user: '4team',
-    password: '4team',
-    database: '4team',
-    port: 3306,
+  host: '192.168.0.191',
+  user: '4team',
+  password: '4team',
+  database: '4team',
+  port: 3306,
 });
 
 // ✅ 장바구니 전체 조회 + 요약 계산
@@ -74,9 +74,33 @@ router.post('/cart/summary', async (req, res) => {
   }
 });
 
+router.post('/cart/delete-multiple', async (req, res) => {
+  const toDelete = req.body.ids; // 예: [3, 7, 12]
+  console.log('삭제할 ID들:', toDelete);
 
+  const conn = await pool.getConnection();
+  try {
+    if (toDelete.length === 0) {
+      return res.status(400).send('삭제할 ID가 없습니다.');
+    }
 
+    // ① 물음표(placeholder) 개수 생성: "?, ?, ?"
+    const placeholders = toDelete.map(() => '?').join(',');
 
+    // ② IN 절을 사용한 DELETE 쿼리
+    const sql = `DELETE FROM cart WHERE cart_id IN (${placeholders})`;
+
+    // ③ toDelete 배열을 파라미터로 전달
+    await conn.query(sql, toDelete);
+
+    res.send('선택된 항목들 삭제 완료');
+  } catch (err) {
+    console.error('삭제 오류:', err);
+    res.status(500).send('서버 오류로 삭제에 실패했습니다.');
+  } finally {
+    conn.release();
+  }
+});
 // ✅ 주문 처리
 router.post('/order', async (req, res) => {
   const { address, detailAddress, payment, discount_id, total_price, items } = req.body;
@@ -87,7 +111,7 @@ router.post('/order', async (req, res) => {
 
   const fullAddress = `${address} ${detailAddress ?? ''}`;
   const user_id = 1; // 임시 사용자 (로그인 기능 없다면 고정값)
-  
+
   try {
     const conn = await pool.getConnection();
 
@@ -104,7 +128,7 @@ router.post('/order', async (req, res) => {
     for (const item of items) {
       const subtotal = item.price * item.quantity;
       const estimatedData = new Date();
-      estimatedData.setDate(estimatedData.getDate()+2);
+      estimatedData.setDate(estimatedData.getDate() + 2);
 
       await conn.query(
         `INSERT INTO order_detail
@@ -114,9 +138,9 @@ router.post('/order', async (req, res) => {
       );
     }
     const productIds = items.map(item => item.product_id);
-    const placeholders = productIds.map(()=>'?').join(',');
+    const placeholders = productIds.map(() => '?').join(',');
     await conn.query(
-       `DELETE FROM cart WHERE product_id IN (${placeholders}) AND user_id = ?`,
+      `DELETE FROM cart WHERE product_id IN (${placeholders}) AND user_id = ?`,
       [...productIds, user_id]
     );
 

@@ -16,7 +16,9 @@ import Menu from "./Component/Menu/Menu";
 import DetailPage from "./Component/Menu/DetailPage/DetailPage";
 import Header from "./Component/Main/Header/Header";
 import Footer from "./Component/Menu/Footer/Footer";
-import Cart from "./Component/Cart/Cart"
+import Cart from "./Component/cart/Cart"
+import Order from "./Component/order/Order";
+import History from "./Component/history/History";
 
 function App() {
     return (
@@ -24,9 +26,6 @@ function App() {
             <BrowserRouter>
                 <Header />
                 <Routes>
-                    {/* 나도 성공? */}
-
-                    {/* 수정할 예정 */}
                     {/* <Route path="/" element={<Main />} /> */}
                     <Route path="/" element={<Main />} />
                     <Route path="/Menu" element={<Menu />} />
@@ -38,6 +37,8 @@ function App() {
                     <Route path="/Mypage" element={<Mypage />} />
                     <Route path="/Userinfofix" element={<Userinfofix />} />
                     <Route path="/Cart" element={<Cart />} />
+                    <Route path="/Order" element={<Order />} />
+                    <Route path="/History" element={<History />} />
                     
                 </Routes>
                 <Footer />
