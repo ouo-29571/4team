@@ -6,6 +6,7 @@ import ScrollbarDs from "../ScrollbarDs/ScrollbarDs";
 import MarqueeText from "../MarqueeText/MarqueeText";
 import PopupModal from "../PopupModal/PopupModal";
 import { useNavigate } from "react-router-dom";
+import ImageSlider from "./ImageSlider/ImageSlider";
 
 //삭제용 test
 
@@ -50,16 +51,17 @@ function Main() {
           {" "}
           {/* ✅ 베스트셀러 아이템 박스 그룹 */}
           <div className="bs-box">
-            <img className="bs-img" src="/img/임시1.png" alt="가구 이미지1" />
+            <div className="bs-img img-furniture"></div>
             <button className="bs-button">#가구</button>
           </div>
-          <div className="bs-box">
-            <img className="bs-img" src="/img/임시2.png" alt="가구 이미지2" />
-            <button className="bs-button">#소품</button>
+          
+         <div className="bs-box">
+            <div className="bs-img img-kitchen"></div>
+            <button className="bs-button">#주방용품</button>
           </div>
           <div className="bs-box">
-            <img className="bs-img" src="/img/임시3.png" alt="가구 이미지3" />
-            <button className="bs-button">#조명</button>
+            <div className="bs-img img-interiorobj"></div>
+            <button className="bs-button">#인테리어 오브제</button>
           </div>
         </div>
       </div>
@@ -87,12 +89,14 @@ function Main() {
         <h2 className="itr-text">감각적인 _______를 만나보세요.</h2>
         <p className="itr-text2">실제 인테리어를 적용한 모습을 확인하세요!</p>
         <div className="itr-box">
-          <img className="itr-img" src="/img/임시1.png"></img>{" "}
+        
+
+          <ImageSlider/>
           {/*인테리어 - 이미지*/}
         </div>
       </div>
       <div className="aboutbox">
-        {" "}
+        
         {/*✅아티클 - 어바웃어스*/}
         <MarqueeText
           text="vintage haus"
@@ -117,7 +121,7 @@ function Main() {
             채워보세요. <br />
             새것보다 익숙함을 좋아하는 당신을 위한, 일상 속 빈티지를 제안합니다.{" "}
             <br />
-            느려도 좋으니, 예쁜 것들로 채워진 오늘을 살아가길 바랍니다.d
+            느려도 좋으니, 예쁜 것들로 채워진 오늘을 살아가길 바랍니다.
           </p>
           <button className="ab-button">더 알아보기</button>
         </div>
