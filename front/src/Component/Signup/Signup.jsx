@@ -33,7 +33,7 @@ const Signup = () => {
         setSignup_form((prev) => ({ ...prev, Signup_email: email_value }));
 
         //DB 값 전달
-        const response = await fetch("http://192.168.0.191:8080/check_email", {
+        const response = await fetch("http://localhost:8080/check_email", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json", //데이터 타입 : 데이터형식(json)
@@ -90,7 +90,7 @@ const Signup = () => {
             alert("중복된 이메일입니다.");
         } else {
             //DB에 화원가입정보 보내기
-            const response = await fetch("http://192.168.0.191:8080/signup", {
+            const response = await fetch("http://localhost:8080/signup", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -163,8 +163,9 @@ const Signup = () => {
                                         onBlur={handleBlurOrEnter} //input바깥영역을 눌렀을 경우발생하는 이벤트 (반대; onFocus)
                                         onKeyDown={(e) => {
                                             //키보드 눌렀을 경우 발생
-                                            if (e.key === "Enter")
+                                            if (e.key === "Enter") {
                                                 handleBlurOrEnter();
+                                            }
                                         }}
                                         placeholder="비밀번호를 입력하세요"
                                         required

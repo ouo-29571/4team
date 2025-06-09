@@ -8,6 +8,7 @@ import "./App.css";
 import Login from "./Component/Login/Login";
 import Signup from "./Component/Signup/Signup";
 import Passwordfind from "./Component/Passwordfind/Passwordfind";
+import Passwordfix from "./Component/Passwordfix/Passwordfix";
 import Mypage from "./Component/Mypage/Mypage";
 import Userinfofix from "./Component/Userinfofix/Userinfofix";
 import Main from "./Component/Main/Main";
@@ -33,6 +34,7 @@ function App() {
                     <Route path="/Login" element={<Login />} />
                     <Route path="/Signup" element={<Signup />} />
                     <Route path="/Passwordfind" element={<Passwordfind />} />
+					<Route path="/Passwordfix" element={<Passwordfix />} />
                     <Route path="/Mypage" element={<Mypage />} />
                     <Route path="/Userinfofix" element={<Userinfofix />} />
                     <Route path="/Cart" element={<Cart />} />
