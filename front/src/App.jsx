@@ -16,6 +16,8 @@ import DetailPage from "./Component/Menu/DetailPage/DetailPage";
 import Header from "./Component/Main/Header/Header";
 import Footer from "./Component/Menu/Footer/Footer";
 import Cart from "./Component/Cart/Cart"
+import EventPage from "./Component/EventPage/EventPage";
+import ImageSlider from "./Component/Main/ImageSlider/ImageSlider";
 
 function App() {
     return (
@@ -36,6 +38,8 @@ function App() {
                     <Route path="/Mypage" element={<Mypage />} />
                     <Route path="/Userinfofix" element={<Userinfofix />} />
                     <Route path="/Cart" element={<Cart />} />
+                    <Route path="/EventPage" element={<EventPage />} />
+                    <Route path="/ImageSlider" element={<ImageSlider />} />
                     
                 </Routes>
                 <Footer />
