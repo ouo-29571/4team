@@ -40,6 +40,7 @@ main {
   border: none;
   cursor: pointer;
   text-align: center;
+  font-size: 100px;
 }
 .up_Box_button:focus {
   outline: none; /* 포커스 시 외곽선 제거 */
@@ -70,7 +71,6 @@ main {
   display: flex; /* 🔴 버튼 배치용 flex */
   align-items: center; /* 🔴 가로 정렬 */
   justify-content: center; /* 🔴 세로 정렬 */
-  border: 1px solid black; /* 🔴 테두리 */
   width: 95%; /* 🔴 big_Box의 95% 너비 */
   height: 80%; /* 🔴 big_Box의 20% 높이 */
   margin-top: 100px; /* 🔴 또 위로 너무 당기면 레이아웃 깨짐 (❗주의) */
