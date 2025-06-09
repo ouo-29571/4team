@@ -7,9 +7,8 @@ const mypage = () => {
     const navigate = useNavigate();
 
     //사용자 정보
-    const [username, setUsername] = useState("user");
     const [coupon, setCoupon] = useState(0);
-    const [bookmark, setBookmark] = useState(0);
+    const [Wish_list, setWish_list] = useState(0);
 
     //사용자 주문
     const [payment, setPayment] = useState(0);
@@ -78,8 +77,8 @@ const mypage = () => {
     };
 
     //찜 목록 클릭시 (수정할 목록 삭제할 수도)
-    const handle_bookmark = () => {
-        navigate("/Bookmark");
+    const handle_Wish_list = () => {
+        navigate("/Wish_list");
     };
 
     return (
@@ -115,13 +114,13 @@ const mypage = () => {
                                 <span>{coupon}</span>
                             </div>
                         </div>
-                        <div>
+                        <div onClick={handle_Wish_list}>
                             {/* 수정사항 삭제할지도? */}
-                            <div onClick={handle_bookmark}>
+                            <div>
                                 <span>찜 목록</span>
                             </div>
                             <div>
-                                <span>{bookmark}</span>
+                                <span>{Wish_list}</span>
                             </div>
                         </div>
                     </div>
