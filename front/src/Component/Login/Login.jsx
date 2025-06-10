@@ -42,6 +42,7 @@ const Login = () => {
             if (data.login_check && response.ok) {
                 //로그인 성공시 실행
                 const userData = {
+                    id: data.login_userid,
                     name: login_form.login_email,
                     token: login_form.login_password,
                 };
