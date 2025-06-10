@@ -44,6 +44,51 @@ router.get('/cart', async (req, res) => {
   }
 });
 
+
+// 할인정보 가져오기
+router.get('/discounts',async (req, res) => {
+    try{
+        const conn = await pool.getConnection();
+        const rows = await conn.query("SELECT discount_id, name, discount, discount_type FROM discount");
+        res.json(rows);
+        conn.release();
+    } catch(err) {
+        console.error("할인 목록 불러오기 실패:", err);
+        res.status(500).send("서버 오류");
+    }
+});
+
+// 주문내역 db저장
+router.get('/history', async (req, res) => {
+  try {
+    const conn = await pool.getConnection();
+    const rows = await conn.query(`
+      SELECT
+        \`order\`.order_id,
+        \`order\`.order_date,
+        \`order\`.total_price,
+        \`order\`.status,
+        order_detail.quantity,
+        order_detail.price,
+        order_detail.delivery,
+        order_detail.estimated_date,
+        product.product_name
+      FROM \`order\`
+      JOIN order_detail ON \`order\`.order_id = order_detail.order_id
+      JOIN product ON order_detail.product_id = product.product_id
+      WHERE \`order\`.user_id = 1
+      ORDER BY \`order\`.order_date DESC
+    `);
+    res.json(rows);
+    conn.release();
+  } catch (err) {
+    console.error("구매내역 조회 실패: ", err);
+    res.status(500).json({ error: err.message || "서버오류" });
+  } finally {
+    conn && conn.release();
+  }
+});
+
 // ✅ 개별 삭제
 router.delete('/cart/:id', async (req, res) => {
   const id = parseInt(req.params.id);
@@ -57,23 +102,7 @@ router.delete('/cart/:id', async (req, res) => {
     res.status(500).send('서버 오류');
   }
 });
-
-// ✅ 선택 항목만 계산 요청
-router.post('/cart/summary', async (req, res) => {
-  const checkedItems = req.body; // [{ id, quantity, price }]
-  try {
-    const totalPrice = checkedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-    const discount = checkedItems.length > 0 ? 1000 : 0;
-    const delivery = checkedItems.length > 0 ? 3000 : 0;
-    const finalPrice = totalPrice - discount + delivery;
-
-    res.json({ totalPrice, discount, delivery, finalPrice });
-  } catch (err) {
-    console.error('요약 계산 실패:', err);
-    res.status(500).send('서버 오류');
-  }
-});
-
+// ✅ 다중 삭제
 router.post('/cart/delete-multiple', async (req, res) => {
   const toDelete = req.body.ids; // 예: [3, 7, 12]
   console.log('삭제할 ID들:', toDelete);
@@ -101,6 +130,23 @@ router.post('/cart/delete-multiple', async (req, res) => {
     conn.release();
   }
 });
+
+// ✅ 선택 항목만 계산 요청
+router.post('/cart/summary', async (req, res) => {
+  const checkedItems = req.body; // [{ id, quantity, price }]
+  try {
+    const totalPrice = checkedItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const discount = checkedItems.length > 0 ? 1000 : 0;
+    const delivery = checkedItems.length > 0 ? 3000 : 0;
+    const finalPrice = totalPrice - discount + delivery;
+
+    res.json({ totalPrice, discount, delivery, finalPrice });
+  } catch (err) {
+    console.error('요약 계산 실패:', err);
+    res.status(500).send('서버 오류');
+  }
+});
+
 // ✅ 주문 처리
 router.post('/order', async (req, res) => {
   const { address, detailAddress, payment, discount_id, total_price, items } = req.body;
@@ -127,14 +173,14 @@ router.post('/order', async (req, res) => {
     // order_detail 테이블에 삽입
     for (const item of items) {
       const subtotal = item.price * item.quantity;
-      const estimatedData = new Date();
-      estimatedData.setDate(estimatedData.getDate() + 2);
+      const estimatedDate = new Date();
+      estimatedDate.setDate(estimatedDate.getDate() + 2);
 
       await conn.query(
         `INSERT INTO order_detail
          (quantity, price, delivery, subtotal, product_id, order_id, estimated_date)
          VALUES (?, ?, '배송준비', ?, ?, ?, ?)`,
-        [item.quantity, item.price, subtotal, item.product_id, order_id, estimatedData]
+        [item.quantity, item.price, subtotal, item.product_id, order_id, estimated_date]
       );
     }
     const productIds = items.map(item => item.product_id);

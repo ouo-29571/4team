@@ -8,7 +8,14 @@ const History = () => {
 
   useEffect(()=>{
     fetch('http://localhost:8080/history')
-    .then(res => res.json())
+    .then(res => {
+      if(!res.ok) {
+        return res.json().then(errBody => {
+          throw new Error(errBody.error || '구매내역 조회 실패');
+        });
+      }
+      return res.json();
+    })
     .then(data => {
       console.log("서버응답 데이터: ", data);
       const grouped = groupByOrder(data);

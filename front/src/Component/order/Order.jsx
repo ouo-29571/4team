@@ -19,7 +19,7 @@ function Order() {
 
   
   useEffect(() => {
-    fetch('http://localhost:8080/discount')
+    fetch('http://localhost:8080/discounts')
       .then(res => res.json())
       .then(data => {
         setDiscounts(data);
@@ -131,15 +131,15 @@ function Order() {
           <div key={index} className="order-item-box">
             <div className='item-row'>
               <label>상품명</label>
-              <input value={item.name} className='item-box-input'/>
+              <input value={item.name} className='item-box-input' readOnly/>
             </div>
             <div className='item-row'>
               <label>수량</label>
-              <input value={item.quantity} className='item-box-input' />
+              <input value={item.quantity} className='item-box-input' readOnly/>
             </div>
             <div className='item-row'>
               <label>총 금액</label>
-              <input value={item.price*item.quantity} className='item-box-input' />
+              <input value={item.price*item.quantity} className='item-box-input' readOnly />
             </div>
           </div>
         ))}
