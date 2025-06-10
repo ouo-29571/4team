@@ -5,7 +5,7 @@
   margin-top: -110px;
   display: flex;
   justify-content: center; /*가로정렬*/
-  background-color: #f1EADA;
+  background-color: #f1eada;
 }
 
 /*상단*/
@@ -50,8 +50,10 @@
 }
 
 .Login_button {
-  width: 100%;
+  width: 9%;
   height: 50px;
+  line-height: 50px; /* 🔥 텍스트 세로 중앙 정렬 */
+  text-align: center; /* 🔥 텍스트 가로 중앙 정렬 */
   border: 1px solid;
   border-radius: 10px;
   margin-top: 10px;

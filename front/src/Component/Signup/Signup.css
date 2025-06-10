@@ -60,6 +60,8 @@
   font-weight: bolder;
   background-color: #584738;
   color: white;
+  line-height: 50px; /* 🔥 텍스트 세로 중앙 정렬 */
+  text-align: center; /* 🔥 텍스트 가로 중앙 정렬 */
 }
 
 .signup_button:hover {
