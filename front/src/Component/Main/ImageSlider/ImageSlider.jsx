@@ -20,6 +20,7 @@ const ImageSlider = () => {
   };
 
   return (
+    <div className="itr-wrapper">
     <div className="itr-box">
       <img
         src="/img/left-arrow.png"
@@ -38,6 +39,7 @@ const ImageSlider = () => {
         className="arrow-button"
         onClick={nextImage}
       />
+      </div>
     </div>
   );
 };

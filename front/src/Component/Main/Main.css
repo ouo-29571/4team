@@ -172,23 +172,10 @@
   width:1920px;
   height:1080px;
   border:1px solid #333;
-  background-color: #B59A7A;
+  background-color: #f1eada;
   display: flex;
   flex-direction: column;
 }
-
-/* .itr-box{                                       / 인테리어 사진 넣을 박스 / 
-  width:800px;
-  height:600px;
-  border:1px solid #333;
-  border-radius: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin: 0 auto;
-  position: relative;
-  top: 60px;
-} */
 
 .itr-text{              /* ㄴ>인테리어 - 감각적인..텍스트 */ 
   position: relative;
@@ -206,20 +193,54 @@
   color: #333;
   font-size: 30px;
   text-align: left;
+  
 }
 
-.itr-img{              /* 인테리어 사진 */ 
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 20px;
+/* 여기부터 !! */
+.itr-a-h3{            /* ㄴ>인테리어 - 왼쪽 타이틀 텍스트 */ 
+  color: #333;
+  font-size: 20px;
+  text-align: left;
+  display: flex;
+  margin-left: -10px;
+  transform: translate(320px, 200px); 
+  position: relative;
+}
+
+.itr-a-h6{            /* ㄴ>인테리어 - 왼쪽 세부 텍스트 */ 
+  color: #333;
+  font-size: 10px;
+  text-align: left;
+  display: flex;
+  margin-left: -10px;
+  transform: translate(320px, 180px); 
+  position: relative;
+
+}
+
+.itr-b-h3{         /* ㄴ>인테리어 - 오른쪽 타이틀 텍스트 */
+  color: #333;
+  font-size: 20px;
+  text-align: right;
+  margin-right: -10px;
+  transform: translate(-320px, 260px); 
+  position: relative;
+}
+
+.itr-b-h6{      /* ㄴ>인테리어 - 오른쪽 세부 텍스트 */
+  color: #333;
+  font-size: 10px;
+  text-align: right;
+  margin-right: -10px;
+  transform: translate(-320px, 240px); 
+  position: relative;
 }
 
 
 .aboutbox{                                               /*✅아티클(어바웃어스) 큰 틀*/
   width:1920px;
   height:1080px;
-  border:1px solid #333;
+  border:1px solid hsl(0, 0%, 20%);
   background-color: #CEC1AB;
   display:flex;
   justify-content: center;
@@ -231,6 +252,7 @@
   width:1100px;
   height:410px;
   border:1px solid #333;
+  border-radius: 20px;
   background-color:#ffffff;
   text-align:center;
   position: relative;

@@ -1,6 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap');
+
+
 .marquee-wrapper {  
   position: relative;
-  top: 0;           /* 위쪽 */
+  top: -200px;           /* 위쪽 */
   left: 0;
   width: 100%;
   overflow: hidden;
@@ -12,8 +15,8 @@
   display: flex;
   width: fit-content;
   animation: scroll-left 20s linear infinite;
+  font-family: "Zen Old Mincho", serif, culsive !important;
   font-style: italic;
-  font-weight: bold;
 }
 
 .marquee-track span {
