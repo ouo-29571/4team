@@ -7,7 +7,7 @@ import MarqueeText from "../MarqueeText/MarqueeText";
 import PopupModal from "../PopupModal/PopupModal";
 import { useNavigate } from "react-router-dom";
 import ImageSlider from "./ImageSlider/ImageSlider";
-
+import { Link } from "react-router-dom";
 //삭제용 test
 
 function Main() {
@@ -52,16 +52,21 @@ function Main() {
           {/* ✅ 카테고리 아이템 박스 그룹 */}
           <div className="bs-box">
             <div className="bs-img img-furniture"></div>
-            <button className="bs-button">#가구</button>
+            <Link to="/menu?category=furniture">
+              <button className="bs-button">#가구</button>
+            </Link>
           </div>
-          
-         <div className="bs-box">
+          <div className="bs-box">
             <div className="bs-img img-kitchen"></div>
-            <button className="bs-button">#주방용품</button>
+            <Link to="/menu?category=kitchen">
+              <button className="bs-button">#주방용품</button>
+            </Link>
           </div>
           <div className="bs-box">
             <div className="bs-img img-interiorobj"></div>
-            <button className="bs-button">#인테리어 오브제</button>
+            <Link to="/menu?category=interiorobj">
+              <button className="bs-button">#인테리어 오브제</button>
+            </Link>
           </div>
         </div>
       </div>
@@ -88,31 +93,23 @@ function Main() {
         {/*✅아티클 - 인테리어(감각적인..)*/}
         <h2 className="itr-text">감각적인 _______를 만나보세요.</h2>
         <p className="itr-text2">실제 인테리어를 적용한 모습을 확인하세요!</p>
-
-        <h3 className="itr-a-h3"> 
-          vintage haus와 함께하는 섬세한 하루
-        </h3>
+        <h3 className="itr-a-h3">vintage haus와 함께하는 섬세한 하루</h3>
         <h6 className="itr-a-h6">
           감각적인 디테일이 공간에 스며들면, 일상은 더 깊고 우아해집니다. <br />
           주방의 온기, 거실의 여유, 침실의 평온함까지
         </h6>
-
-        <h3 className="itr-b-h3">
-          나를 닮은 공간에서 시작하는 하루
-        </h3>
+        <h3 className="itr-b-h3">나를 닮은 공간에서 시작하는 하루</h3>
         <h6 className="itr-b-h6">
           눈을 뜨는 순간부터 잠들기 전까지, <br />
           작은 소품 하나에도 당신의 감성이 스며들어요. <br />
           지금, 집 안의 모든 공간을 새롭게 마주해보세요.
         </h6>
-
         <div>
-          <ImageSlider/>
+          <ImageSlider />
           {/*인테리어 - 이미지*/}
         </div>
       </div>
       <div className="aboutbox">
-        
         {/*✅아티클 - 어바웃어스*/}
         <MarqueeText
           text="vintage haus"

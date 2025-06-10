@@ -37,7 +37,7 @@ function Menu() {
   // 🔴 버튼 클릭 시 URL에 category 추가
   const handleCategoryChange = (cat) => {
     setCategory(cat);
-    navigate(`?category=${cat}`);
+    navigate(`?category=${cat}`, { replace: true });
   };
   const filteredData = useMemo(() => {
     if (category === "decoration") {
