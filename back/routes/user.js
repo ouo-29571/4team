@@ -85,6 +85,18 @@ async function login_data(login_email, login_password) {
     return [rows];
 }
 
+async function login_data_userid(login_email, login_password) {
+    const conn = await pool.getConnection();
+    const [rows] = await conn.query(
+        "SELECT user_id AS user_id FROM user WHERE email =? AND password = ?",
+        [login_email, login_password]
+    );
+
+    console.log(rows.user_id);
+    conn.release();
+    return rows;
+}
+
 router.post("/login_submit", async (req, res) => {
     const { login_email, login_password } = req.body;
     const rows = await login_data(login_email, login_password);
@@ -94,7 +106,11 @@ router.post("/login_submit", async (req, res) => {
         login_check = true;
     }
 
-    res.json({ login_check });
+    const user_id = await login_data_userid(login_email, login_password);
+    login_userid = user_id.user_id;
+    console.log(login_userid);
+
+    res.json({ login_check, login_userid });
 });
 
 //비밀번호 찾기

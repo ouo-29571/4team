@@ -24,32 +24,31 @@ import Order from "./Component/order/Order";
 import History from "./Component/history/History";
 
 function App() {
-    return (
-        <>
-            <BrowserRouter>
-                <Header />
-                <Routes>
-                    {/* <Route path="/" element={<Main />} /> */}
-                    <Route path="/" element={<Main />} />
-                    <Route path="/Menu" element={<Menu />} />
-                    <Route path="/DetailPage/:id" element={<DetailPage />} />
-                    <Route path="/Login" element={<Login />} />
-                    <Route path="/Signup" element={<Signup />} />
-                    <Route path="/Passwordfind" element={<Passwordfind />} />
-					<Route path="/Passwordfix" element={<Passwordfix />} />
-                    <Route path="/Mypage" element={<Mypage />} />
-                    <Route path="/Userinfofix" element={<Userinfofix />} />
-                    <Route path="/Cart" element={<Cart />} />
-                    <Route path="/EventPage" element={<EventPage />} />
-                    <Route path="/ImageSlider" element={<ImageSlider />} />
-                    <Route path="/Order" element={<Order />} />
-                    <Route path="/History" element={<History />} />
-                    
-                </Routes>
-                <Footer />
-            </BrowserRouter>
-        </>
-    );
+  return (
+    <>
+      <BrowserRouter>
+        <Header />
+        <Routes>
+          {/* <Route path="/" element={<Main />} /> */}
+          <Route path="/" element={<Main />} />
+          <Route path="/Menu" element={<Menu />} />
+          <Route path="/DetailPage/:id" element={<DetailPage />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/Signup" element={<Signup />} />
+          <Route path="/Passwordfind" element={<Passwordfind />} />
+          <Route path="/Passwordfix" element={<Passwordfix />} />
+          <Route path="/Mypage" element={<Mypage />} />
+          <Route path="/Userinfofix" element={<Userinfofix />} />
+          <Route path="/Cart" element={<Cart />} />
+          <Route path="/EventPage" element={<EventPage />} />
+          <Route path="/ImageSlider" element={<ImageSlider />} />
+          <Route path="/Order" element={<Order />} />
+          <Route path="/History" element={<History />} />
+        </Routes>
+        <Footer />
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;

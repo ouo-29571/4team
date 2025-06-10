@@ -15,7 +15,7 @@ button {
   /*✅헤더 틀*/
   width: 1920px;
   height: 90px;
-  border: 1px solid #333;
+
   background-color: #f1eada;
   display: flex;
   align-items: center;
