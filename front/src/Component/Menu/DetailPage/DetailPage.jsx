@@ -30,11 +30,14 @@ import Image209 from "../Product/Object_Image/Image209.png";
 //jsdafhkjasdhfkjasdfh
 import "./DetailPage.css";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 function DetailPage() {
   const [count, setCount] = useState(1);
   const { id } = useParams();
   const [product, setProduct] = useState(null);
+  const [inCart, setInCart] = useState(false);
+  const userId = Number(sessionStorage.getItem('user_id'));
+  const navigate = useNavigate();
 
   const images = {
     1: Image1,
@@ -80,6 +83,72 @@ function DetailPage() {
       })
       .catch((err) => console.error("fetch 오류", err));
   }, [id]);
+
+  //장바구니 등록 여부 확인
+  useEffect(() => {
+    if(!userId || !product) return;
+    fetch(`http://localhost:8080/cart?user_id=${userId}`)
+      .then(res => res.json())
+      .then(items => {
+        const exists = items.some(i => i.product_id === product.product_id);
+        setInCart(exists);
+      })
+      .catch(console.error);
+  }, [userId, product]);
+  // 장바구니 담기 토글
+  const toggleCart = () => {
+    if (!userId) return alert("로그인 후 이용해주세요.");
+    const url = "http://localhost:8080/cart";
+    if (!inCart) {
+      // 담기
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: userId,
+          product_id: product.product_id,
+          quantity: count,
+          price: product.price
+        })
+      })
+        .then(() => setInCart(true))
+        .catch(console.error);
+    } else {
+      // 빼기
+      fetch(`${url}?user_id=${userId}&product_id=${product.product_id}`, {
+        method: "DELETE"
+      })
+        .then(() => setInCart(false))
+        .catch(console.error);
+    }
+  };
+
+  const buyNow = () => {
+    if (!userId) return alert("로그인 후 이용해주세요.");
+    const orderData = {
+      address:       sessionStorage.getItem("address")       || "",
+      detailAddress: sessionStorage.getItem("detailAddress") || "",
+      payment:       sessionStorage.getItem("payment")       || "card",
+      discount_id:   0,
+      total_price:   product.price * count,
+      items: [{
+        product_id: product.product_id,
+        quantity:   count,
+        price:      product.price
+    }]
+  };
+  fetch("http://localhost:8080/order",{
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(orderData)
+  })
+    .then(res => {
+      if(!res.ok) throw new Error("주문 실패");
+      return res.text();
+    })
+    .then(() => navigate("/order-success"))
+    .catch(err => alert(err.message));
+  };
 
   if (!product) {
     return (
@@ -132,8 +201,10 @@ function DetailPage() {
           </div>
           <div className="Product_Buttons">
             <button>찜</button>
-            <button>장바구니</button>
-            <button>바로구매</button>
+            <button onClick={toggleCart}>
+              {inCart ? "장바구니 빼기" : "장바구니 담기"}
+              </button>
+            <button onClick={buyNow}>바로구매</button>
           </div>
         </div>
       </div>

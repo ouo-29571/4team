@@ -13,6 +13,8 @@ const pool = mariadb.createPool({
 
 // ✅ 장바구니 전체 조회 + 요약 계산
 router.get('/cart', async (req, res) => {
+  const user_id = Number(req.query.user_id);
+  if(!user_id) return res.status(400).json({error:'user_id 필요'});
   try {
     const conn = await pool.getConnection();
 
@@ -25,7 +27,8 @@ router.get('/cart', async (req, res) => {
         product.product_id
       FROM cart
       JOIN product ON cart.product_id = product.product_id
-    `);
+      WHERE cart.user_id = ?
+    `, [user_id]);
 
     const totalPrice = cartRows.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const discount = cartRows.length > 0 ? 1000 : 0;
@@ -37,10 +40,11 @@ router.get('/cart', async (req, res) => {
       summary: { totalPrice, discount, delivery, finalPrice }
     });
 
-    conn.release();
   } catch (err) {
     console.error('장바구니 조회 실패:', err);
     res.status(500).send('서버 오류');
+  } finally {
+    conn && conn.release();
   }
 });
 
@@ -130,6 +134,60 @@ router.post('/cart/delete-multiple', async (req, res) => {
     conn.release();
   }
 });
+
+// Cart 삭제 by user_id+product_id: DELETE /cart
+router.delete('/cart', async (req, res) => {
+  const user_id    = Number(req.query.user_id);
+  const product_id = Number(req.query.product_id);
+  if (!user_id || !product_id) {
+    return res.status(400).json({ error: 'user_id, product_id 필요' });
+  }
+  try {
+    const conn = await pool.getConnection();
+    await conn.query(
+      'DELETE FROM cart WHERE user_id=? AND product_id=?',
+      [user_id, product_id]
+    );
+    conn.release();
+    res.json({ success: true });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Cart 추가
+router.post('/cart', async (req, res) => {
+  const { user_id, product_id, quantity, price } = req.body;
+  if (!user_id || !product_id) {
+    return res.status(400).json({ error: 'user_id, product_id 필요' });
+  }
+  try {
+    const conn = await pool.getConnection();
+    // 이미 담긴 상품이면 수량만 업데이트
+    const exists = await conn.query(
+      'SELECT cart_id, quantity FROM cart WHERE user_id=? AND product_id=?',
+      [user_id, product_id]
+    );
+    if (exists.length) {
+      await conn.query(
+        'UPDATE cart SET quantity = ? WHERE cart_id = ?',
+        [ exists[0].quantity + (quantity||1), exists[0].cart_id ]
+      );
+    } else {
+      await conn.query(
+        'INSERT INTO cart (user_id, product_id, quantity, price) VALUES (?, ?, ?, ?)',
+        [user_id, product_id, quantity||1, price||0]
+      );
+    }
+    conn.release();
+    res.json({ success: true });
+  } catch (e) {
+    console.error(e);
+    res.status(500).json({ error: e.message });
+  }
+});
+
 
 // ✅ 선택 항목만 계산 요청
 router.post('/cart/summary', async (req, res) => {
