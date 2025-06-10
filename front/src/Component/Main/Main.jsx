@@ -31,11 +31,11 @@ function Main() {
       {/* 메인사진(2-3개)  / 01 버튼 (누르면 사진 슬라이드) */}
       <div className="bestsellerbox">
         {" "}
-        {/* ✅ 아티클 - 베스트셀러 */}
-        <h2 className="bs-text">베스트셀러</h2>
+        {/* ✅ 아티클 - 카테고리 */}
+        <h2 className="bs-text">카테고리 별 보기</h2>
         <div className="bs-dropdown">
           {" "}
-          {/* ✅ 베스트셀러 - 드롭다운 */}
+          {/* ✅ 카테고리 - 드롭다운 */}
           <select
             value={selected}
             onChange={handleChange}
@@ -49,7 +49,7 @@ function Main() {
         </div>
         <div className="bs-group">
           {" "}
-          {/* ✅ 베스트셀러 아이템 박스 그룹 */}
+          {/* ✅ 카테고리 아이템 박스 그룹 */}
           <div className="bs-box">
             <div className="bs-img img-furniture"></div>
             <button className="bs-button">#가구</button>
@@ -67,11 +67,11 @@ function Main() {
       </div>
       <button className="discountbox">
         {" "}
-        {/*✅ 아티클 - 할인상품 */}
-        <h2 className="ds-text">할인상품</h2>
+        {/*✅ 아티클 - 베스트셀러 */}
+        <h2 className="ds-text">베스트셀러</h2>
         <ScrollbarDs style={{ maxWidth: "1530px" /* 490 * 3 + gap 대략 */ }}>
           {" "}
-          {/* 할인상품 스크롤바 */}
+          {/* 베스트셀러 스크롤바 */}
           {[1, 2, 3, 4, 5, 6].map((num) => (
             <div className="dsbox" key={num}>
               <img
@@ -88,9 +88,25 @@ function Main() {
         {/*✅아티클 - 인테리어(감각적인..)*/}
         <h2 className="itr-text">감각적인 _______를 만나보세요.</h2>
         <p className="itr-text2">실제 인테리어를 적용한 모습을 확인하세요!</p>
-        <div className="itr-box">
-        
 
+        <h3 className="itr-a-h3"> 
+          vintage haus와 함께하는 섬세한 하루
+        </h3>
+        <h6 className="itr-a-h6">
+          감각적인 디테일이 공간에 스며들면, 일상은 더 깊고 우아해집니다. <br />
+          주방의 온기, 거실의 여유, 침실의 평온함까지
+        </h6>
+
+        <h3 className="itr-b-h3">
+          나를 닮은 공간에서 시작하는 하루
+        </h3>
+        <h6 className="itr-b-h6">
+          눈을 뜨는 순간부터 잠들기 전까지, <br />
+          작은 소품 하나에도 당신의 감성이 스며들어요. <br />
+          지금, 집 안의 모든 공간을 새롭게 마주해보세요.
+        </h6>
+
+        <div>
           <ImageSlider/>
           {/*인테리어 - 이미지*/}
         </div>

@@ -4,6 +4,7 @@ import React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 
+
 //import Main from "";
 import Login from "./Component/Login/Login";
 import Signup from "./Component/Signup/Signup";
@@ -18,7 +19,7 @@ import Header from "./Component/Main/Header/Header";
 import Footer from "./Component/Menu/Footer/Footer";
 import EventPage from "./Component/EventPage/EventPage";
 import ImageSlider from "./Component/Main/ImageSlider/ImageSlider";
-import Cart from "./Component/cart/Cart"
+import Cart from "./Component/Cart/Cart";
 import Order from "./Component/order/Order";
 import History from "./Component/history/History";
 
