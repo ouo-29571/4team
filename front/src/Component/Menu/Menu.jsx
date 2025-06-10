@@ -1,4 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom"; // 🔴 추가
 import "./Menu.css";
 import Dropdown from "./product/Dropdown";
 //import projectsData from "./product/data";
@@ -8,6 +9,8 @@ function Menu() {
   const [sortOption, setSortOption] = useState("like");
   const [category, setCategory] = useState("decoration");
   const [productsData, setProductsData] = useState([]);
+  const location = useLocation(); // 🔴 추가
+  const navigate = useNavigate(); // 🔴 추가
   useEffect(() => {
     fetch("http://localhost:8080/api/products")
       .then((res) => res.json())
@@ -18,12 +21,23 @@ function Menu() {
         console.error(err);
       });
   }, []); // ⭐️ 한번만 실행
+  // 🔴 URL에서 category 읽어오기
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const cat = params.get("category");
+    if (cat) {
+      setCategory(cat);
+    }
+  }, [location.search]);
+
   const handleSortChange = (e) => {
     setSortOption(e.target.value);
   };
 
+  // 🔴 버튼 클릭 시 URL에 category 추가
   const handleCategoryChange = (cat) => {
     setCategory(cat);
+    navigate(`?category=${cat}`);
   };
   const filteredData = useMemo(() => {
     if (category === "decoration") {
