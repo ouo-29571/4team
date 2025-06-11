@@ -11,10 +11,18 @@ const pool = mariadb.createPool({
   port: 3306,
 });
 
+router.post('/cart/user_id', async (req, res) => {
+  const { user_id, product_id, quantity, price } = req.body;
+  console.log(user_id, product_id, quantity, price);
+  return res.json({ success: true });
+});
+
+
 // ✅ 장바구니 전체 조회 + 요약 계산
-router.get('/cart', async (req, res) => {
-  const user_id = Number(req.query.user_id);
-  if(!user_id) return res.status(400).json({error:'user_id 필요'});
+router.post('/personalCart', async (req, res) => {
+  const { user_id } = req.body;
+  console.log(user_id);
+  if (!user_id) return res.status(400).json({ error: 'user_id 필요' });
   try {
     const conn = await pool.getConnection();
 
@@ -50,21 +58,23 @@ router.get('/cart', async (req, res) => {
 
 
 // 할인정보 가져오기
-router.get('/discounts',async (req, res) => {
-    try{
-        const conn = await pool.getConnection();
-        const rows = await conn.query("SELECT discount_id, name, discount, discount_type FROM discount");
-        res.json(rows);
-        conn.release();
-    } catch(err) {
-        console.error("할인 목록 불러오기 실패:", err);
-        res.status(500).send("서버 오류");
-    }
+router.get('/discounts', async (req, res) => {
+  try {
+    const conn = await pool.getConnection();
+    const rows = await conn.query("SELECT discount_id, name, discount, discount_type FROM discount");
+    console.log(rows);
+    res.json(rows);
+    conn.release();
+  } catch (err) {
+    console.error("할인 목록 불러오기 실패:", err);
+    res.status(500).json({error: "서버 오류"});
+  }
 });
 
 // 주문내역 db저장
-router.get('/history', async (req, res) => {
+router.post('/history', async (req, res) => {
   try {
+    const {userId} = req.body;
     const conn = await pool.getConnection();
     const rows = await conn.query(`
       SELECT
@@ -80,9 +90,9 @@ router.get('/history', async (req, res) => {
       FROM \`order\`
       JOIN order_detail ON \`order\`.order_id = order_detail.order_id
       JOIN product ON order_detail.product_id = product.product_id
-      WHERE \`order\`.user_id = 1
+      WHERE \`order\`.user_id = ?
       ORDER BY \`order\`.order_date DESC
-    `);
+    `,[userId]);
     res.json(rows);
     conn.release();
   } catch (err) {
@@ -136,8 +146,8 @@ router.post('/cart/delete-multiple', async (req, res) => {
 });
 
 // Cart 삭제 by user_id+product_id: DELETE /cart
-router.delete('/cart', async (req, res) => {
-  const user_id    = Number(req.query.user_id);
+router.post('/cart/delete', async (req, res) => {
+  const user_id = Number(req.query.user_id);
   const product_id = Number(req.query.product_id);
   if (!user_id || !product_id) {
     return res.status(400).json({ error: 'user_id, product_id 필요' });
@@ -172,12 +182,12 @@ router.post('/cart', async (req, res) => {
     if (exists.length) {
       await conn.query(
         'UPDATE cart SET quantity = ? WHERE cart_id = ?',
-        [ exists[0].quantity + (quantity||1), exists[0].cart_id ]
+        [exists[0].quantity + (quantity || 1), exists[0].cart_id]
       );
     } else {
       await conn.query(
         'INSERT INTO cart (user_id, product_id, quantity, price) VALUES (?, ?, ?, ?)',
-        [user_id, product_id, quantity||1, price||0]
+        [user_id, product_id, quantity || 1, price || 0]
       );
     }
     conn.release();
@@ -207,15 +217,21 @@ router.post('/cart/summary', async (req, res) => {
 
 // ✅ 주문 처리
 router.post('/order', async (req, res) => {
-  const { address, detailAddress, payment, discount_id, total_price, items } = req.body;
+  const { 
+    address,
+    detailAddress,
+    payment,
+    discount_id,
+    total_price,
+    items,
+    user_id
+  } = req.body;
 
-  if (!address || !payment || !items || items.length === 0) {
+  if (!address || !payment || !items || !items.length) {
     return res.status(400).send("필수 정보 누락");
   }
 
   const fullAddress = `${address} ${detailAddress ?? ''}`;
-  const user_id = 1; // 임시 사용자 (로그인 기능 없다면 고정값)
-
   try {
     const conn = await pool.getConnection();
 
@@ -238,7 +254,7 @@ router.post('/order', async (req, res) => {
         `INSERT INTO order_detail
          (quantity, price, delivery, subtotal, product_id, order_id, estimated_date)
          VALUES (?, ?, '배송준비', ?, ?, ?, ?)`,
-        [item.quantity, item.price, subtotal, item.product_id, order_id, estimated_date]
+        [item.quantity, item.price, subtotal, item.product_id, order_id, estimatedDate]
       );
     }
     const productIds = items.map(item => item.product_id);

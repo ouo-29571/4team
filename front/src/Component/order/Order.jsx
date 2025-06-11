@@ -17,30 +17,35 @@ function Order() {
     finalPrice: 0
   });
 
-  
+
   useEffect(() => {
     fetch('http://localhost:8080/discounts')
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(`'할인 쿠폰 불러오기 실패:' ${res.status}`);
+        }
+        return res.json();
+      })
       .then(data => {
         setDiscounts(data);
       })
       .catch(err => console.error('할인 쿠폰 불러오기 실패:', err));
   }, []);
 
-  useEffect(()=>{
-    if(!orderItems || orderItems.length === 0) return;
+  useEffect(() => {
+    if (!orderItems || orderItems.length === 0) return;
 
     const totalPrice = orderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    const selected = discounts.find(d => d.discount_id === selectedDiscount); 
+    const selected = discounts.find(d => d.discount_id === selectedDiscount);
 
     let discountAmount = 0;
     if (selected) {
-    if (selected.discount_type === 'percent') {
-      discountAmount = Math.floor(totalPrice * (selected.discount / 100));
-    } else {
-      discountAmount = selected.discount;
+      if (selected.discount_type === 'percent') {
+        discountAmount = Math.floor(totalPrice * (selected.discount / 100));
+      } else {
+        discountAmount = selected.discount;
+      }
     }
-  }
     const delivery = totalPrice === 0 ? 0 : totalPrice < 30000 ? 3000 : 0;
     const finalPrice = totalPrice - discountAmount + delivery;
 
@@ -60,40 +65,46 @@ function Order() {
   } = usePostcode();
 
   const handleOrder = () => {
+    const rawUser = sessionStorage.getItem('user');
+    if (!rawUser) {
+      return alert("로그인 후 이용해주세요.");
+    }
+    const user = JSON.parse(rawUser);
     const paymentSelect = document.getElementById('paymentSelect');
     const selectedPaymentText = paymentSelect?.selectedOptions[0]?.text || '미선택';
     const confirmMsg = `
-      배송지: ${document.getElementById('sample3_address')?. value || '없음'}
-      상세주소: ${document.getElementById('sample3_detailAddress')?. value || '없음'}
+      배송지: ${document.getElementById('sample3_address')?.value || '없음'}
+      상세주소: ${document.getElementById('sample3_detailAddress')?.value || '없음'}
       결제수단: ${selectedPaymentText}
       총 금액: ${summary.finalPrice}원
       주문하시겠습니까?
     `;
-    if(!window.confirm(confirmMsg)) return;
+    if (!window.confirm(confirmMsg)) return;
 
     const orderData = {
       address: document.getElementById('sample3_address')?.value,
       detailAddress: document.getElementById('sample3_detailAddress')?.value,
-      payment: document.querySelector('select').value,
+      payment: document.getElementById('paymentSelect').value,
       discount_id: selectedDiscount,
       total_price: summary.finalPrice,
+      user_id: user.id,
       items: orderItems.map(item => ({
         product_id: item.product_id,
         quantity: item.quantity,
         price: item.price
-      }))
-    };
+      }))};
+    console.log(orderData);
 
-    fetch('http://localhost:8080/order',{
+    fetch('http://localhost:8080/order', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json'},
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(orderData)
     })
-      .then(res=>{
-        if(!res.ok) throw new Error("주문 실패");
+      .then(res => {
+        if (!res.ok) throw new Error("주문 실패");
         return res.text();
       })
-      .then(()=> {
+      .then(() => {
         alert("주문이 완료되었습니다.");
         navigate('/history');
       })
@@ -108,19 +119,19 @@ function Order() {
       <div className="order-form">
         <p>배송지입력</p>
         <div className="order-item-box">
-        <div className="row">
-          <input type="text" id="sample3_postcode" placeholder="우편번호" readOnly style={{ width: '200px', height: '30px' }} />
-          <button onClick={handlePostcode}>우편번호 찾기</button>
-        </div>
-        <input type="text" id="sample3_address" placeholder="주소" className="full-input" readOnly />
-        <input type="text" id="sample3_detailAddress" placeholder="상세주소" className="full-input" />
+          <div className="row">
+            <input type="text" id="sample3_postcode" placeholder="우편번호" readOnly style={{ width: '200px', height: '30px' }} />
+            <button onClick={handlePostcode}>우편번호 찾기</button>
+          </div>
+          <input type="text" id="sample3_address" placeholder="주소" className="full-input" readOnly />
+          <input type="text" id="sample3_detailAddress" placeholder="상세주소" className="full-input" />
 
-        {wrapVisible && (
-          <>
-            <div ref={wrapRef} id="wrap" className="postcode-embed" />
-            <button className="postcode-close-btn" onClick={handleClose}>×</button>
-          </>
-        )}
+          {wrapVisible && (
+            <>
+              <div ref={wrapRef} id="wrap" className="postcode-embed" />
+              <button className="postcode-close-btn" onClick={handleClose}>×</button>
+            </>
+          )}
         </div>
       </div>
 
@@ -131,15 +142,15 @@ function Order() {
           <div key={index} className="order-item-box">
             <div className='item-row'>
               <label>상품명</label>
-              <input value={item.name} className='item-box-input' readOnly/>
+              <input value={item.name} className='item-box-input' readOnly />
             </div>
             <div className='item-row'>
               <label>수량</label>
-              <input value={item.quantity} className='item-box-input' readOnly/>
+              <input value={item.quantity} className='item-box-input' readOnly />
             </div>
             <div className='item-row'>
               <label>총 금액</label>
-              <input value={item.price*item.quantity} className='item-box-input' readOnly />
+              <input value={item.price * item.quantity} className='item-box-input' readOnly />
             </div>
           </div>
         ))}
@@ -148,37 +159,37 @@ function Order() {
       {/* 할인/쿠폰 */}
       <div className="order-form">
         <p>할인/쿠폰</p>
-         <div className="order-item-box">
-          <select 
-            className="full-input" 
-            value={selectedDiscount} 
-            onChange={(e)=> setSelectedDiscount(Number(e.target.value))}
+        <div className="order-item-box">
+          <select
+            className="full-input"
+            value={selectedDiscount}
+            onChange={(e) => setSelectedDiscount(Number(e.target.value))}
           >
             <option value={0}>쿠폰 선택 안 함</option>
             {discounts.map(discount => (
-              <option 
-                key={discount.discount_id} 
+              <option
+                key={discount.discount_id}
                 value={discount.discount_id}
               >
                 {discount.name} (-
-                  {discount.discount}
-                  {discount.discount_type === 'percent' ? '%' : '원'})
+                {discount.discount}
+                {discount.discount_type === 'percent' ? '%' : '원'})
               </option>
-          ))}
-        </select>
+            ))}
+          </select>
         </div>
       </div>
 
       {/* 결제수단 */}
       <div className="order-form">
         <p>결제수단</p>
-         <div className="order-item-box">
-        <select id="paymentSelect" className="full-input" defaultValue="">
-          <option value="" disabled>결제수단 선택</option>
-          <option value="card">카드</option>
-          <option value="simple-order">간편결제</option>
-          <option value="deposit">무통장입금</option>
-        </select>
+        <div className="order-item-box">
+          <select id="paymentSelect" className="full-input" defaultValue="">
+            <option value="" disabled>결제수단 선택</option>
+            <option value="card">카드</option>
+            <option value="simple-order">간편결제</option>
+            <option value="deposit">무통장입금</option>
+          </select>
         </div>
       </div>
 
@@ -188,7 +199,7 @@ function Order() {
         <div className='order-item-box'>
           <div className="item-row">
             <label>구매금액</label>
-            <input value={summary.totalPrice} readOnly className='item-box-input'/>
+            <input value={summary.totalPrice} readOnly className='item-box-input' />
           </div>
           <div className="item-row">
             <label>할인금액</label>
@@ -198,15 +209,15 @@ function Order() {
             <label>배송비</label>
             <input value={summary.delivery} readOnly className='item-box-input' />
           </div>
-          <br/>
+          <br />
           <div className='item-row'>
-              <label style={{font:"bold"}}>총 결제금액</label>
-              <input value={summary.finalPrice} readOnly className='item-box-input' />
+            <label style={{ font: "bold" }}>총 결제금액</label>
+            <input value={summary.finalPrice} readOnly className='item-box-input' />
           </div>
-            <button onClick={handleOrder} style={{ width: '95%' }}>구매하기</button>
+          <button onClick={handleOrder} style={{ width: '95%' }}>구매하기</button>
         </div>
       </div>
-      
+
     </>
   );
 }
