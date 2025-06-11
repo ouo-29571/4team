@@ -13,6 +13,15 @@ function Cart() {
     finalPrice: 0
   });
 
+  useEffect(() => {
+    const user = sessionStorage.getItem('user');
+      if (!user) {
+        alert("로그인 후 이용해주세요.");
+        navigate('/', { replace: true });
+        return;
+      }
+  },[navigate])
+
   const allCheck = (checked) => {
     setCartItems(prev => prev.map(item => ({ ...item, checked })));
   };

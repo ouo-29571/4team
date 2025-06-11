@@ -8,6 +8,11 @@ const History = () => {
 
   useEffect(() => {
     const user = sessionStorage.getItem('user');
+    if (!user) {
+      alert("로그인 후 이용해주세요.");
+      navigate('/', { replace: true });
+      return;
+    }
     const userId = JSON.parse(user).id;
     
     fetch('http://localhost:8080/history', {

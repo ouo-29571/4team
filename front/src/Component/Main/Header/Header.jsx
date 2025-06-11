@@ -38,8 +38,11 @@ const Header = () => {
           <img className="icon-user" src="/img/회원.png" alt="user" />  {/* ✅ 회원*/}
         </button>
 
-        <button>
-          <img className="icon-cart" src="/img/장바구니.png" alt="cart" />  {/* ✅ 장바구니(카트)*/}
+        <button onClick={()=>navigate('/cart')}>
+          <img className="icon-cart" 
+            src="/img/장바구니.png" 
+            alt="cart" 
+          />  {/* ✅ 장바구니(카트)*/}
         </button>
         </div>
 
