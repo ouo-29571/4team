@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom"; // 🔴 추가
 import "./Menu.css";
 import Dropdown from "./product/Dropdown";
 //import projectsData from "./product/data";
-import ProductGrid from "./product/ProductGrid";
+import ProductGrid from "./Product/ProductGrid";
 
 function Menu() {
   const [sortOption, setSortOption] = useState("like");
@@ -39,6 +39,8 @@ function Menu() {
     setCategory(cat);
     navigate(`?category=${cat}`, { replace: true });
   };
+
+  // 카테고리별 필터링
   const filteredData = useMemo(() => {
     if (category === "decoration") {
       return productsData.filter(
@@ -59,7 +61,7 @@ function Menu() {
   const sortedData = useMemo(() => {
     const sorted = [...filteredData];
     if (sortOption === "like") {
-      sorted.sort((a, b) => (b.like || 0) - (a.like || 0));
+      sorted.sort((a, b) => (b.likes || 0) - (a.likes || 0)); // 🔥 a.like → a.likes
     } else if (sortOption === "lowPrice") {
       sorted.sort((a, b) => a.price - b.price);
     } else if (sortOption === "highPrice") {
