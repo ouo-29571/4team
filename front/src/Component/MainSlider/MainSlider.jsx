@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom'; // ✅ 리액트 라우터 훅 i
 // ✅ 이미지 배열
 const images = [
   {
-    src: '/img/main_bg.png',
-    text: '최대 50% \n 할인쿠폰',
+    src: '/img/bg.png',
+    text: '최대 50% \n 할인쿠폰', 
     button: '쿠폰 할인 받기',
     link: '/EventPage', // ✅ 다른 페이지도 가능
   },

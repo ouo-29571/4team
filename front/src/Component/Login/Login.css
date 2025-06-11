@@ -1,14 +1,16 @@
 .login_page {
     width: 100%;
+    height: 800px;
+    padding-top: 150px;
+    margin-top: -110px;
     display: flex;
     justify-content: center; /*가로정렬*/
-    margin-bottom: 150px;
+    background-color: #f1eada;
 }
 
 /*상단*/
 
 /*로그인 관련*/
-/* 참고: https://0lrlokr.tistory.com/46 */
 .login {
     max-width: 500px;
     padding: 0 30px;
@@ -19,9 +21,15 @@
     width: 200px;
     height: auto; /*비율맞추도록*/
     margin-left: 30%;
-    margin-bottom: 100px;
-
     border-radius: 50px;
+}
+
+.login_logo_text {
+    text-align: center;
+    font-size: 50px;
+    font-weight: bolder;
+    margin-bottom: 50px;
+    color: #584738;
 }
 
 .contentWrap > input {
@@ -44,11 +52,14 @@
 .Login_button {
     width: 100%;
     height: 50px;
+    line-height: 50px; /* 🔥 텍스트 세로 중앙 정렬 */
+    text-align: center; /* 🔥 텍스트 가로 중앙 정렬 */
     border: 1px solid;
     border-radius: 10px;
     margin-top: 10px;
-    padding: 10px;
     font-weight: bolder;
+    background-color: #584738;
+    color: white;
 }
 
 .Login_button:hover {

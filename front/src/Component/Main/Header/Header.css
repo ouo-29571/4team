@@ -1,3 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap');
+
+.logo{font-family: "Zen Old Mincho", serif, culsive !important;
+  font-weight: 400;
+  font-style: normal;}
+
+  /* 모든 button에 적용 */
+button {
+  all: unset; /* 기본 스타일 모두 제거 */
+  cursor: pointer; /* 커서 포인터로 변경 (선택 사항) */
+}
+
+
 .headerbox {
   /*✅헤더 틀*/
   width: 1920px;
@@ -20,7 +33,7 @@
   position: relative;
   width: 100%;
   height: 160px;
-  background-color: #b5927d;
+  background-color: #584738;
   padding: 0 30px;
   box-sizing: border-box;
   top: -110px;
@@ -32,7 +45,7 @@
   align-items: center;
   gap: 20px;
 }
-.icon {
+.icon-search, .icon-user, .icon-cart, .icon-menu{
   /* ✅아이콘 (검색,회원가입,로그인) */
   width: 20px;
   height: 20px;

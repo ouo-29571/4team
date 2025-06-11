@@ -7,7 +7,8 @@ const mypage = () => {
     const navigate = useNavigate();
 
     //사용자 정보
-    const [coupon, setCoupon] = useState(0);
+    const [userName, setUserName] = useState(""); //사용자이름
+    const [coupon_count, setcoupon_count] = useState(0); //쿠폰 수
     const [Wish_list, setWish_list] = useState(0);
 
     //사용자 주문
@@ -20,9 +21,9 @@ const mypage = () => {
 
     //쿠폰 상세보기
     const [showcoupon, setShowcoupon] = useState(false);
-    const [userName, setUserName] = useState("");
+    const [couponlist, setCouponlist] = useState([]);
 
-    async function set_Username(email) {
+    async function get_Username(email) {
         const response = await fetch("http://localhost:8080/Mypage_userName", {
             method: "POST",
             headers: {
@@ -39,6 +40,39 @@ const mypage = () => {
         }
     }
 
+    //쿠폰 수 가져오기
+    async function get_Couponcount(email) {
+        const response = await fetch(
+            "http://localhost:8080/Mypage_couponcount",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ user_email: email }),
+            }
+        );
+
+        const data = await response.json();
+        setcoupon_count(data.count);
+    }
+
+    //쿠폰 정보가져오기
+    function get_Coupondata(email) {
+        fetch("http://localhost:8080/Mypage_coupondata", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_email: email }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                setCouponlist(data);
+            });
+    }
+
     //마이페이지 클릭시 로그인상태가 아닐경우 로그인 페이지로
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem("user"));
@@ -46,7 +80,8 @@ const mypage = () => {
         if (!user || !user.token) {
             navigate("/Login");
         } else {
-            set_Username(user.name);
+            get_Username(user.name);
+            get_Couponcount(user.name);
         }
     }, [navigate]);
 
@@ -65,9 +100,10 @@ const mypage = () => {
 
     //쿠폰 상세정보 열기
     const toggle_coupon = () => {
-        //setShowcoupon((prev) => !prev);
+        const user = JSON.parse(sessionStorage.getItem("user"));
         if (!showcoupon) {
             setShowcoupon(true);
+            get_Coupondata(user.name);
         }
     };
 
@@ -89,7 +125,7 @@ const mypage = () => {
                     <div className="username_box">
                         {/* 대충 사용자 이미지 */}
                         <div className="userinfo_box_img">
-                            <img src="../img/free-icon-logo-5448104.png" />
+                            <img src="/img/logo1.png" />
                         </div>
                         <div className="user_name">
                             <div>
@@ -111,7 +147,7 @@ const mypage = () => {
                                 <span>쿠폰</span>
                             </div>
                             <div>
-                                <span>{coupon}</span>
+                                <span>{coupon_count}</span>
                             </div>
                         </div>
                         <div onClick={handle_Wish_list}>
@@ -194,7 +230,6 @@ const mypage = () => {
                         </div>
                     )}
                 </div>
-
                 {/* 쿠폰 상세 내용 */}
                 <div>
                     {showcoupon && (
@@ -203,12 +238,30 @@ const mypage = () => {
                                 <span>쿠폰</span>
                             </div>
                             <div>
-                                <div>
-                                    <span>쿠폰1</span>
-                                </div>
-                                <div>
-                                    <span>쿠폰2</span>
-                                </div>
+                                {couponlist.length === 0 ? (
+                                    <div>
+                                        <span>
+                                            사용 가능한 쿠폰이 없습니다.
+                                        </span>
+                                    </div>
+                                ) : (
+                                    couponlist.map((coupon) => (
+                                        <div key={coupon.discount_id}>
+                                            <div className="coupon_subject">
+                                                <span>{coupon.name}</span>
+                                            </div>
+                                            <div className="coupon_content">
+                                                <span>{coupon.discount}</span>
+                                                <span>
+                                                    {coupon.discount_type ===
+                                                    "percent"
+                                                        ? "%"
+                                                        : "원"}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
                             </div>
                             <div className="user_info_details_close">
                                 <button onClick={toggle_coupon_close}>
