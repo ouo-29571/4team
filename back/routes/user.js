@@ -84,32 +84,28 @@ async function login_data(login_email, login_password) {
     conn.release();
     return [rows];
 }
-
+//user_id가져오기
 async function login_data_userid(login_email, login_password) {
     const conn = await pool.getConnection();
     const [rows] = await conn.query(
-        "SELECT user_id AS user_id FROM user WHERE email =? AND password = ?",
+        "SELECT user_id FROM user WHERE email = ? AND password = ?",
         [login_email, login_password]
     );
-
-    console.log(rows.user_id);
     conn.release();
     return rows;
 }
-
 router.post("/login_submit", async (req, res) => {
     const { login_email, login_password } = req.body;
     const rows = await login_data(login_email, login_password);
 
     login_check = false;
+    login_userid = "";
     if (rows[0].count > 0) {
         login_check = true;
+        const user_id = await login_data_userid(login_email, login_password);
+        login_userid = user_id.user_id;
+        console.log(login_userid);
     }
-
-    const user_id = await login_data_userid(login_email, login_password);
-    login_userid = user_id.user_id;
-    console.log(login_userid);
-
     res.json({ login_check, login_userid });
 });
 
@@ -176,6 +172,36 @@ router.post("/Mypage_userName", async (req, res) => {
     res.json({ User_Name });
 });
 
+//쿠폰 수 가져오기
+async function find_couponcount(user_email) {
+    const conn = await pool.getConnection();
+    const row = conn.query("SELECT COUNT(*) AS count FROM discount");
+    conn.release();
+    return row;
+}
+router.post("/Mypage_couponcount", async (req, res) => {
+    const { user_email } = req.body;
+    const rows = await find_couponcount(user_email);
+    count = rows[0].count;
+    // BigInt 처리 (toString 또는 Number로 변환)
+    if (typeof count === "bigint") {
+        count = Number(count); // 또는 count.toString()
+    }
+    res.json({ count });
+});
+
+//쿠폰 데이터 가져오기
+router.post("/Mypage_coupondata", async (req, res) => {
+    const { user_email } = req.body;
+    const conn = await pool.getConnection();
+    const rows = await conn.query(
+        "SELECT discount_id, name, discount, discount_type FROM discount"
+    );
+    conn.release();
+    console.log(rows);
+    res.json(rows);
+});
+
 //회원정보 가져오기
 async function find_userinfo(get_email) {
     const conn = await pool.getConnection();
@@ -186,7 +212,6 @@ async function find_userinfo(get_email) {
     conn.release();
     return [rows];
 }
-
 router.post("/get_userinfo", async (req, res) => {
     const { get_email } = req.body;
     const rows = await find_userinfo(get_email);

@@ -177,7 +177,7 @@ const Userinfofix = () => {
 
   return (
     <>
-      <div className="signup_page">
+      <div className="userinfofix_page">
         <div>{/* 상단 헤더 추가 예정 */}</div>
         {/* 회원가입 */}
         <div className="signupcontainer">

@@ -47,9 +47,6 @@ const Passwordfind = () => {
             <div className="Passwordfind_page">
                 <div className="Passwordfind_main">
                     <div>
-                        <div className="passwrodfind_logo">
-                            <img src="../img/free-icon-logo-5448104.png" />
-                        </div>
                         <div>
                             <label
                                 htmlFor="email"
