@@ -9,24 +9,42 @@ import Image8 from "../Product/Object_Image/Image8.png";
 import Image9 from "../Product/Object_Image/Image9.png";
 
 import Image101 from "../Product/Object_Image/Image101.png";
+import Image101_2 from "../Product/Object_Image/Image101_2.png";
 import Image102 from "../Product/Object_Image/Image102.png";
+import Image102_2 from "../Product/Object_Image/Image102_2.png";
 import Image103 from "../Product/Object_Image/Image103.png";
+import Image103_2 from "../Product/Object_Image/Image103_2.png";
 import Image104 from "../Product/Object_Image/Image104.png";
+import Image104_2 from "../Product/Object_Image/Image104_2.png";
 import Image105 from "../Product/Object_Image/Image105.png";
+import Image105_2 from "../Product/Object_Image/Image105_2.png";
 import Image106 from "../Product/Object_Image/Image106.png";
+import Image106_2 from "../Product/Object_Image/Image106_2.png";
 import Image107 from "../Product/Object_Image/Image107.png";
+import Image107_2 from "../Product/Object_Image/Image107_2.png";
 import Image108 from "../Product/Object_Image/Image108.png";
+import Image108_2 from "../Product/Object_Image/Image108_2.png";
 import Image109 from "../Product/Object_Image/Image109.png";
+import Image109_2 from "../Product/Object_Image/Image109_2.png";
 
 import Image201 from "../Product/Object_Image/Image201.png";
+import Image201_2 from "../Product/Object_Image/Image201_2.png";
 import Image202 from "../Product/Object_Image/Image202.png";
+import Image202_2 from "../Product/Object_Image/Image202_2.png";
 import Image203 from "../Product/Object_Image/Image203.png";
 import Image204 from "../Product/Object_Image/Image204.png";
+import Image204_2 from "../Product/Object_Image/Image204_2.png";
 import Image205 from "../Product/Object_Image/Image205.png";
+import Image205_2 from "../Product/Object_Image/Image205_2.png";
 import Image206 from "../Product/Object_Image/Image206.png";
+import Image206_2 from "../Product/Object_Image/Image206_2.png";
 import Image207 from "../Product/Object_Image/Image207.png";
+import Image207_2 from "../Product/Object_Image/Image207_2.png";
 import Image208 from "../Product/Object_Image/Image208.png";
+import Image208_2 from "../Product/Object_Image/Image208_2.png";
 import Image209 from "../Product/Object_Image/Image209.png";
+import Image209_2 from "../Product/Object_Image/Image209_2.png";
+
 //jsdafhkjasdhfkjasdfh
 import "./DetailPage.css";
 import { useState, useEffect } from "react";
