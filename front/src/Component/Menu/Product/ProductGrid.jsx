@@ -31,7 +31,7 @@ import Image209 from "./Object_Image/Image209.png";
 
 import Star from "./Star";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 // src/components/ProductGrid.jsx
 function ProductGrid({ items, isLoggedIn }) {
   const [likedItems, setLikedItems] = useState({});
@@ -66,22 +66,73 @@ function ProductGrid({ items, isLoggedIn }) {
     209: Image209,
   };
 
-  const toggleLike = async (id) => {
-    // 프론트 상태 먼저 토글
-    setLikedItems((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
-
-    try {
-      const res = await fetch(`http://localhost:8080/api/products/${id}/like`, {
-        method: "POST",
+  async function wish_init(id) {
+    const response = await fetch("http://localhost:8080/Mypage_wish_init", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user_id: id }),
+    });
+    const data = await response.json();
+    //data 형식이 배열인 경우
+    setLikedItems((prev) => {
+      const updatedItems = { ...prev };
+      data.product_id.forEach((product_id) => {
+        updatedItems[product_id] = true; // 해당 product_id를 찜 상태로 설정
       });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const data = await res.json();
-      // 필요 시 data.likes를 state로 반영 가능
-    } catch (error) {
-      console.error("찜 수 증가 실패:", error);
+      return updatedItems;
+    });
+  }
+
+  useEffect(() => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    wish_init(user.id);
+  }, []);
+
+  const toggleLike = async (id) => {
+    const user = JSON.parse(sessionStorage.getItem("user"));
+    if (user) {
+      const updatedItems = { ...likedItems, [id]: !likedItems[id] }; // 상품의 찜 상태 토글
+      console.log("Updated likedItems inside toggleLike:", updatedItems);
+
+      // 상태 업데이트 후에 fetch 호출
+      try {
+        const response = await fetch(
+          `http://localhost:8080/api/products/${id}/like`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              likedItems: updatedItems[id], // 상태를 즉시 전달
+            }),
+          }
+        );
+        const data = await response.json();
+        console.log("찜 상태 서버에 반영:", data);
+      } catch (error) {
+        console.error("서버 오류:", error);
+      }
+
+      // 상태를 나중에 업데이트
+      setLikedItems(updatedItems);
+
+      //wish테이블 저장
+      const response = await fetch("http://localhost:8080/Mypage_Wish", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: user.id,
+          product_id: id,
+          likedItems: updatedItems[id],
+        }),
+      });
+    } else {
+      navigate("/Login");
     }
   };
 
