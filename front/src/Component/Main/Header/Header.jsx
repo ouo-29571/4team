@@ -9,9 +9,18 @@ const Header = () => {
     const goToMain = () => {
         navigate("/");
     };
+
+    const handleClick = () => {
+      navigate("/EventPage");
+    };
+
     return (
         <div>
-            <div className="headerbox">
+            <div 
+              onClick={handleClick}
+              style={{cursor:'pointer'}}
+              role="button"
+              className="headerbox">
                 {" "}
                 {/* ✅ 헤더*/}
                 <p className="headertext">최대 50% 할인쿠폰</p>
@@ -35,9 +44,9 @@ const Header = () => {
                 </div>
 
                 <div className="nav-right">
-                    <button className="login-btn">log in</button>
-                    <button className="signup-btn">sine up</button>
-                    <button>
+                    <button onClick={() => navigate("/Login")} className="login-btn">log in</button>
+                    <button onClick={() => navigate("/Signup")}className="signup-btn">sine up</button>
+                    <button onClick={() => navigate("/Mypage")}>
                         <img
                             className="icon-user"
                             src="/img/회원.png"
@@ -46,7 +55,7 @@ const Header = () => {
                         {/* ✅ 회원*/}
                     </button>
 
-                    <button onClick={() => navigate("/cart")}>
+                    <button onClick={() => navigate("/Cart")}>
                         <img
                             className="icon-cart"
                             src="/img/장바구니.png"

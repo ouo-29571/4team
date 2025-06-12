@@ -27,9 +27,10 @@ router.get("/api/products", async (req, res) => {
 router.get("/api/products/:id", async (req, res) => {
   const { id } = req.params;
   const conn = await pool.getConnection();
-  const rows = await conn.query("SELECT * FROM product WHERE product_id = ?", [
-    id,
-  ]);
+  const rows = await conn.query(
+    "SELECT * FROM product WHERE product_id = ?",
+    [id]
+  );
   conn.release();
 
   if (rows.length === 0) {
