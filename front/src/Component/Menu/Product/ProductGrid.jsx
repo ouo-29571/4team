@@ -34,7 +34,6 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 // src/components/ProductGrid.jsx
 function ProductGrid({ items, isLoggedIn }) {
-  const navigate = useNavigate();
   const [likedItems, setLikedItems] = useState({});
 
   const images = {
@@ -159,15 +158,21 @@ function ProductGrid({ items, isLoggedIn }) {
               <br />
               가격 : {item.price.toLocaleString()}원
               <br />
-              리뷰: <Star />
+              {/*  ⭐️⭐️⭐️⭐️⭐️ 버튼 */}
+              <Star productId={item.product_id} />
             </div>
             <div className="inner_right_heart">
-              {/*  ⭐️⭐️⭐️⭐️⭐️ 버튼 */}
               <button
                 className={`inner_left_button ${
-                  likedItems[item.product_id] ? "active" : "" // ⭐️ id → product_id
+                  likedItems[item.product_id] ? "active" : ""
                 }`}
-                onClick={() => toggleLike(item.product_id)} // ⭐️ id → product_id
+                onClick={() => {
+                  // if (!isLoggedIn) {
+                  //   alert("로그인 후 찜할 수 있습니다.");
+                  //   return;
+                  // }
+                  toggleLike(item.product_id);
+                }}
               >
                 찜
               </button>
