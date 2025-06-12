@@ -26,10 +26,9 @@ router.get("/api/products", async (req, res) => {
 router.get("/api/products/:id", async (req, res) => {
   const { id } = req.params;
   const conn = await pool.getConnection();
-  const rows = await conn.query(
-    "SELECT likes FROM product WHERE product_id = ?",
-    [id]
-  );
+  const rows = await conn.query("SELECT * FROM product WHERE product_id = ?", [
+    id,
+  ]);
   conn.release();
 
   if (rows.length === 0) {
@@ -42,15 +41,35 @@ router.get("/api/products/:id", async (req, res) => {
 // 상품 찜 수 증가
 router.post("/api/products/:id/like", async (req, res) => {
   const { id } = req.params;
+  const { likedItems } = req.body;
+
+  console.log(`likedItems : ${likedItems}`);
+
   const conn = await pool.getConnection();
   try {
-    // 1) 찜 수 증가
-    await conn.query(
-      `UPDATE product
-         SET likes = IFNULL(likes, 0) + 1
-       WHERE product_id = ?`,
+    const row = await conn.query(
+      "SELECT likes FROM product WHERE product_id = ?",
       [id]
     );
+    console.log(row[0].likes);
+
+    if (likedItems === true) {
+      // 1) 찜 수 증가
+      await conn.query(
+        `UPDATE product
+         SET likes = IFNULL(likes, 0) + 1
+       WHERE product_id = ?`,
+        [id]
+      );
+    } else {
+      // 1) 찜 수 감소
+      await conn.query(
+        `UPDATE product
+          SET likes = IFNULL(likes, 0) - 1
+          WHERE product_id = ?`,
+        [id]
+      );
+    }
 
     // 2) 변경된 likes 값 조회 — **여기만 rows로 받고** rows[0]에 접근!
     const rows = await conn.query(
