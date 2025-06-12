@@ -27,7 +27,7 @@ router.get("/api/products/:id", async (req, res) => {
   const { id } = req.params;
   const conn = await pool.getConnection();
   const rows = await conn.query(
-    "SELECT likes FROM product WHERE product_id = ?",
+    "SELECT * FROM product WHERE product_id = ?",
     [id]
   );
   conn.release();

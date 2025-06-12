@@ -38,6 +38,7 @@ router.post('/personalCart', async (req, res) => {
       WHERE cart.user_id = ?
     `, [user_id]);
 
+  
     const totalPrice = cartRows.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const discount = cartRows.length > 0 ? 1000 : 0;
     const delivery = totalPrice === 0 ? 0 : totalPrice < 30000 ? 3000 : 0;
@@ -48,14 +49,27 @@ router.post('/personalCart', async (req, res) => {
       summary: { totalPrice, discount, delivery, finalPrice }
     });
 
+    conn.release();
+
   } catch (err) {
     console.error('장바구니 조회 실패:', err);
     res.status(500).send('서버 오류');
-  } finally {
-    conn && conn.release();
   }
 });
 
+// 장바구니 가져오기
+// router.get('/cart', async (req, res) => {
+//   try {
+//     const conn = await pool.getConnection();
+//     const rows = await conn.query("SELECT cart_id, quantity, price, product_id, user_id FROM cart");
+//     console.log(rows);
+//     res.json(rows);
+//     conn.release();
+//   } catch (err) {
+//     console.error("장바구니 불러오기 실패:", err);
+//     res.status(500).json({error: "서버 오류"});
+//   }
+// });
 
 // 할인정보 가져오기
 router.get('/discounts', async (req, res) => {

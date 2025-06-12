@@ -50,19 +50,19 @@ function Main() {
         <div className="bs-group">
           {" "}
           {/* ✅ 카테고리 아이템 박스 그룹 */}
-          <div className="bs-box">
+          <div onClick={() => navigate("/menu?category=furniture")} className="bs-box">
             <div className="bs-img img-furniture"></div>
             <Link to="/menu?category=furniture">
               <button className="bs-button">#가구</button>
             </Link>
           </div>
-          <div className="bs-box">
+          <div onClick={() => navigate("/menu?category=kitchen")} className="bs-box">
             <div className="bs-img img-kitchen"></div>
             <Link to="/menu?category=kitchen">
               <button className="bs-button">#주방용품</button>
             </Link>
           </div>
-          <div className="bs-box">
+          <div onClick={() => navigate("/menu?category=interiorobj")} className="bs-box">
             <div className="bs-img img-interiorobj"></div>
             <Link to="/menu?category=interiorobj">
               <button className="bs-button">#인테리어 오브제</button>

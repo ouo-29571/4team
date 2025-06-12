@@ -15,12 +15,12 @@ function Cart() {
 
   useEffect(() => {
     const user = sessionStorage.getItem('user');
-      if (!user) {
-        alert("로그인 후 이용해주세요.");
-        navigate('/', { replace: true });
-        return;
-      }
-  },[navigate])
+    if (!user) {
+      alert("로그인 후 이용해주세요.");
+      navigate('/', { replace: true });
+      return;
+    }
+  }, [navigate])
 
   const allCheck = (checked) => {
     setCartItems(prev => prev.map(item => ({ ...item, checked })));
@@ -36,23 +36,49 @@ function Cart() {
   };
 
   // 선택 삭제
-  const selected_Delete = () => {
-    const toDelete = cartItems.filter(item => item.checked).map(item => item.id)
-    fetch(`http://localhost:8080/cart/delete-multiple`, {
+  const selected_Delete = async () => {
+    const sessionUser = sessionStorage.getItem('user');
+    const user = JSON.parse(sessionUser);
+
+    const toDelete = cartItems
+      .filter(item => item.checked)
+      .map(item => item.id);
+
+    // 1) 삭제 요청
+    const deleteRes = await fetch(
+      'http://localhost:8080/cart/delete-multiple',
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ids: toDelete }),
+      }
+    );
+    if (!deleteRes.ok) throw new Error(`삭제 실패: ${deleteRes.status}`);
+
+    // 2) 삭제 후 장바구니 다시 불러오기
+    fetch('http://localhost:8080/personalCart', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ids: toDelete })
+      body: JSON.stringify({ user_id: user.id })
     })
-      .then(() => {
-        return fetch('http://localhost:8080/cart');
-      })
-      .then(res => res.json())
-      .then(data => {
-        const withChecked = data.cart.map(item => ({ ...item, checked: false }));
+      .then((res) => res.json())
+      .then((data) => {
+        // 서버에서 받아온 data.cart 배열에 각 item마다 checked: false 추가
+        const withChecked = data.cart.map((item) => ({
+          ...item,
+          checked: false,
+          product_id: item.product_id, // 필요하다면 추가
+        }))
         setCartItems(withChecked);
-        setSummary(data.summary);
       })
-      .catch(err => console.error('선택 삭제 실패:', err));
+      .catch((err) => {
+        console.error('장바구니 데이터 로딩 실패:', err)
+      })
+    // 3) 상태 업데이트
+    // const withChecked = data.cart.map(item => ({ ...item, checked: false }));
+    // setCartItems(withChecked);
+    // setSummary(data.summary);
+
   };
 
   // 개별 삭제 버튼 (id 기준 삭제)
@@ -99,7 +125,7 @@ function Cart() {
           checked: false,
           product_id: item.product_id, // 필요하다면 추가
         }))
-        setCartItems(withChecked)
+        setCartItems(withChecked);
       })
       .catch((err) => {
         console.error('장바구니 데이터 로딩 실패:', err)
