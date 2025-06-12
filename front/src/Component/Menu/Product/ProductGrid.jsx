@@ -33,7 +33,7 @@ import Star from "./Star";
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 // src/components/ProductGrid.jsx
-function ProductGrid({ items }) {
+function ProductGrid({ items, isLoggedIn }) {
   const [likedItems, setLikedItems] = useState({});
 
   const images = {
@@ -66,27 +66,24 @@ function ProductGrid({ items }) {
     209: Image209,
   };
 
-const toggleLike = async (id) => {
-  // 프론트 상태 먼저 토글
-  setLikedItems((prev) => ({
-    ...prev,
-    [id]: !prev[id],
-  }));
+  const toggleLike = async (id) => {
+    // 프론트 상태 먼저 토글
+    setLikedItems((prev) => ({
+      ...prev,
+      [id]: !prev[id],
+    }));
 
-  try {
-    const res = await fetch(
-      `http://localhost:8080/api/products/${id}/like`,
-      {
+    try {
+      const res = await fetch(`http://localhost:8080/api/products/${id}/like`, {
         method: "POST",
-      }
-    );
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    // 필요 시 data.likes를 state로 반영 가능
-  } catch (error) {
-    console.error("찜 수 증가 실패:", error);
-  }
-};
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      // 필요 시 data.likes를 state로 반영 가능
+    } catch (error) {
+      console.error("찜 수 증가 실패:", error);
+    }
+  };
 
   return (
     <>
@@ -111,16 +108,20 @@ const toggleLike = async (id) => {
               가격 : {item.price.toLocaleString()}원
               <br />
               {/*  ⭐️⭐️⭐️⭐️⭐️ 버튼 */}
-              리뷰: <Star productId={item.product_id} /> 
+              <Star productId={item.product_id} />
             </div>
             <div className="inner_right_heart">
-              
-              
               <button
                 className={`inner_left_button ${
                   likedItems[item.product_id] ? "active" : ""
                 }`}
-                onClick={() => toggleLike(item.product_id)} 
+                onClick={() => {
+                  if (!isLoggedIn) {
+                    alert("로그인 후 찜할 수 있습니다.");
+                    return;
+                  }
+                  toggleLike(item.product_id);
+                }}
               >
                 찜
               </button>
