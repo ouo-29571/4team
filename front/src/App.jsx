@@ -19,7 +19,7 @@ import Header from "./Component/Main/Header/Header";
 import Footer from "./Component/Menu/Footer/Footer";
 import EventPage from "./Component/EventPage/EventPage";
 import ImageSlider from "./Component/Main/ImageSlider/ImageSlider";
-import Cart from "./Component/Cart/Cart";
+import Cart from "./Component/cart/Cart";
 import Order from "./Component/order/Order";
 import History from "./Component/history/History";
 

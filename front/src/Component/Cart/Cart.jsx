@@ -7,17 +7,26 @@ function Cart() {
   const navigate = useNavigate()
   const [cartItems, setCartItems] = useState([]);
   const [summary, setSummary] = useState({
-    totalPrice: 0, 
-    discount: 0, 
+    totalPrice: 0,
+    discount: 0,
     delivery: 0,
     finalPrice: 0
   });
+
+  useEffect(() => {
+    const user = sessionStorage.getItem('user');
+      if (!user) {
+        alert("로그인 후 이용해주세요.");
+        navigate('/', { replace: true });
+        return;
+      }
+  },[navigate])
 
   const allCheck = (checked) => {
     setCartItems(prev => prev.map(item => ({ ...item, checked })));
   };
 
-    // 체크박스 토글 (개별 선택)
+  // 체크박스 토글 (개별 선택)
   const toggleCheck = (index) => {
     setCartItems(prev =>
       prev.map((item, i) =>
@@ -29,43 +38,43 @@ function Cart() {
   // 선택 삭제
   const selected_Delete = () => {
     const toDelete = cartItems.filter(item => item.checked).map(item => item.id)
-      fetch(`http://localhost:8080/cart/delete-multiple`,{
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
-        body: JSON.stringify({ ids: toDelete })
-      })
-        .then(() => {
-          return fetch('http://localhost:8080/cart');
-        })
-        .then(res => res.json())
-        .then(data => {
-          const withChecked = data.cart.map(item => ({ ...item, checked: false }));
-          setCartItems(withChecked);
-          setSummary(data.summary);
+    fetch(`http://localhost:8080/cart/delete-multiple`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ids: toDelete })
     })
-    .catch(err => console.error('선택 삭제 실패:', err));
+      .then(() => {
+        return fetch('http://localhost:8080/cart');
+      })
+      .then(res => res.json())
+      .then(data => {
+        const withChecked = data.cart.map(item => ({ ...item, checked: false }));
+        setCartItems(withChecked);
+        setSummary(data.summary);
+      })
+      .catch(err => console.error('선택 삭제 실패:', err));
   };
 
   // 개별 삭제 버튼 (id 기준 삭제)
   const del_btn = (id) => {
-    fetch(`http://localhost:8080/cart/${id}`,{
+    fetch(`http://localhost:8080/cart/${id}`, {
       method: 'DELETE'
     })
-    .then(() => {
-      setCartItems(prev => prev.filter(item => item.id !== id));
-    })
-    .catch(err => console.error('개별 삭제 실패:', err));
+      .then(() => {
+        setCartItems(prev => prev.filter(item => item.id !== id));
+      })
+      .catch(err => console.error('개별 삭제 실패:', err));
   };
 
   const placeOrder = (navigate) => {
     const orderItems = cartItems.filter(item => item.checked);
     if (orderItems.length === 0) return alert("주문할 항목을 선택하세요!");
 
-    navigate('/order', {state: {items: orderItems } });
+    navigate('/order', { state: { items: orderItems } });
   };
 
 
-  
+
 
   // "전체 선택" 체크박스 상태 계산
   const isAllChecked =
@@ -74,8 +83,13 @@ function Cart() {
   // 1) 컴포넌트 마운트 시 한 번만, 서버에서 장바구니 데이터를 가져와서
   //    cartItems 상태에 저장 (checked 필드를 false로 초기화)
   useEffect(() => {
-    fetch('http://localhost:8080/cart',{
-      method: 'GET',
+    const sessionUser = sessionStorage.getItem('user');
+    const user = JSON.parse(sessionUser);
+    console.log(user.id);
+    fetch('http://localhost:8080/personalCart', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ user_id: user.id })
     })
       .then((res) => res.json())
       .then((data) => {

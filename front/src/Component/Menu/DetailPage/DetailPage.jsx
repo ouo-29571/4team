@@ -9,50 +9,39 @@ import Image8 from "../Product/Object_Image/Image8.png";
 import Image9 from "../Product/Object_Image/Image9.png";
 
 import Image101 from "../Product/Object_Image/Image101.png";
-import Image101_2 from "../Product/Object_Image/Image101_2.png";
 import Image102 from "../Product/Object_Image/Image102.png";
-import Image102_2 from "../Product/Object_Image/Image102_2.png";
 import Image103 from "../Product/Object_Image/Image103.png";
-import Image103_2 from "../Product/Object_Image/Image103_2.png";
 import Image104 from "../Product/Object_Image/Image104.png";
-import Image104_2 from "../Product/Object_Image/Image104_2.png";
 import Image105 from "../Product/Object_Image/Image105.png";
-import Image105_2 from "../Product/Object_Image/Image105_2.png";
 import Image106 from "../Product/Object_Image/Image106.png";
-import Image106_2 from "../Product/Object_Image/Image106_2.png";
 import Image107 from "../Product/Object_Image/Image107.png";
-import Image107_2 from "../Product/Object_Image/Image107_2.png";
 import Image108 from "../Product/Object_Image/Image108.png";
-import Image108_2 from "../Product/Object_Image/Image108_2.png";
 import Image109 from "../Product/Object_Image/Image109.png";
-import Image109_2 from "../Product/Object_Image/Image109_2.png";
 
 import Image201 from "../Product/Object_Image/Image201.png";
-import Image201_2 from "../Product/Object_Image/Image201_2.png";
 import Image202 from "../Product/Object_Image/Image202.png";
-import Image202_2 from "../Product/Object_Image/Image202_2.png";
 import Image203 from "../Product/Object_Image/Image203.png";
 import Image204 from "../Product/Object_Image/Image204.png";
-import Image204_2 from "../Product/Object_Image/Image204_2.png";
 import Image205 from "../Product/Object_Image/Image205.png";
-import Image205_2 from "../Product/Object_Image/Image205_2.png";
 import Image206 from "../Product/Object_Image/Image206.png";
-import Image206_2 from "../Product/Object_Image/Image206_2.png";
 import Image207 from "../Product/Object_Image/Image207.png";
-import Image207_2 from "../Product/Object_Image/Image207_2.png";
 import Image208 from "../Product/Object_Image/Image208.png";
-import Image208_2 from "../Product/Object_Image/Image208_2.png";
 import Image209 from "../Product/Object_Image/Image209.png";
-import Image209_2 from "../Product/Object_Image/Image209_2.png";
 //jsdafhkjasdhfkjasdfh
 import "./DetailPage.css";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 function DetailPage() {
   const [count, setCount] = useState(1);
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [mainImageIndex, setMainImageIndex] = useState(0);
+  const [productId, setProductId] = useState('');
+  const [productPrice, setProductPrice] = useState('');
+  const [productName, setProductName] = useState('');
+  const [inCart, setInCart] = useState(false);
+  const rawUser = sessionStorage.getItem("user");
+  const userId = rawUser ? JSON.parse(rawUser).id : null;
+  const navigate = useNavigate();
 
   const images = {
     1: [Image1],
@@ -93,10 +82,86 @@ function DetailPage() {
         return res.json();
       })
       .then((data) => {
+        // console.log("서버에서 받아온 데이터 👉", data.product_name); // 👈 여기서 콘솔 찍힘
         setProduct(data);
+        setProductId(data.product_id);
+        setProductPrice(data.price);
+        setProductName(data.product_name);
       })
       .catch((err) => console.error("fetch 오류", err));
   }, [id]);
+
+  //장바구니 등록 여부 확인
+  useEffect(() => {
+    // if(!userId || !product) return;
+    fetch('http://localhost:8080/cart/user_id', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        user_id: userId,
+        product_id: productId,
+        quantity: count,
+        price: productPrice
+      })
+    })
+      .then(res => {
+        if (!res.ok) throw new Error(`담기 실패:%{res.status}`);
+        return res.json();
+      })
+      .then(json => {
+        console.log("POST /cart 응답:", json);   // { success: true } 여야 합니다
+        setInCart(false);
+      })
+    // .catch(err => {
+    //   console.error(err);
+    //   alert(err.message);
+    // });
+  });
+
+  // 장바구니 담기
+  const toggleCart = () => {
+    if (!userId) return alert("로그인 후 이용해주세요.");
+    const url = "http://localhost:8080/cart";
+    console.log("▶️ toggleCart 호출, url:", url, "userId:", userId, "productId:", product.product_id);
+    if (!inCart) {
+      // 담기
+      fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          user_id: userId,
+          product_id: productId,
+          quantity: count,
+          price: productPrice
+        })
+      })
+        .then(res => {
+          if (!res.ok) throw new Error("장바구니 담기 실패");
+          setInCart(false);
+          alert(
+            `✅장바구니에 추가되었습니다! \n`+
+            `품명: ${productName}\n`+
+            `수량: ${count}개\n`+
+            `가격: ${productPrice.toLocaleString()}원\n`+
+            `===========================\n`+
+            `합계: ${(count*productPrice).toLocaleString()}원`
+          );
+        })
+        .catch(err => alert(err.message));
+    }
+  };
+
+  const buyNow = () => {
+    if (!userId) return alert("로그인 후 이용해주세요.");
+    const orderData = {
+      name: productName,
+      quantity: count,
+      price: product.price,
+      product_id: productId
+    };
+    // console.log("orderData:" + orderData.name);
+    navigate('/order', { state: { items: [orderData] } });
+  };
 
   if (!product) {
     return (
@@ -112,11 +177,9 @@ function DetailPage() {
         <div className="Product_Box">
           {/*이미지*/}
           <div className="Product_Image">
-            {product.product_id &&
-            images[product.product_id] &&
-            images[product.product_id][mainImageIndex] ? (
+            {product.product_id && images[product.product_id] ? (
               <img
-                src={images[product.product_id][mainImageIndex]}
+                src={images[product.product_id]}
                 alt={product.product_name}
                 style={{ width: "600px", height: "600px" }}
               />
@@ -161,20 +224,17 @@ function DetailPage() {
           </div>
           <div className="Product_Buttons">
             <button>찜</button>
-            <button>장바구니</button>
-            <button>바로구매</button>
+            <button onClick={toggleCart}>
+              {inCart ? "장바구니 빼기" : "장바구니 담기"}
+            </button>
+            <button onClick={() => buyNow(navigate)}>바로구매</button>
           </div>
         </div>
       </div>
       <div className="Product_DetailPage">
         <div className="Product_Coupon">
           첫 구매 시 99% 할인
-          <button
-            className="Product_Coupon_Button"
-            onClick={() => alert("쿠폰이 발급되었습니다!")}
-          >
-            쿠폰
-          </button>
+          <button style={{ width: "100px" }}>쿠폰</button>
         </div>
         <div
           style={{

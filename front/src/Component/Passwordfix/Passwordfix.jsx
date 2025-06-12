@@ -55,9 +55,6 @@ const passwordfix = () => {
             <div className="Passwordfix_page">
                 <div className="Passwordfix_main">
                     <div>
-                        <div className="passwrodfix_logo">
-                            <img src="../img/free-icon-logo-5448104.png" />
-                        </div>
                         <div>
                             <label
                                 htmlFor="Passwordfix"

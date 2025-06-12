@@ -1,86 +1,85 @@
 .login_page {
-  width: 100%;
-  height: 800px;
-  padding-top: 150px;
-  margin-top: -110px;
-  display: flex;
-  justify-content: center; /*가로정렬*/
-  background-color: #f1eada;
+    width: 100%;
+    height: 800px;
+    padding-top: 150px;
+    margin-top: -110px;
+    display: flex;
+    justify-content: center; /*가로정렬*/
+    background-color: #f1eada;
 }
 
 /*상단*/
 
 /*로그인 관련*/
-/* 참고: https://0lrlokr.tistory.com/46 */
 .login {
-  max-width: 500px;
-  padding: 0 30px;
+    max-width: 500px;
+    padding: 0 30px;
 }
 
 /* 상단로고 */
 .login_logo > img {
-  width: 200px;
-  height: auto; /*비율맞추도록*/
-  margin-left: 30%;
-  border-radius: 50px;
+    width: 200px;
+    height: auto; /*비율맞추도록*/
+    margin-left: 30%;
+    border-radius: 50px;
 }
+
 .login_logo_text {
-  text-align: center;
-  font-size: 50px;
-  font-weight: bolder;
-  margin-bottom: 50px;
-  color: #584738;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bolder;
+    margin-bottom: 50px;
+    color: #584738;
 }
 
 .contentWrap > input {
-  width: 400px;
-  height: 40px;
-  border: 1px solid gray;
-  border-radius: 10px;
-  font-size: 17px;
-  font-weight: 400; /*글씨 두께*/
-  margin-bottom: 10px;
-  padding: 10px;
+    width: 400px;
+    height: 40px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: 400; /*글씨 두께*/
+    margin-bottom: 10px;
+    padding: 10px;
 }
 
 .Login_error {
-  color: red;
-  margin-top: 10px;
-  margin-bottom: 10px;
+    color: red;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .Login_button {
-  width: 9%;
-  height: 50px;
-  line-height: 50px; /* 🔥 텍스트 세로 중앙 정렬 */
-  text-align: center; /* 🔥 텍스트 가로 중앙 정렬 */
-  border: 1px solid;
-  border-radius: 10px;
-  margin-top: 10px;
-  padding: 10px;
-  font-weight: bolder;
-  background-color: #584738;
-  color: white;
+    width: 100%;
+    height: 50px;
+    line-height: 50px; /* 🔥 텍스트 세로 중앙 정렬 */
+    text-align: center; /* 🔥 텍스트 가로 중앙 정렬 */
+    border: 1px solid;
+    border-radius: 10px;
+    margin-top: 10px;
+    font-weight: bolder;
+    background-color: #584738;
+    color: white;
 }
 
 .Login_button:hover {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .Login_find {
-  display: flex;
-  margin-top: 10px;
+    display: flex;
+    margin-top: 10px;
 }
 
 .Login_find > div {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 .Login_find a {
-  color: black;
-  text-align: none;
-  font-weight: bolder;
-  text-decoration: none; /*밑줄제거*/
+    color: black;
+    text-align: none;
+    font-weight: bolder;
+    text-decoration: none; /*밑줄제거*/
 }
 
 /*하단 메뉴*/
