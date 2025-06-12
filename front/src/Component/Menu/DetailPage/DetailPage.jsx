@@ -55,15 +55,15 @@ function DetailPage() {
   const [mainImageIndex, setMainImageIndex] = useState(0);
 
   const images = {
-    1: [Image1,],
-    2: [Image2,],
-    3: [Image3,],
-    4: [Image4,],
-    5: [Image5,],
-    6: [Image6,],
-    7: [Image7,],
-    8: [Image8,],
-    9: [Image9,],
+    1: [Image1],
+    2: [Image2],
+    3: [Image3],
+    4: [Image4],
+    5: [Image5],
+    6: [Image6],
+    7: [Image7],
+    8: [Image8],
+    9: [Image9],
     101: [Image101, Image101_2],
     102: [Image102, Image102_2],
     103: [Image103, Image103_2],
@@ -73,15 +73,15 @@ function DetailPage() {
     107: [Image107, Image107_2],
     108: [Image108, Image108_2],
     109: [Image109, Image109_2],
-    201: [Image201,Image201_2],
-    202: [Image202,Image202_2],
-    203: [Image203,],
-    204: [Image204,Image204_2],
-    205: [Image205,Image205_2],
-    206: [Image206,Image206_2],
-    207: [Image207,Image207_2],
-    208: [Image208,Image208_2],
-    209: [Image209,Image209_2],
+    201: [Image201, Image201_2],
+    202: [Image202, Image202_2],
+    203: [Image203],
+    204: [Image204, Image204_2],
+    205: [Image205, Image205_2],
+    206: [Image206, Image206_2],
+    207: [Image207, Image207_2],
+    208: [Image208, Image208_2],
+    209: [Image209, Image209_2],
   };
 
   useEffect(() => {
@@ -126,7 +126,7 @@ function DetailPage() {
           </div>
 
           <div className="Product_Scroll" style={{ cursor: "pointer" }}>
-            {images[product.product_id].map((imgSrc, index) => (
+            {images[product.product_id]?.map((imgSrc, index) => (
               <div
                 className="Thumb"
                 key={index}
@@ -187,7 +187,8 @@ function DetailPage() {
           {product.product_name}
         </div>
         <div
-          style={{ fontSize: "50px", fontWeight: 500, marginBottom: "80px" }}>
+          style={{ fontSize: "50px", fontWeight: 500, marginBottom: "80px" }}
+        >
           “어디서도 볼 수 없는 특별한 디자인.”
         </div>
         <div style={{ marginBottom: "40px" }}>
