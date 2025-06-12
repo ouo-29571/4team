@@ -9,6 +9,7 @@ const pool = mariadb.createPool({
   password: "4team",
   database: "4team",
   port: 3306,
+  bigIntAsNumber: true, // ⭐️ 이거 추가!
 });
 
 router.get("/api/products", async (req, res) => {
@@ -27,7 +28,7 @@ router.get("/api/products/:id", async (req, res) => {
   const { id } = req.params;
   const conn = await pool.getConnection();
   const rows = await conn.query(
-    "SELECT likes FROM product WHERE product_id = ?",
+    "SELECT * FROM product WHERE product_id = ?",
     [id]
   );
   conn.release();
@@ -69,6 +70,71 @@ router.post("/api/products/:id/like", async (req, res) => {
     res.status(500).json({ error: "Database error", details: err.message });
   } finally {
     conn.release();
+  }
+});
+
+// ---------------------------------------------------------------------------------------------------
+// 상품평 평점 조회
+router.get("/api/products/:id/rating", async (req, res) => {
+  const { id } = req.params;
+  let conn;
+  try {
+    conn = await pool.getConnection();
+
+    // 1) 평균 평점과 개수
+    const [avgRow] = await conn.query(
+      `SELECT AVG(rating) AS avg, COUNT(*) AS cnt 
+       FROM product_ratings
+       WHERE product_id = ?`,
+      [id]
+    );
+    console.log("평균 평점 및 개수:", avgRow);
+    //아이디 로그인시 아이디 넘버 설정되는 ..
+    const userId = req.user?.id || req.query.userId || 1;
+    const [userRow] = await conn.query(
+      `SELECT rating 
+       FROM product_ratings
+       WHERE product_id = ? AND user_id = ?`,
+      [id, TEST_USER_ID]
+    );
+    console.log("사용자 평점:", userRow);
+    res.json({
+      avgRating: avgRow?.avg ? parseFloat(avgRow.avg).toFixed(1) : 0,
+      reviewCount: avgRow?.cnt || 0,
+      userRating: userRow?.rating || 0,
+    });
+  } catch (err) {
+    console.error("DB error:", err.message);
+    res.status(500).json({ error: "별진행 안됨" });
+  } finally {
+    if (conn) conn.release();
+  }
+});
+
+// 상품평 등록 API
+router.post("/api/products/:id/rating", async (req, res) => {
+  const { id } = req.params;
+  const { rating } = req.body;
+  const userId = req.user?.id || 1; // 추후 인증 미들웨어 연결시 req.user.id로
+
+  let conn;
+  try {
+    conn = await pool.getConnection();
+
+    const result = await conn.query(
+      `INSERT INTO product_ratings (product_id, user_id, rating, created_at)
+   VALUES (?, ?, ?, NOW())
+   ON DUPLICATE KEY UPDATE rating = VALUES(rating), created_at = NOW()`,
+      [id, userId, rating]
+    );
+
+    console.log("평점 등록 결과:", result);
+    res.json({ success: true });
+  } catch (err) {
+    console.error("DB error:", err.message);
+    res.status(500).json({ error: "Database error" });
+  } finally {
+    if (conn) conn.release();
   }
 });
 

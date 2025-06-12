@@ -66,30 +66,27 @@ function ProductGrid({ items }) {
     209: Image209,
   };
 
-  const toggleLike = async (id) => {
-    // 프론트 상태 먼저 토글
-    setLikedItems((prev) => ({
-      ...prev,
-      [id]: !prev[id],
-    }));
+const toggleLike = async (id) => {
+  // 프론트 상태 먼저 토글
+  setLikedItems((prev) => ({
+    ...prev,
+    [id]: !prev[id],
+  }));
 
-    // DB likes 증가 호출
-    //찜 버튼 이벤트 처리
-    try {
-      const res = await fetch(
-        `http://localhost:8080/api/products/${id}/like`, // 🔥 전체 URL로 변경
-        {
-          method: "POST", // 🔥 메서드 지정
-        }
-      );
-      if (!res.ok) throw new Error(`HTTP ${res.status}`); // 🔥 응답 체크
-      const data = await res.json(); // 🔥 JSON 파싱
-      console.log("찜 수 증가 성공:", data); // 🔥 성공 로그
-      // 필요 시 data.likes를 state로 반영 가능
-    } catch (error) {
-      console.error("찜 수 증가 실패:", error); // 🔥 에러 로그
-    }
-  };
+  try {
+    const res = await fetch(
+      `http://localhost:8080/api/products/${id}/like`,
+      {
+        method: "POST",
+      }
+    );
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    // 필요 시 data.likes를 state로 반영 가능
+  } catch (error) {
+    console.error("찜 수 증가 실패:", error);
+  }
+};
 
   return (
     <>
@@ -113,15 +110,17 @@ function ProductGrid({ items }) {
               <br />
               가격 : {item.price.toLocaleString()}원
               <br />
-              리뷰: <Star />
+              {/*  ⭐️⭐️⭐️⭐️⭐️ 버튼 */}
+              리뷰: <Star productId={item.product_id} /> 
             </div>
             <div className="inner_right_heart">
-              {/*  ⭐️⭐️⭐️⭐️⭐️ 버튼 */}
+              
+              
               <button
                 className={`inner_left_button ${
-                  likedItems[item.product_id] ? "active" : "" // ⭐️ id → product_id
+                  likedItems[item.product_id] ? "active" : ""
                 }`}
-                onClick={() => toggleLike(item.product_id)} // ⭐️ id → product_id
+                onClick={() => toggleLike(item.product_id)} 
               >
                 찜
               </button>
