@@ -12,17 +12,19 @@ const mypage = () => {
     const [Wish_list, setWish_list] = useState(0);
 
     //사용자 주문
-    const [payment, setPayment] = useState(0);
-    const [delivery_ing, setDelivery_ing] = useState(0);
-    const [delivery, setDelivery] = useState(0);
-
+    const [user_order, setUser_order] = useState({
+        payment: 0,
+        delivery_ing: 0,
+        delivery: 0,
+    });
     //사용자 주문 상세보기
-    const [showuserorder, setUserorder] = useState(false);
+    const [showuserorder, setShowuserorder] = useState(false);
 
     //쿠폰 상세보기
     const [showcoupon, setShowcoupon] = useState(false);
     const [couponlist, setCouponlist] = useState([]);
 
+    //사용자 이름 가져오기
     async function get_Username(email) {
         const response = await fetch("http://localhost:8080/Mypage_userName", {
             method: "POST",
@@ -57,7 +59,7 @@ const mypage = () => {
         setcoupon_count(data.count);
     }
 
-    //쿠폰 정보가져오기
+    //쿠폰 정보 가져오기
     function get_Coupondata(email) {
         fetch("http://localhost:8080/Mypage_coupondata", {
             method: "POST",
@@ -68,9 +70,25 @@ const mypage = () => {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 setCouponlist(data);
             });
+    }
+
+    //사용자 주문, 배송상태 가져오기
+    async function get_Userorder(id) {
+        const response = await fetch("http://localhost:8080/Mypage_userorder", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id: id }),
+        });
+        const data = await response.json();
+        setUser_order({
+            payment: data.paymentcount,
+            delivery_ing: data.delivery_ingcount,
+            delivery: data.deliverycount,
+        });
     }
 
     //마이페이지 클릭시 로그인상태가 아닐경우 로그인 페이지로
@@ -82,20 +100,13 @@ const mypage = () => {
         } else {
             get_Username(user.name);
             get_Couponcount(user.name);
+            get_Userorder(user.id);
         }
-    }, [navigate]);
+    }, []);
 
     //사용자주문 상세정보 열기
-    const toggle_userorder = () => {
-        //setUserorder((prev) => !prev);
-        if (!showuserorder) {
-            setUserorder(true);
-        }
-    };
-
-    //사용자주문 상세정보 닫기
-    const toggle_userorder_close = () => {
-        setUserorder((prev) => !prev);
+    const Click_userorder = () => {
+        navigate("/History");
     };
 
     //쿠폰 상세정보 열기
@@ -143,21 +154,13 @@ const mypage = () => {
                     </div>
                     <div className="user_simpleinfo">
                         <div onClick={toggle_coupon}>
-                            <div>
-                                <span>쿠폰</span>
-                            </div>
-                            <div>
-                                <span>{coupon_count}</span>
-                            </div>
+                            <div>쿠폰</div>
+                            <div>{coupon_count}</div>
                         </div>
                         <div onClick={handle_Wish_list}>
                             {/* 수정사항 삭제할지도? */}
-                            <div>
-                                <span>찜 목록</span>
-                            </div>
-                            <div>
-                                <span>{Wish_list}</span>
-                            </div>
+                            <div>찜 목록</div>
+                            <div>{Wish_list}</div>
                         </div>
                     </div>
                 </div>
@@ -169,66 +172,38 @@ const mypage = () => {
                             </div>
                             <div
                                 className="use_order"
-                                onClick={toggle_userorder}
+                                onClick={Click_userorder}
                             >
-                                <span>더보기</span>
+                                <div>더보기</div>
                             </div>
                         </div>
                         <div className="order_box">
                             <div>
                                 <div>
-                                    <span>{payment}</span>
+                                    <span>{user_order.payment}</span>
                                 </div>
-                                <div>
-                                    <span>결제완료</span>
-                                </div>
+                                <div>결제완료</div>
                             </div>
                             <div className="user_order_img">
                                 <img src="../img/free-icon-right-arrow-271228.png" />
                             </div>
                             <div>
                                 <div>
-                                    <span>{delivery_ing}</span>
+                                    <span>{user_order.delivery_ing}</span>
                                 </div>
-                                <div>
-                                    <span>배송 중</span>
-                                </div>
+                                <div>배송 중</div>
                             </div>
                             <div className="user_order_img">
                                 <img src="../img/free-icon-right-arrow-271228.png" />
                             </div>
                             <div>
                                 <div>
-                                    <span>{delivery}</span>
+                                    <span>{user_order.delivery}</span>
                                 </div>
-                                <div>
-                                    <span>배송완료</span>
-                                </div>
+                                <div>배송완료</div>
                             </div>
                         </div>
                     </div>
-                </div>
-                {/* 주문목록 */}
-                <div>
-                    {showuserorder && (
-                        <div className="user_info_details">
-                            <div>
-                                <div>
-                                    {/* 주문목록 들어갈 예정 */}
-                                    <span>임시 주문</span>
-                                </div>
-                                <div>
-                                    {/* 주문목록 들어갈 예정 */}
-                                    <span>임시 주문</span>
-                                </div>
-                            </div>
-                            <div className="user_info_details_close">
-                                <button onClick={toggle_userorder_close}>
-                                    닫기
-                                </button>
-                            </div>
-                        </div>
-                    )}
                 </div>
                 {/* 쿠폰 상세 내용 */}
                 <div>
@@ -238,6 +213,7 @@ const mypage = () => {
                                 <span>쿠폰</span>
                             </div>
                             <div>
+                                {/* 쿠폰상세정보 */}
                                 {couponlist.length === 0 ? (
                                     <div>
                                         <span>
@@ -246,12 +222,15 @@ const mypage = () => {
                                     </div>
                                 ) : (
                                     couponlist.map((coupon) => (
-                                        <div key={coupon.discount_id}>
+                                        <div
+                                            key={coupon.discount_id}
+                                            className="couponbox"
+                                        >
                                             <div className="coupon_subject">
-                                                <span>{coupon.name}</span>
+                                                {coupon.name}
                                             </div>
                                             <div className="coupon_content">
-                                                <span>{coupon.discount}</span>
+                                                {coupon.discount}
                                                 <span>
                                                     {coupon.discount_type ===
                                                     "percent"
