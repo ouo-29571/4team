@@ -29,7 +29,12 @@ const Footer = () => {
             >
               이용약관
             </button>
-            <button className="footer_BigBox_right_button">오시는길</button>
+            <button
+              onClick={() => navigate("/ArrivalMap")}
+              className="footer_BigBox_right_button"
+            >
+              오시는길
+            </button>
           </div>
         </div>
 

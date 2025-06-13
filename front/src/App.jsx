@@ -23,6 +23,7 @@ import Order from "./Component/order/Order";
 import History from "./Component/history/History";
 import CustomerCenter from "./Component/Menu/Footer/CustomerCenter/CustomerCenter";
 import TermsOfService from "./Component/Menu/Footer/TermsOfService/TermsOfService";
+import ArrivalMap from "./Component/Menu/Footer/ArrivalMap/ArrivalMap";
 function App() {
   return (
     <>
@@ -46,6 +47,7 @@ function App() {
           <Route path="/History" element={<History />} />
           <Route path="/CustomerCenter" element={<CustomerCenter />} />
           <Route path="/TermsOfService" element={<TermsOfService />} />
+          <Route path="/ArrivalMap" element={<ArrivalMap />} />
         </Routes>
         <Footer />
       </BrowserRouter>
