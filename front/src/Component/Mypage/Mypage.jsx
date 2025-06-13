@@ -17,8 +17,6 @@ const mypage = () => {
         delivery_ing: 0,
         delivery: 0,
     });
-    //사용자 주문 상세보기
-    const [showuserorder, setShowuserorder] = useState(false);
 
     //쿠폰 상세보기
     const [showcoupon, setShowcoupon] = useState(false);
@@ -74,6 +72,22 @@ const mypage = () => {
             });
     }
 
+    //사용자별 찜 개수 가져오기
+    async function get_wishlist(id) {
+        const response = await fetch(
+            "http://localhost:8080/Mypage_wishlist_count",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ user_id: id }),
+            }
+        );
+        const data = await response.json();
+        setWish_list(data.count);
+    }
+
     //사용자 주문, 배송상태 가져오기
     async function get_Userorder(id) {
         const response = await fetch("http://localhost:8080/Mypage_userorder", {
@@ -100,6 +114,7 @@ const mypage = () => {
         } else {
             get_Username(user.name);
             get_Couponcount(user.name);
+            get_wishlist(user.id);
             get_Userorder(user.id);
         }
     }, []);
@@ -158,7 +173,6 @@ const mypage = () => {
                             <div>{coupon_count}</div>
                         </div>
                         <div onClick={handle_Wish_list}>
-                            {/* 수정사항 삭제할지도? */}
                             <div>찜 목록</div>
                             <div>{Wish_list}</div>
                         </div>
