@@ -87,3 +87,21 @@ button {
     cursor: pointer;
     text-align: center;
 }
+
+/* 로그인시 사용자 이름 */
+.headername {
+    color: #fff;
+    letter-spacing: 1px;
+    align-content: center;
+}
+
+.logout-btn {
+    border: 0.5px solid #fff;
+    border-radius: 10px;
+    width: 60px;
+    height: 20px;
+    padding: 10px 20px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+}

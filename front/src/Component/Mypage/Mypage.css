@@ -29,7 +29,9 @@
 .userinfo_box_img > img {
     width: 100px;
     margin: 10px;
-    border-radius: 50px;
+    /* 바탕색이 있어야지 동그라미보임 */
+    background-color: #cec1ab;
+    border-radius: 100px;
 }
 
 .user_name > div {
@@ -56,7 +58,7 @@
     padding: 5px 10px 5px 10px;
     border-radius: 10px;
     background-color: #584738;
-    color: white;
+    color: #f1eada;
     margin-top: 10px;
     margin-bottom: 10px;
     margin-right: 30px;
@@ -77,37 +79,36 @@
 .user_order_menu {
     width: 1500px;
     height: auto;
-    display: flex;
     padding: 20px;
     margin-top: 20px;
     border-radius: 10px;
-    align-items: center;
     background-color: #aaa396;
-
-    /* 추가사항 */
-    justify-content: center;
 }
 
 .user_order_table > div {
     display: flex;
+    align-items: center;
 }
 
 .user_order_table_header {
-    align-items: center;
     justify-content: space-between;
 }
 
 .user_oder_table_subject {
+    margin-left: 10px;
+    align-content: center;
     font-weight: bolder;
     font-size: 30px;
 }
 
+/* 주문정보 더보기 버튼*/
 .use_order {
-    padding: 9px 12px 9px 12px;
-    font-size: 15px;
-    text-align: center;
+    height: 30px;
+    padding: 11px 20px 11px 20px;
+    margin-right: 35px;
+    font-size: 20px;
     border-radius: 10px;
-    color: white;
+    color: #f1eada;
     background-color: #584738;
 }
 
@@ -115,14 +116,15 @@
     cursor: pointer;
 }
 
+/* 주문 수 */
 .order_box {
     width: 400px;
-    padding: 15px;
+    display: flex;
+    padding: 15px 50px 15px 50px;
     margin-top: 15px;
     text-align: center;
     align-items: center;
     justify-content: space-between;
-    border: 1px, solid gray;
     border-radius: 10px;
     background-color: #f1eada;
 }
@@ -178,20 +180,21 @@
 
 /* 쿠폰이름 */
 .coupon_subject {
-    width: 10%;
+    width: 400px;
     letter-spacing: 1px;
     font-size: 25px;
     font-weight: bold;
-    padding: 30px 40px 30px 40px;
     margin-left: 10px;
     border-radius: 10px;
     background-color: #cec1ab;
     text-align: center;
+    align-content: center;
+    white-space: nowrap;
 }
 
 /* 쿠폰 할인값 */
 .coupon_content {
-    width: 77%;
+    width: 980px;
     letter-spacing: 1px;
     font-size: 30px;
     font-weight: bold;
@@ -238,14 +241,14 @@
     font-size: 27px;
     font-weight: bolder;
     letter-spacing: 1px;
-    color: white;
+    color: #f1eada;
 }
 
 .wish_productprice {
     font-size: 25px;
     letter-spacing: 1px;
     margin-top: 10px;
-    color: white;
+    color: #f1eada;
 }
 
 .user_info_details_close {
@@ -261,7 +264,7 @@
     font-weight: bold;
     text-align: center;
     background-color: #584738;
-    color: white;
+    color: #f1eada;
 }
 
 .list_empty {

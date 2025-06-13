@@ -213,37 +213,37 @@ const mypage = () => {
                             <div className="user_oder_table_subject">
                                 <span>주문 / 배송조회</span>
                             </div>
+                            <div className="order_box">
+                                <div>
+                                    <div>
+                                        <span>{user_order.payment}</span>
+                                    </div>
+                                    <div>결제완료</div>
+                                </div>
+                                <div className="user_order_img">
+                                    <img src="../img/free-icon-right-arrow-271228.png" />
+                                </div>
+                                <div>
+                                    <div>
+                                        <span>{user_order.delivery_ing}</span>
+                                    </div>
+                                    <div>배송 중</div>
+                                </div>
+                                <div className="user_order_img">
+                                    <img src="../img/free-icon-right-arrow-271228.png" />
+                                </div>
+                                <div>
+                                    <div>
+                                        <span>{user_order.delivery}</span>
+                                    </div>
+                                    <div>배송완료</div>
+                                </div>
+                            </div>
                             <div
                                 className="use_order"
                                 onClick={Click_userorder}
                             >
-                                <div>더보기</div>
-                            </div>
-                        </div>
-                        <div className="order_box">
-                            <div>
-                                <div>
-                                    <span>{user_order.payment}</span>
-                                </div>
-                                <div>결제완료</div>
-                            </div>
-                            <div className="user_order_img">
-                                <img src="../img/free-icon-right-arrow-271228.png" />
-                            </div>
-                            <div>
-                                <div>
-                                    <span>{user_order.delivery_ing}</span>
-                                </div>
-                                <div>배송 중</div>
-                            </div>
-                            <div className="user_order_img">
-                                <img src="../img/free-icon-right-arrow-271228.png" />
-                            </div>
-                            <div>
-                                <div>
-                                    <span>{user_order.delivery}</span>
-                                </div>
-                                <div>배송완료</div>
+                                <span>더보기</span>
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import "./Login.css";
@@ -11,6 +11,14 @@ const Login = () => {
         login_password: "",
     });
     const [login_error, setLogin_error] = useState("");
+
+    useEffect(() => {
+        //로그인되어있는 상태에서 로그인페이지로 이동할 시 전 페이지로 이동하도록
+        const user = JSON.parse(sessionStorage.getItem("user"));
+        if (user) {
+            navigate(-1);
+        }
+    }, []);
 
     //login_form 값 업데이트
     const handleChange_Login = (e) => {
@@ -48,7 +56,9 @@ const Login = () => {
                 };
                 sessionStorage.setItem("user", JSON.stringify(userData));
 
-                navigate(-1);
+                navigate("/");
+                //새로고침
+                window.location.reload();
             } else {
                 setLogin_error("이메일 또는 비밀번호가 일치하지 않습니다.");
             }
@@ -76,6 +86,7 @@ const Login = () => {
                                 <input
                                     type="email"
                                     id="login_email"
+                                    autocomplete="username"
                                     value={login_form.login_email}
                                     onChange={handleChange_Login}
                                     placeholder="이메일을 입력하세요"
@@ -86,6 +97,7 @@ const Login = () => {
                                 <input
                                     type="password"
                                     id="login_password"
+                                    autocomplete="current-password"
                                     value={login_form.login_password}
                                     onChange={handleChange_Login}
                                     placeholder="비밀번호를 입력하세요"
