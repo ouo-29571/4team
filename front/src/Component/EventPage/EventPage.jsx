@@ -43,6 +43,7 @@ function EventPage() {
         } catch (err) {
             console.error(err);
             alert("쿠폰 발급 도중 문제가 발생했습니다.");
+            setClaimed(false);
         }
     }, [user, discountIds]);
 

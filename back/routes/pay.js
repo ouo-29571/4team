@@ -118,9 +118,9 @@ router.post("/coupon", async (req, res) => {
         // 1) 이미 발급된 쿠폰인지 체크
         const [existing] = await conn.query(
             `SELECT user_coupon_id 
-        FROM user_coupon 
-        WHERE user_id = ? 
-          AND discount_id = ?`,
+            FROM user_coupon 
+            WHERE user_id = ? 
+            AND discount_id = ?`,
             [user_id, discount_id]
         );
 
