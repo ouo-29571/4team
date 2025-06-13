@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+import images from "../Menu/Product/productimg.jsx";
 import "./Mypage.css";
 
 const mypage = () => {
@@ -9,7 +10,7 @@ const mypage = () => {
     //사용자 정보
     const [userName, setUserName] = useState(""); //사용자이름
     const [coupon_count, setcoupon_count] = useState(0); //쿠폰 수
-    const [Wish_list, setWish_list] = useState(0);
+    const [Wishcount, setWishcount] = useState(0); //찜 수
 
     //사용자 주문
     const [user_order, setUser_order] = useState({
@@ -21,6 +22,10 @@ const mypage = () => {
     //쿠폰 상세보기
     const [showcoupon, setShowcoupon] = useState(false);
     const [couponlist, setCouponlist] = useState([]);
+
+    //위시리스트 상세보기
+    const [showwish, setShowwish] = useState(false);
+    const [wishlist, setWishlist] = useState([]);
 
     //사용자 이름 가져오기
     async function get_Username(email) {
@@ -57,21 +62,6 @@ const mypage = () => {
         setcoupon_count(data.count);
     }
 
-    //쿠폰 정보 가져오기
-    function get_Coupondata(email) {
-        fetch("http://localhost:8080/Mypage_coupondata", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ user_email: email }),
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                setCouponlist(data);
-            });
-    }
-
     //사용자별 찜 개수 가져오기
     async function get_wishlist(id) {
         const response = await fetch(
@@ -85,7 +75,7 @@ const mypage = () => {
             }
         );
         const data = await response.json();
-        setWish_list(data.count);
+        setWishcount(data.count);
     }
 
     //사용자 주문, 배송상태 가져오기
@@ -124,6 +114,21 @@ const mypage = () => {
         navigate("/History");
     };
 
+    //쿠폰 정보 가져오기
+    function get_Coupondata(email) {
+        fetch("http://localhost:8080/Mypage_coupondata", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_email: email }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setCouponlist(data);
+            });
+    }
+
     //쿠폰 상세정보 열기
     const toggle_coupon = () => {
         const user = JSON.parse(sessionStorage.getItem("user"));
@@ -138,9 +143,33 @@ const mypage = () => {
         setShowcoupon((prev) => !prev);
     };
 
-    //찜 목록 클릭시 (수정할 목록 삭제할 수도)
-    const handle_Wish_list = () => {
-        navigate("/Wish_list");
+    //찜 정보 가져오기
+    function get_wishdata(id) {
+        fetch("http://localhost:8080/Mypage_wishdata", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id: id }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setWishlist(data);
+            });
+    }
+
+    //찜 목록 상세정보 열기
+    const toggle_wishlist = () => {
+        const user = JSON.parse(sessionStorage.getItem("user"));
+        if (!showwish) {
+            setShowwish(true);
+            get_wishdata(user.id);
+        }
+    };
+
+    //찜 목록 상세정보 닫기
+    const toggle_wishlist_close = () => {
+        setShowwish((prev) => !prev);
     };
 
     return (
@@ -172,9 +201,9 @@ const mypage = () => {
                             <div>쿠폰</div>
                             <div>{coupon_count}</div>
                         </div>
-                        <div onClick={handle_Wish_list}>
+                        <div onClick={toggle_wishlist}>
                             <div>찜 목록</div>
-                            <div>{Wish_list}</div>
+                            <div>{Wishcount}</div>
                         </div>
                     </div>
                 </div>
@@ -225,11 +254,17 @@ const mypage = () => {
                         <div className="user_info_details">
                             <div className="user_info_details_header">
                                 <span>쿠폰</span>
+                                <button
+                                    onClick={toggle_coupon_close}
+                                    className="user_info_details_close"
+                                >
+                                    닫기
+                                </button>
                             </div>
                             <div>
                                 {/* 쿠폰상세정보 */}
                                 {couponlist.length === 0 ? (
-                                    <div>
+                                    <div className="list_empty">
                                         <span>
                                             사용 가능한 쿠폰이 없습니다.
                                         </span>
@@ -238,13 +273,13 @@ const mypage = () => {
                                     couponlist.map((coupon) => (
                                         <div
                                             key={coupon.discount_id}
-                                            className="couponbox"
+                                            className="detailbox"
                                         >
                                             <div className="coupon_subject">
                                                 {coupon.name}
                                             </div>
                                             <div className="coupon_content">
-                                                {coupon.discount}
+                                                {coupon.discount.toLocaleString()}
                                                 <span>
                                                     {coupon.discount_type ===
                                                     "percent"
@@ -256,10 +291,62 @@ const mypage = () => {
                                     ))
                                 )}
                             </div>
-                            <div className="user_info_details_close">
-                                <button onClick={toggle_coupon_close}>
+                        </div>
+                    )}
+                </div>
+                {/* 위시리스트 */}
+                <div>
+                    {showwish && (
+                        <div className="user_info_details">
+                            <div className="user_info_details_header">
+                                <span>찜 목록</span>
+                                <button
+                                    onClick={toggle_wishlist_close}
+                                    className="user_info_details_close"
+                                >
                                     닫기
                                 </button>
+                            </div>
+                            <div>
+                                {/* 찜목록 상세정보 */}
+                                {wishlist.length === 0 ? (
+                                    <div className="list_empty">
+                                        <span>찜 목록이 없습니다</span>
+                                    </div>
+                                ) : (
+                                    wishlist.map((wish) => (
+                                        <div
+                                            key={wish.product_id}
+                                            className="detailbox"
+                                        >
+                                            <Link
+                                                to={`/DetailPage/${wish.product_id}`}
+                                            >
+                                                <div className="wishbox">
+                                                    <img
+                                                        src={
+                                                            images[
+                                                                wish.product_id
+                                                            ]
+                                                        }
+                                                        alt={wish.product_name}
+                                                        height="200"
+                                                        width="200"
+                                                    />
+                                                    <div className="wish_content">
+                                                        <span className="wish_productname">
+                                                            {wish.product_name}
+                                                        </span>
+                                                        <span className="wish_productprice">
+                                                            {wish.price.toLocaleString()}
+                                                            원
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </Link>
+                                        </div>
+                                    ))
+                                )}
                             </div>
                         </div>
                     )}

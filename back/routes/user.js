@@ -219,24 +219,36 @@ router.post("/Mypage_wishlist_count", async (req, res) => {
     res.json({ count });
 });
 
+//찜 데이터 가져오기
+router.post("/Mypage_wishdata", async (req, res) => {
+    const { user_id } = req.body;
+    const conn = await pool.getConnection();
+    const rows = await conn.query(
+        "SELECT p.product_id, p.product_name, p.price FROM product p WHERE p.product_id IN (SELECT w.product_id FROM wish w WHERE w.user_id = ?)",
+        [user_id]
+    );
+    conn.release();
+    res.json(rows);
+});
+
 //주문및 배송상태 가져오기
 router.post("/Mypage_userorder", async (req, res) => {
     const { user_id } = req.body;
     const conn = await pool.getConnection();
     const payment_rows = await pool.query(
-        "SELECT COUNT(*) AS count FROM `order` WHERE status= ? AND user_id = ?",
-        ["결제완료", user_id]
+        "SELECT COUNT(*) AS count FROM order_detail WHERE order_id IN (SELECT order_id FROM `order` WHERE status = ? AND user_id = ?) AND delivery = ?",
+        ["결제완료", user_id, "배송준비"]
     );
 
-    //배송준비 또는 배송중인 항목 검색
+    //배송중인 항목 검색
     const delivery_ing_rows = await pool.query(
-        "SELECT COUNT(DISTINCT order_id) AS count FROM order_detail WHERE order_id IN (SELECT order_id FROM `order` WHERE status = ? AND user_id = ?) AND delivery = ? OR delivery = ?",
-        ["결제완료", user_id, "배송준비", "배송중"]
+        "SELECT COUNT(*) AS count FROM order_detail WHERE order_id IN (SELECT order_id FROM `order` WHERE status = ? AND user_id = ?) AND delivery = ?",
+        ["결제완료", user_id, "배송중"]
     );
 
     //배송완료인 항목 검색
     const delivery_rows = await pool.query(
-        "SELECT COUNT(DISTINCT order_id) AS count FROM order_detail WHERE order_id IN (SELECT order_id FROM `order` WHERE status = ? AND user_id = ?) AND delivery = ?",
+        "SELECT COUNT(*) AS count FROM order_detail WHERE order_id IN (SELECT order_id FROM `order` WHERE status = ? AND user_id = ?) AND delivery = ?",
         ["결제완료", user_id, "배송완료"]
     );
 
@@ -258,12 +270,6 @@ router.post("/Mypage_userorder", async (req, res) => {
     if (typeof deliverycount === "bigint") {
         deliverycount = Number(deliverycount);
     }
-
-    //결제완료항목에서 배송준비 또는 배송중인 항목 제거
-    paymentcount -= delivery_ingcount + deliverycount;
-
-    //배송중인 항목에서 배송완료인 항목 제거
-    delivery_ingcount -= deliverycount;
 
     res.json({ paymentcount, delivery_ingcount, deliverycount });
 });
