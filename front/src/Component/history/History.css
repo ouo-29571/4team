@@ -109,8 +109,14 @@
   text-decoration: none;
 }
 
+.card-buttons {
+  display: flex;
+  flex-direction: column;
+}
+
 .card-buttons button {
   margin-right: 8px;
+  margin-bottom: 8px;
   padding: 6px 12px;
   background-color: #f0f0f0;
   border: none;
