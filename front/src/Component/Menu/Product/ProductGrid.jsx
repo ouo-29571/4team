@@ -27,7 +27,9 @@ function ProductGrid({ items, isLoggedIn }) {
 
     useEffect(() => {
         const user = JSON.parse(sessionStorage.getItem("user"));
-        wish_init(user.id);
+        if (user) {
+            wish_init(user.id);
+        }
     }, []);
 
     const toggleLike = async (id) => {
@@ -109,10 +111,10 @@ function ProductGrid({ items, isLoggedIn }) {
                                     likedItems[item.product_id] ? "active" : ""
                                 }`}
                                 onClick={() => {
-                                    // if (!isLoggedIn) {
-                                    //   alert("로그인 후 찜할 수 있습니다.");
-                                    //   return;
-                                    // }
+                                    if (!isLoggedIn) {
+                                        alert("로그인 후 찜할 수 있습니다.");
+                                        return;
+                                    }
                                     toggleLike(item.product_id);
                                 }}
                             >
