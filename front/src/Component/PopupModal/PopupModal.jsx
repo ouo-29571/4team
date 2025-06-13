@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import './PopupModal.css';
+import { useNavigate } from 'react-router-dom';
 
 const PopupModal = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
 
   // 페이지 진입 시 모달 자동 열림
   useEffect(() => {
@@ -38,7 +40,7 @@ const PopupModal = () => {
             </div>
           </div>
 
-          <button className="ck-button">출석 체크 하러 가기</button>
+          <button onClick={()=>{navigate("/EventPage")}} className="ck-button">출석 체크 하러 가기</button>
         </div>
       </div>
     </div>

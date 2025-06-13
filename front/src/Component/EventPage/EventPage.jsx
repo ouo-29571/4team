@@ -1,7 +1,51 @@
+import { useCallback, useState } from "react";
 import "../EventPage/EventPage.css";
 import Daycheck from "./Daycheck/Daycheck";
 
-const EventPage = () => {
+function EventPage() {
+    const sessionUser = sessionStorage.getItem("user");
+    const user = sessionUser ? JSON.parse(sessionUser) : null;
+    const [claimed, setClaimed] = useState(false);
+
+    // 쿠폰 발급할 id
+    const discountIds = [1, 2];
+
+    const handleCoupon = useCallback(async () => {
+        //로그인 체크
+        if (!user) {
+            alert("로그인 후 이용해 주세요.");
+            return;
+        }
+        // 여러쿠폰 한번에 발급
+        try {
+            const responses = await Promise.all(
+                discountIds.map((id) =>
+                    fetch("/coupon", {
+                        // proxy 세팅 시
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            user_id: user.id,
+                            discount_id: id,
+                        }),
+                    })
+                )
+            );
+            // 409 체크
+            if (responses.some((r) => r.status === 409)) {
+                return alert("이미 발급된 쿠폰이 있습니다.");
+            } else if (responses.some((r) => !r.ok)) {
+                return alert("쿠폰 발급 중 오류가 발생했습니다.");
+            } else {
+                alert("쿠폰이 발급되었습니다!");
+                setClaimed(true);
+            }
+        } catch (err) {
+            console.error(err);
+            alert("쿠폰 발급 도중 문제가 발생했습니다.");
+        }
+    }, [user, discountIds]);
+
     return (
         <div className="eventpage-bigbox">
             {/* ✅ 놓치기 아까운 첫 혜택 */}
@@ -62,9 +106,10 @@ const EventPage = () => {
                 <div className="cpbtn-wrapper">
                     <button
                         className="cp-button"
-                        onClick={() => alert("쿠폰이 발급되었습니다!")}
+                        onClick={handleCoupon}
+                        disabled={claimed}
                     >
-                        쿠폰 한 번에 받기
+                        {claimed ? "이미 발급된 쿠폰" : "쿠폰 한 번에 받기"}
                     </button>
                 </div>
             </section>
@@ -100,6 +145,6 @@ const EventPage = () => {
             </section>
         </div>
     );
-};
+}
 
 export default EventPage;
