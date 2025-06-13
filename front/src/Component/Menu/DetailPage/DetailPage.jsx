@@ -53,15 +53,15 @@ function DetailPage() {
   const [count, setCount] = useState(1);
   const { id } = useParams();
   const [product, setProduct] = useState(null);
-  const [productId, setProductId] = useState("");
-  const [productPrice, setProductPrice] = useState("");
-  const [productName, setProductName] = useState("");
+  const [productId, setProductId] = useState('');
+  const [productPrice, setProductPrice] = useState('');
+  const [productName, setProductName] = useState('');
   const [inCart, setInCart] = useState(false);
   const rawUser = sessionStorage.getItem("user");
   const userId = rawUser ? JSON.parse(rawUser).id : null;
   const navigate = useNavigate();
   const [mainImageIndex, setMainImageIndex] = useState(0);
-  
+
   const images = {
     1: [Image1],
     2: [Image2],
@@ -113,15 +113,15 @@ function DetailPage() {
   //장바구니 등록 여부 확인
   useEffect(() => {
     // if(!userId || !product) return;
-    fetch("http://localhost:8080/cart/user_id", {
+    fetch('http://localhost:8080/cart/user_id', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         user_id: userId,
         product_id: productId,
         quantity: count,
-        price: productPrice,
-      }),
+        price: productPrice
+      })
     })
       .then((res) => {
         if (!res.ok) throw new Error(`담기 실패:%{res.status}`);
@@ -165,12 +165,12 @@ function DetailPage() {
           if (!res.ok) throw new Error("장바구니 담기 실패");
           setInCart(false);
           alert(
-            `✅장바구니에 추가되었습니다! \n` +
-              `품명: ${productName}\n` +
-              `수량: ${count}개\n` +
-              `가격: ${productPrice.toLocaleString()}원\n` +
-              `===========================\n` +
-              `합계: ${(count * productPrice).toLocaleString()}원`
+            `✅장바구니에 추가되었습니다! \n`+
+            `품명: ${productName}\n`+
+            `수량: ${count}개\n`+
+            `가격: ${productPrice.toLocaleString()}원\n`+
+            `===========================\n`+
+            `합계: ${(count*productPrice).toLocaleString()}원`
           );
         })
         .catch((err) => alert(err.message));
@@ -183,10 +183,10 @@ function DetailPage() {
       name: productName,
       quantity: count,
       price: product.price,
-      product_id: productId,
+      product_id: productId
     };
     // console.log("orderData:" + orderData.name);
-    navigate("/order", { state: { items: [orderData] } });
+    navigate('/order', { state: { items: [orderData] } });
   };
 
   if (!product) {
@@ -203,7 +203,7 @@ function DetailPage() {
         <div className="Product_Box">
           {/*이미지----------------------------------------------------------------------------*/}
           <div className="Product_Image">
-            {product.product_id && images[product.product_id] ? (
+            {product.product_id && images[product.product_id] ? ( 
               <img
                 src={images[product.product_id][mainImageIndex]} // mainImageIndex를 사용하여 이미지 변경
                 alt={product.product_name}

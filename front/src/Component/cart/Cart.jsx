@@ -142,14 +142,13 @@ function Cart() {
       0
     )
 
-    // discount, delivery: 아이템이 하나라도 선택되어 있으면 3000원
-    const discount = checkedItems.length > 0 ? 3000 : 0
+    // delivery: 아이템이 하나라도 선택되어 있으면 3000원
     const delivery = checkedItems.length > 0 ? 3000 : 0
 
     // 최종 결제금액 = 총 상품가격 - 할인 + 배송비
-    const finalPrice = totalPrice - discount + delivery
+    const finalPrice = totalPrice + delivery
 
-    setSummary({ totalPrice, discount, delivery, finalPrice })
+    setSummary({ totalPrice, delivery, finalPrice })
   }, [cartItems, setSummary])
 
   return (
@@ -227,13 +226,6 @@ function Cart() {
               <p>총 상품가격</p>
               <input
                 value={summary.totalPrice}
-                type="text"
-                className="small-input"
-                readOnly
-              />
-              <p>+ 총 할인</p>
-              <input
-                value={summary.discount}
                 type="text"
                 className="small-input"
                 readOnly
