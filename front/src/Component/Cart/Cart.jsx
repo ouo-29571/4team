@@ -142,13 +142,18 @@ function Cart() {
       0
     )
 
-    // delivery: 아이템이 하나라도 선택되어 있으면 3000원
-    const delivery = checkedItems.length > 0 ? 3000 : 0
+    // 총 수량
+    const totalQuantity = checkedItems.reduce(
+      (sum, item) => sum + item.quantity, 0
+    )
+
+    // 3만원이상시 배송비 무료
+    const delivery = totalPrice === 0 ? 0 : totalPrice < 30000 ? 3000 : 0;
 
     // 최종 결제금액 = 총 상품가격 - 할인 + 배송비
     const finalPrice = totalPrice + delivery
 
-    setSummary({ totalPrice, delivery, finalPrice })
+    setSummary({ totalPrice, totalQuantity, delivery, finalPrice })
   }, [cartItems, setSummary])
 
   return (
@@ -230,7 +235,8 @@ function Cart() {
                 className="small-input"
                 readOnly
               />
-              <p>+ 총 배송비</p>
+              
+              <p>+ 배송비(3만원이상 구매시 배송비 무료)</p>
               <input
                 value={summary.delivery}
                 type="text"
@@ -239,19 +245,30 @@ function Cart() {
               />
             </form>
             <br />
-            <input
+            <br />
+            <div className="confirmBox">
+              <p>구매물품 수량</p>
+              <input
+                value={summary.totalQuantity}
+                readOnly
+                style={{ margin:'0px 10px'}}
+              />
+              <p>예상 결제금액</p>
+              <input
               value={summary.finalPrice}
               placeholder="총 금액"
-              className="full-input"
+              style={{ marginLeft:'10px'}}
               readOnly
-            />
-            <br />
-            <button
-              onClick={() => placeOrder(navigate)}
-              style={{ width: '800px' }}
-            >
-              구매하기
-            </button>
+              />
+              <p>원</p>
+            </div>
+            <div>
+              <button
+                  onClick={() => placeOrder(navigate)}
+                  style={{ width: '600px', border: '1px solid #333'}}
+                >구매하기
+              </button>
+            </div>
           </div>
         </section>
       </main>

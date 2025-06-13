@@ -88,18 +88,15 @@ const History = () => {
                       <p className="product-name">금액: {item.price}원</p>
                       {item.estimated_date && <p className="product-name">{item.estimated_date?.substring(0, 10)} 도착 예정</p>}
                     </div>
+                    <div className="card-buttons">
+                      <button onClick={() => navigate(`/delivery/${order.order_id}`)}>배송조회</button>
+                      <button onClick={() => navigate(`/exchange/${order.order_id}`)}>교환/반품</button>
+                      <button onClick={() => navigate(`/review/${order.order_id}`)}>리뷰작성</button>
+                    </div>
                   </div>
                 ))}
               </div>
 
-              {/* 카드 하단 */}
-              <div className="card-footer">
-                <div className="card-buttons">
-                  <button onClick={() => navigate(`/delivery/${order.order_id}`)}>배송조회</button>
-                  <button onClick={() => navigate(`/exchange/${order.order_id}`)}>교환/반품</button>
-                  <button onClick={() => navigate(`/review/${order.order_id}`)}>리뷰작성</button>
-                </div>
-              </div>
             </div>
           )))}
       </div>

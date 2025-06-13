@@ -56,3 +56,8 @@
     width: auto;
     height: 30px;    
 }
+
+.confirmBox {
+  display: flex;
+  align-items: center;
+}
