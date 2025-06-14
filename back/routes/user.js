@@ -11,6 +11,24 @@ const pool = mariadb.createPool({
     port: 3306,
 });
 
+//헤더
+
+//이름찾기
+async function find_userName(User_email) {
+    const conn = await pool.getConnection();
+    const [rows] = await conn.query("SELECT name FROM user WHERE email= ?", [
+        User_email,
+    ]);
+    conn.release();
+    return [rows];
+}
+router.post("/Header_userName", async (req, res) => {
+    const { User_email } = req.body;
+    const rows = await find_userName(User_email);
+    Headername = rows[0].name;
+    res.json({ Headername });
+});
+
 //회원가입
 
 //이메일 중복확인
