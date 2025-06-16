@@ -188,15 +188,18 @@ router.post("/Mypage_userName", async (req, res) => {
 });
 
 //쿠폰 수 가져오기
-async function find_couponcount(user_email) {
+async function find_couponcount(user_id) {
     const conn = await pool.getConnection();
-    const row = conn.query("SELECT COUNT(*) AS count FROM discount");
+    const row = conn.query(
+        "SELECT COUNT(*) AS count FROM user_coupon WHERE status = 'active' AND user_id = ?",
+        [user_id]
+    );
     conn.release();
     return row;
 }
 router.post("/Mypage_couponcount", async (req, res) => {
-    const { user_email } = req.body;
-    const rows = await find_couponcount(user_email);
+    const { user_id } = req.body;
+    const rows = await find_couponcount(user_id);
     count = rows[0].count;
     // BigInt 처리 (toString 또는 Number로 변환)
     if (typeof count === "bigint") {
@@ -207,10 +210,11 @@ router.post("/Mypage_couponcount", async (req, res) => {
 
 //쿠폰 데이터 가져오기
 router.post("/Mypage_coupondata", async (req, res) => {
-    const { user_email } = req.body;
+    const { user_id } = req.body;
     const conn = await pool.getConnection();
     const rows = await conn.query(
-        "SELECT discount_id, name, discount, discount_type FROM discount"
+        "SELECT d.discount_id, d.name, d.discount, d.discount_type FROM discount d WHERE d.discount_id IN (SELECT u.discount_id FROM user_coupon u WHERE user_id = ? AND status = 'active')",
+        [user_id]
     );
     conn.release();
     res.json(rows);

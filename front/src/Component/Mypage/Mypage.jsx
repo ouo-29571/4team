@@ -46,7 +46,7 @@ const mypage = () => {
     }
 
     //쿠폰 수 가져오기
-    async function get_Couponcount(email) {
+    async function get_Couponcount(id) {
         const response = await fetch(
             "http://localhost:8080/Mypage_couponcount",
             {
@@ -54,7 +54,7 @@ const mypage = () => {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ user_email: email }),
+                body: JSON.stringify({ user_id: id }),
             }
         );
 
@@ -103,7 +103,7 @@ const mypage = () => {
             navigate("/Login");
         } else {
             get_Username(user.name);
-            get_Couponcount(user.name);
+            get_Couponcount(user.id);
             get_wishlist(user.id);
             get_Userorder(user.id);
         }
@@ -115,13 +115,13 @@ const mypage = () => {
     };
 
     //쿠폰 정보 가져오기
-    function get_Coupondata(email) {
+    function get_Coupondata(id) {
         fetch("http://localhost:8080/Mypage_coupondata", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ user_email: email }),
+            body: JSON.stringify({ user_id: id }),
         })
             .then((res) => res.json())
             .then((data) => {
@@ -134,7 +134,7 @@ const mypage = () => {
         const user = JSON.parse(sessionStorage.getItem("user"));
         if (!showcoupon) {
             setShowcoupon(true);
-            get_Coupondata(user.name);
+            get_Coupondata(user.id);
         }
     };
 
