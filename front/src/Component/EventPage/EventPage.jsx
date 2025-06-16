@@ -62,7 +62,7 @@ function EventPage() {
             .then((r) => r.json())
             .then(({ days: d, couponClaimed }) => {
                 setDays(d);
-                setClaimable(d.length > -GOAL && !couponClaimed);
+                setClaimable(d.length >= GOAL && !couponClaimed);
             });
     }, [user]);
 
