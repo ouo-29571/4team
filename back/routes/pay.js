@@ -27,15 +27,15 @@ router.post("/personalCart", async (req, res) => {
 
         const cartRows = await conn.query(
             `
-      SELECT 
+        SELECT 
         cart.cart_id AS id, 
         cart.quantity, 
         cart.price, 
         product.product_name AS name,
         product.product_id
-      FROM cart
-      JOIN product ON cart.product_id = product.product_id
-      WHERE cart.user_id = ?
+        FROM cart
+        JOIN product ON cart.product_id = product.product_id
+        WHERE cart.user_id = ?
     `,
             [user_id]
         );
@@ -60,45 +60,30 @@ router.post("/personalCart", async (req, res) => {
     }
 });
 
-// 장바구니 가져오기
-// router.get('/cart', async (req, res) => {
-//   try {
-//     const conn = await pool.getConnection();
-//     const rows = await conn.query("SELECT cart_id, quantity, price, product_id, user_id FROM cart");
-//     console.log(rows);
-//     res.json(rows);
-//     conn.release();
-//   } catch (err) {
-//     console.error("장바구니 불러오기 실패:", err);
-//     res.status(500).json({error: "서버 오류"});
-//   }
-// });
-
 // 할인정보 가져오기
 router.get("/discounts", async (req, res) => {
-    const user = req.session?.user;
-    if (!user) {
-        return res.status(401).json({ error: "로그인 필요" });
+    const user_id = Number(req.query.user_id);
+    if (!user_id) {
+        return res.status(400).json({ error: "로그인 필요" });
     }
     let conn;
     try {
         conn = await pool.getConnection();
         const rows = await conn.query(
             `SELECT 
-        uc.user_coupon_id,
-        uc.status,
-        d.name, 
-        d.discount, 
-        d.discount_type
+            uc.user_coupon_id,
+            uc.status,
+            d.name, 
+            d.discount, 
+            d.discount_type
         FROM user_coupon AS uc
-        Join discount AS d
-        ON uc.discount_id = d.discount_id
+        JOIN discount AS d ON uc.discount_id = d.discount_id
         WHERE
-          uc.user_id = ?
-          AND uc.status = 'active'`,
+            uc.user_id = ?
+            AND uc.status = 'active'`,
             [user.id]
         );
-        res.json({ coupons: rows });
+        res.json(rows);
     } catch (err) {
         console.error("할인 목록 불러오기 실패:", err);
         res.status(500).json({ error: "서버 오류" });
@@ -107,16 +92,40 @@ router.get("/discounts", async (req, res) => {
     }
 });
 
+router.get("/users/:userId/coupons", async (req, res) => {
+    const userId = Number(req.params.userId);
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        const rows = await conn.query(
+            `
+            SELECT d.discount_id, d.name, d.discount, d.discount_type
+            FROM user_coupon uc
+            JOIN discount d ON uc.discount_id = d.discount_id
+            WHERE uc.user_id = ? AND uc.status = 'active'
+            `,
+            [userId]
+        );
+        res.json(rows);
+    } catch (er) {
+        console.error("쿠폰 조회 실패:", err);
+        res.status(500).json({ error: "server error" });
+    } finally {
+        conn && conn.release();
+    }
+});
+
 router.post("/coupon", async (req, res) => {
     const { user_id, discount_id, status } = req.body;
     if (!user_id || !discount_id)
         return res.status(400).json({ error: "user_id, discount_id 필요" });
+
     let conn;
     try {
         conn = await pool.getConnection();
 
         // 1) 이미 발급된 쿠폰인지 체크
-        const [existing] = await conn.query(
+        const rows = await conn.query(
             `SELECT user_coupon_id 
             FROM user_coupon 
             WHERE user_id = ? 
@@ -124,17 +133,18 @@ router.post("/coupon", async (req, res) => {
             [user_id, discount_id]
         );
 
-        if (existing.length > 0) {
+        if (rows.length > 0) {
             // 이미 있으면 409 Conflict 로
-            return res
-                .status(409)
-                .json({ success: false, message: "이미 발급된 쿠폰입니다." });
+            return res.status(409).json({
+                success: false,
+                message: "이미 발급된 쿠폰입니다.",
+            });
         }
 
         // 2) 없으면 INSERT
         await conn.query(
             `INSERT INTO user_coupon (user_id, discount_id, status)
-          VALUES (?, ?, ?)`,
+            VALUES (?, ?, ?)`,
             [user_id, discount_id, status || "active"]
         );
 
@@ -154,7 +164,7 @@ router.post("/history", async (req, res) => {
         const conn = await pool.getConnection();
         const rows = await conn.query(
             `
-      SELECT
+        SELECT
         \`order\`.order_id,
         \`order\`.order_date,
         \`order\`.total_price,
@@ -164,11 +174,11 @@ router.post("/history", async (req, res) => {
         order_detail.delivery,
         order_detail.estimated_date,
         product.product_name
-      FROM \`order\`
-      JOIN order_detail ON \`order\`.order_id = order_detail.order_id
-      JOIN product ON order_detail.product_id = product.product_id
-      WHERE \`order\`.user_id = ?
-      ORDER BY \`order\`.order_date DESC
+        FROM \`order\`
+        JOIN order_detail ON \`order\`.order_id = order_detail.order_id
+        JOIN product ON order_detail.product_id = product.product_id
+        WHERE \`order\`.user_id = ?
+        ORDER BY \`order\`.order_date DESC
     `,
             [userId]
         );
@@ -313,28 +323,35 @@ router.post("/order", async (req, res) => {
     }
 
     const fullAddress = `${address} ${detailAddress ?? ""}`;
-    try {
-        const conn = await pool.getConnection();
 
-        // order 테이블에 삽입
-        const orderResult = await conn.query(
-            `INSERT INTO \`order\` (order_date, total_price, status, payment_method, user_id, address, discount_id)
-        VALUES (NOW(), ?, '결제완료', ?, ?, ?, ?)`,
+    let conn;
+    try {
+        conn = await pool.getConnection();
+        await conn.beginTransaction();
+
+        // order 테이블 삽입
+        const { insertId: order_id } = await conn.query(
+            `
+            INSERT INTO \`order\`
+            (order_date, total_price, status, 
+            payment_method, user_id, address, discount_id)
+            VALUES (NOW(), ?, '결제완료', ?, ?, ?, ?)
+            `,
             [total_price, payment, user_id, fullAddress, discount_id || null]
         );
 
-        const order_id = orderResult.insertId;
-
         // order_detail 테이블에 삽입
+        const estimatedDate = new Date();
+        estimatedDate.setDate(estimatedDate.getDate() + 2);
+
         for (const item of items) {
             const subtotal = item.price * item.quantity;
-            const estimatedDate = new Date();
-            estimatedDate.setDate(estimatedDate.getDate() + 2);
 
             await conn.query(
                 `INSERT INTO order_detail
-          (quantity, price, delivery, subtotal, product_id, order_id, estimated_date)
-          VALUES (?, ?, '배송준비', ?, ?, ?, ?)`,
+                (quantity, price, delivery, subtotal, 
+                product_id, order_id, estimated_date)
+                VALUES (?, ?, '배송준비', ?, ?, ?, ?)`,
                 [
                     item.quantity,
                     item.price,
@@ -345,18 +362,44 @@ router.post("/order", async (req, res) => {
                 ]
             );
         }
-        const productIds = items.map((item) => item.product_id);
-        const placeholders = productIds.map(() => "?").join(",");
-        await conn.query(
-            `DELETE FROM cart WHERE product_id IN (${placeholders}) AND user_id = ?`,
-            [...productIds, user_id]
-        );
 
-        conn.release();
-        res.send("주문 저장 완료");
+        // 쿠폰 사용 처리
+        if (discount_id) {
+            const { affectedRows } = await conn.query(
+                `UPDATE user_coupon
+                SET status = 'used'
+                WHERE user_id = ? AND discount_id = ? 
+                AND status = 'active'`,
+                [user_id, discount_id]
+            );
+
+            if (affectedRows === 0) {
+                throw new Error("쿠폰이 없거나 이미 사용되었습니다.");
+            }
+        }
+
+        // 장바구니 비우기
+        const ids = items.map((i) => i.product_id);
+        if (ids.length) {
+            await conn.query(
+                `DELETE FROM cart
+                WHERE user_id = ? AND product_id
+                IN (${ids.map(() => "?").join(",")})`,
+                [user_id, ...ids]
+            );
+        }
+
+        // 커밋
+        await conn.commit();
+        res.json({ success: true });
+
+        // 에러 시 롤백
     } catch (err) {
-        console.error("주문 저장 실패:", err);
-        res.status(500).send("서버 오류");
+        if (conn) await conn.rollback();
+        console.error("주문저장실패:", err);
+        res.status(500).send("서버오류: " + err.message);
+    } finally {
+        conn && conn.release();
     }
 });
 

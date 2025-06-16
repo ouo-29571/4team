@@ -20,7 +20,7 @@ function EventPage() {
         try {
             const responses = await Promise.all(
                 discountIds.map((id) =>
-                    fetch("/coupon", {
+                    fetch("http://localhost:8080/coupon", {
                         // proxy 세팅 시
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
