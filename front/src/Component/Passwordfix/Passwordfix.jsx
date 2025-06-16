@@ -45,6 +45,7 @@ const passwordfix = () => {
             const data = await response.json();
             if (data.Passwordfix_result == true) {
                 //비밀번호 수정 페이지 연결
+                sessionStorage.removeItem("user");
                 navigate("/Login");
             }
         }
