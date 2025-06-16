@@ -230,6 +230,7 @@ function EventPage() {
                         </button>
                     )}
                 </div>
+
                 <p className="stamp-counter">
                     도장 {days.length} / {GOAL}
                 </p>
