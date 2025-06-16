@@ -1,13 +1,21 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "../EventPage/EventPage.css";
-import Daycheck from "./Daycheck/Daycheck";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css";
 
 function EventPage() {
+    // 로그인 정보 가져오기
     const sessionUser = sessionStorage.getItem("user");
     const user = sessionUser ? JSON.parse(sessionUser) : null;
-    const [claimed, setClaimed] = useState(false);
 
-    // 쿠폰 발급할 id
+    const [days, setDays] = useState([]);
+    const [claimable, setClaimable] = useState(false);
+    const [claimed, setClaimed] = useState(false);
+    const GOAL = 5;
+    const ATTEND_COUPON_ID = 3;
+
+    // 쿠폰 한번에 받기
+    // 발급할 쿠폰id
     const discountIds = [1, 2];
 
     const handleCoupon = useCallback(async () => {
@@ -46,6 +54,72 @@ function EventPage() {
             setClaimed(false);
         }
     }, [user, discountIds]);
+
+    // 출석체크 쿠폰받기
+    useEffect(() => {
+        if (!user) return;
+        fetch(`http://localhost:8080/attendance/count?user_id=${user.id}`)
+            .then((r) => r.json())
+            .then(({ days: d, couponClaimed }) => {
+                setDays(d);
+                setClaimable(d.length > -GOAL && !couponClaimed);
+            });
+    }, [user]);
+
+    // 오늘 출석 버튼
+    const checkToday = useCallback(async () => {
+        if (!user) return alert("로그인 해주세요");
+
+        const today = new Date().toISOString().slice(0, 10);
+        if (days.includes(today)) return alert("오늘은 이미 출석했습니다.");
+
+        try {
+            const r = await fetch("http://localhost:8080/attendance", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: user.id, date: today }),
+            });
+            if (!r.ok) throw new Error();
+
+            setDays((prev) => [...prev, today]);
+            if (days.length + 1 >= GOAL) setClaimable(true);
+            alert("출석 완료!");
+        } catch {
+            alert("출석 저장 실패");
+        }
+    }, [user, days]);
+
+    // 쿠폰 발급 버튼
+    const claimCoupon = async () => {
+        if (!user) return;
+        try {
+            const r = await fetch("http://localhost:8080/coupon", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    user_id: user.id,
+                    discount_id: ATTEND_COUPON_ID,
+                }),
+            });
+            if (r.status === 409) return alert("이미 발급된 쿠폰입니다.");
+            if (!r.ok) throw new Error();
+            alert("쿠폰발급 완료!");
+            setClaimable(false);
+        } catch {
+            alert("쿠폰 발급 오류");
+        }
+    };
+
+    // 달력에 도장 찍기
+    const tileClassName = ({ date, view }) =>
+        view === "month" && days.includes(date.toISOString().slice(0, 10))
+            ? "react=calendar__tile--attended"
+            : null;
+
+    const tileContent = ({ date, view }) =>
+        view === "month" && days.includes(date.toISOString().slice(0, 10)) ? (
+            <span className="stamp-icon">✅</span>
+        ) : null;
 
     return (
         <div className="eventpage-bigbox">
@@ -117,32 +191,29 @@ function EventPage() {
 
             {/* ✅ 출석체크하고 할인 받기 */}
             <section className="attendance-section">
-                <div className="at-title">
-                    <h6>출석체크하고</h6>
-                    <h3>포인트 받기</h3>
-                </div>
-                <div className="at-date-wrapper">
-                    <div className="at-date">6/1 ~ 6/30</div>
-                </div>
+                <h3>출석 체크 달력</h3>
 
-                <div className="at-boxline">
-                    <div className="at-textbox">
-                        <span className="at-text">매일매일 500p 적립</span>
-                    </div>
+                <Calendar
+                    className="attend-calendar"
+                    locale="ko"
+                    tileClassName={tileClassName}
+                    tileContent={tileContent}
+                    value={new Date()}
+                />
 
-                    <div className="at-daybox">
-                        {Array.from({ length: 9 }, (_, i) => (
-                            <Daycheck key={i} day={i + 1} />
-                        ))}
-                    </div>
-                </div>
-
-                <button
-                    className="at-button"
-                    onClick={() => alert("출석 체크 완료되었습니다!")}
-                >
+                <button className="at-button" onClick={checkToday}>
                     오늘 출석 체크 하기
                 </button>
+
+                <p>
+                    도장 {days.length} / {GOAL}
+                </p>
+
+                {claimable && (
+                    <button className="cp-button" onClick={claimCoupon}>
+                        출석 쿠폰 받기
+                    </button>
+                )}
             </section>
         </div>
     );

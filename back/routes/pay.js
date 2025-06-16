@@ -287,6 +287,41 @@ router.post("/cart", async (req, res) => {
     }
 });
 
+// 출석 도장 확인
+router.get("/attendance/count", async (req, res) => {
+    const user_id = req.query.user_id;
+    const conn = await pool.getConnection();
+    const [result] = await conn.query(
+        `
+    SELECT COUNT(*) AS count
+    FROM user_attendance
+    WHERE user_id = ? AND MONTH(date) = MONTH(NOW()) AND YEAR(date) = YEAR(NOW())`,
+        [user_id]
+    );
+    conn.release();
+    res.json({ count: result.count });
+});
+
+// 출석 저장
+router.post("/attendance", async (req, res) => {
+    const { user_id, date } = req.body;
+    if (!user_id || !date) return res.status(400).send("user_id, date 필요");
+
+    try {
+        const conn = await pool.getConnection();
+        await conn.query(
+            `INSERT IGNORE INTO user_attendance (user_id, date)
+            VALUES (?, ?)`,
+            [user_id, date]
+        );
+        conn.release();
+        res.json({ success: true });
+    } catch (err) {
+        console.error("출석 저장 실패:", err);
+        res.status(500).send("서버 오류");
+    }
+});
+
 // ✅ 선택 항목만 계산 요청
 router.post("/cart/summary", async (req, res) => {
     const checkedItems = req.body; // [{ id, quantity, price }]
