@@ -71,8 +71,16 @@
   align-items: start;
   margin-bottom: 10px;
   justify-content: center;
+  width: 100%;
 }
 
+.row-input{
+  width: 500px;
+}
+.row-input-map{
+  width: 493px;
+  margin-left: 30px;
+}
 /* ✅ 우편번호 input, 버튼 높이 통일 */
 .row input[type="text"],
 .row button {

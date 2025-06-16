@@ -124,29 +124,29 @@ function Order() {
           <p>배송지입력</p>
           <div className="order-item-box">
             <div className="row">
-              <input
+              <input className="row-input"
                 type="text"
                 id="sample3_postcode"
                 placeholder="우편번호"
                 disabled
-                style={{ width: "200px", height: "37px" }}
+                style={{ height: "37px" }}
               />
               <button className="ZipCode" onClick={handlePostcode}>
                 우편번호 찾기
               </button>
             </div>
-            <input
+            <input 
               type="text"
               id="sample3_address"
               placeholder="주소"
-              className="full-input"
+              className="row-input-map"
               disabled
             />
             <input
               type="text"
               id="sample3_detailAddress"
               placeholder="상세주소"
-              className="full-input"
+              className="row-input-map"
             />
 
             {wrapVisible && (
@@ -232,7 +232,7 @@ function Order() {
             <div className="item-row">
               <label>구매금액</label>
               <input
-                value={summary.totalPrice}
+                value={summary.totalPrice.toLocaleString() + '원'}
                 disabled
                 className="item-box-input"
               />
@@ -240,7 +240,7 @@ function Order() {
             <div className="item-row">
               <label>할인금액</label>
               <input
-                value={summary.discount}
+                value={summary.discount.toLocaleString() + '원'}
                 disabled
                 className="item-box-input"
               />
@@ -248,16 +248,16 @@ function Order() {
             <div className="item-row">
               <label>배송비</label>
               <input
-                value={summary.delivery}
+                value={summary.delivery.toLocaleString() + '원'}
                 disabled
                 className="item-box-input"
               />
             </div>
             <br />
             <div className="item-row">
-              <label style={{ font: "bold" }}>총 결제금액</label>
+              <label style={{ fontWeight: "bold" }}>총 결제금액</label>
               <input
-                value={summary.finalPrice}
+                value={summary.finalPrice.toLocaleString() + '원'}
                 disabled
                 className="item-box-input"
               />
