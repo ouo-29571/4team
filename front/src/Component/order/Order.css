@@ -116,6 +116,7 @@
   align-items: center;
   width: 95%;
   margin-bottom: 8px;
+  
 }
 
 .item-row label {
@@ -130,4 +131,17 @@
   box-sizing: border-box;
   text-align: end;
 
+}
+
+.ItemBuy-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+margin-left: 300px;
+  width: 150px;
+  color: white;
+  background-color: #584738;
+  border-radius: 10px;
+  
 }
