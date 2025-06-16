@@ -14,7 +14,7 @@ const Footer = () => {
             style={{ width: "70px", height: "70px" }}
           />
           <div className="Logo">
-            <h1>vintage haus</h1>
+            <p>vintage haus</p>
           </div>
           <div className="footer_BigBox_right">
             <button

@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap");
+
 .footer_BigBox {
   padding: 20px;
   color: black;
@@ -19,6 +21,9 @@
   display: flex;
   justify-content: left;
   align-items: center;
+  font-family: "Zen Old Mincho", serif, culsive !important;
+  font-style: normal;
+  font-size: 40px;
 }
 .footer_BigBox_left {
   display: flex; /* flex로 정렬 (가로 정렬 시작) */
@@ -55,6 +60,7 @@
   border: none;
   color: white;
   cursor: pointer;
+  font-size: 22px;
 }
 .footer_BigBox_right_button:focus {
   outline: none; /* 포커스 시 외곽선 제거 */
