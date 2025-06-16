@@ -24,7 +24,7 @@
 }
 
 .scrollbar-ds-container::-webkit-scrollbar-track {
-  background:#AAA396; 
+  background: #aaa396;
   border-radius: 10px;
 }
 

@@ -58,7 +58,7 @@ const Header = () => {
             >
                 {" "}
                 {/* ✅ 헤더*/}
-                <p className="headertext">최대 50% 할인쿠폰</p>
+                <p className="headertext">신규 회원 가입 혜택 받기</p>
             </div>
             <div className="navbox">
                 <div className="nav-left">

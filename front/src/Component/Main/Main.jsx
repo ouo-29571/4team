@@ -33,36 +33,33 @@ function Main() {
         {" "}
         {/* ✅ 아티클 - 카테고리 */}
         <h2 className="bs-text">카테고리 별 보기</h2>
-        <div className="bs-dropdown">
-          {" "}
-          {/* ✅ 카테고리 - 드롭다운 */}
-          <select
-            value={selected}
-            onChange={handleChange}
-            className="dropdown-select"
-          >
-            <option value="1">인기순</option>
-            <option value="2">높은 가격순</option>
-            <option value="3">낮은 가격순</option>
-          </select>
-          {/* <p>선택한 값: {selected}</p>  // 선택된 값 표시 (필요시 주석 해제) */}
-        </div>
         <div className="bs-group">
           {" "}
           {/* ✅ 카테고리 아이템 박스 그룹 */}
-          <div onClick={() => navigate("/menu?category=furniture")} className="bs-box">
-            <div className="bs-img img-furniture"></div>
+          <div
+            onClick={() => navigate("/menu?category=furniture")}
+            className="bs-box"
+          >
             <Link to="/menu?category=furniture">
-              <button className="bs-button">#가구</button>
+              <div className="bs-box">
+                <div className="bs-img img-furniture"></div>
+                <div className="bs-button">#가구</div>
+              </div>
             </Link>
           </div>
-          <div onClick={() => navigate("/menu?category=kitchen")} className="bs-box">
+          <div
+            onClick={() => navigate("/menu?category=kitchen")}
+            className="bs-box"
+          >
             <div className="bs-img img-kitchen"></div>
             <Link to="/menu?category=kitchen">
               <button className="bs-button">#주방용품</button>
             </Link>
           </div>
-          <div onClick={() => navigate("/menu?category=interiorobj")} className="bs-box">
+          <div
+            onClick={() => navigate("/menu?category=interiorobj")}
+            className="bs-box"
+          >
             <div className="bs-img img-interiorobj"></div>
             <Link to="/menu?category=interiorobj">
               <button className="bs-button">#인테리어 오브제</button>
@@ -73,7 +70,7 @@ function Main() {
       <button className="discountbox">
         {" "}
         {/*✅ 아티클 - 베스트셀러 */}
-        <h2 className="ds-text">베스트셀러</h2>
+        <h2 className="ds-text">인기 상품</h2>
         <ScrollbarDs style={{ maxWidth: "1530px" /* 490 * 3 + gap 대략 */ }}>
           {" "}
           {/* 베스트셀러 스크롤바 */}
@@ -121,9 +118,15 @@ function Main() {
         {/*어바웃어스 폰트 - 나중에 폰트 변경 후 이탤릭스타일 적용*/}
         <div className="abbox">
           <br />
-          <h2>About us</h2> <br />
+          <h2 className="ab-text">About us</h2> <br />
           <br />
           <br />
+          <img className="ab-deco-img1" src="/img/deco1.png" />
+          <img className="ab-deco-img2" src="/img/deco2.png" />
+          <img className="ab-deco-img3" src="/img/deco3.png" />
+          <img className="ab-deco-img4" src="/img/deco4.png" />
+          <img className="ab-deco-img5" src="/img/deco5.png" />
+          <img className="ab-deco-img6" src="/img/deco6.png" />
           <p>
             {" "}
             Vintage Haus는 세월의 따스함을 담은 물건들을 큐레이션하는 감성
@@ -136,7 +139,6 @@ function Main() {
             <br />
             느려도 좋으니, 예쁜 것들로 채워진 오늘을 살아가길 바랍니다.
           </p>
-          <button className="ab-button">더 알아보기</button>
         </div>
       </div>
       {/* <Footer /> ✅푸터 */}
