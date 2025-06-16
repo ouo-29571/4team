@@ -5,7 +5,7 @@ body {
   height: 100%; /* 🔴 브라우저 창 전체 높이 */
   margin-top: -200px; /* 🔴 위로 당기는 효과 (너무 크면 이상해질 수 있음) */
 }
-/* 부모요소(main)가 자식(big_Box)을 가운데로 */
+/*  ✅ 부모요소(main)가 자식(big_Box)을 가운데로 */
 main {
   display: flex; /* 🔴 main도 flex로 설정 */
   justify-content: center; /* 🔴 가로 가운데 정렬 */
@@ -15,7 +15,7 @@ main {
   margin-top: -110px; /* 🔴 아래로 밀기 (하지만 너무 크면 배치가 깨질 수 있음) */
   background-color: #f1eada;
 }
-/* 박스 전체 (up_Box, down_Box를 감싸는 부모) */
+/* ✅ 박스 전체 (up_Box, down_Box를 감싸는 부모) */
 .big_Box {
   display: flex; /* 🔴 자식들을 배치하려면 flex */
   flex-direction: column; /* 🔴 위 ➝ 아래 방향 배치 */
@@ -24,7 +24,7 @@ main {
   width: 80%; /* 🔴 부모(main)의 100% 너비 */
   height: 100%; /* 🔴 main의 절반 높이 */
 }
-/* 위 박스 */
+/*  ✅ 위 박스 */
 .up_Box {
   display: flex; /* 🔴 버튼 배치용 flex */
   align-items: center; /* 🔴 가로 정렬 */
@@ -32,74 +32,91 @@ main {
   width: 95%; /* 🔴 big_Box의 95% 너비 */
   height: 5%; /* 🔴 big_Box의 20% 높이 */
   margin-top: 100px; /* 🔴 너무 위로 밀려서 겹칠 위험 있음 (❗추천하지 않음) */
-  gap: 200px;
+  gap: 80px;
   font-size: 40px;
 }
 .up_Box_button {
-  background-color: transparent;
+  text-align: center;
+  font-size: 30px;
+  background-color: #584738;
+  color: #fff;
+  padding: 20px 60px;
+  border-radius: 50px;
   border: none;
   cursor: pointer;
-  text-align: center;
-  font-size: 100px;
+  display: inline-block;
+  transform: translateY(60px);
 }
+
 .up_Box_button:focus {
   outline: none; /* 포커스 시 외곽선 제거 */
   box-shadow: none; /* 포커스 시 생기는 그림자 제거 */
   border: none; /* 포커스 시 테두리 제거 */
 }
-/* 드롭다운 찜순 , 낮은 가격순 , 높은 가격순 */
+/*✅ 드롭다운 찜순 , 낮은 가격순 , 높은 가격순 */
 .sortDropdown {
-  font-size: 25px;
-  margin-left: 1150px; /* 오른쪽으로 이동 */
+  font-size: 18px;
+  margin-left: 1240px; /* 오른쪽으로 이동 */
   margin-top: 50px; /* 아래로 이동 */
-  background-color: transparent;
-  border: none;
+  transform: translateY(-30px);
+  background-color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
   appearance: none; /* 🔴 브라우저 기본 UI 없애기 (중요) */
   -webkit-appearance: none; /* 🔴 사파리 등 웹킷 브라우저용 */
   -moz-appearance: none; /* 🔴 파이어폭스용 */
   text-align: center;
+  padding: 10px 20px;
 }
-.sortDropdown:focus,
+/*.sortDropdown:focus,
 .sortDropdown:active {
   background-color: transparent;
   outline: none;
   border: none;
-}
-/* 아래 박스 */
+} */
+
+/* ✅ 아래 박스 */
 .down_Box {
   display: flex; /* 🔴 버튼 배치용 flex */
   align-items: center; /* 🔴 가로 정렬 */
   justify-content: center; /* 🔴 세로 정렬 */
   width: 95%; /* 🔴 big_Box의 95% 너비 */
   height: 80%; /* 🔴 big_Box의 20% 높이 */
-  margin-top: 100px; /* 🔴 또 위로 너무 당기면 레이아웃 깨짐 (❗주의) */
+  margin-top: 10px; /* 🔴 또 위로 너무 당기면 레이아웃 깨짐 (❗주의) */
 }
 .grid_Box {
   display: grid; /* 🔴 grid 방식으로 배치 */
   grid-template-columns: repeat(3, 1fr); /* 🔴 3열로 반복 */
   gap: 100px; /* 🔴 각 박스 사이 간격 */
   width: 50%; /* 🔴 너비 설정 (원하는 대로 조절 가능) */
-  height: 98%; /* 🔴 높이는 내용에 따라 */
+  height: 100%; /* 🔴 높이는 내용에 따라 */
   position: relative;
   left: -352px;
 }
 .item {
-  border: 1px solid gray; /* 🔴 각 칸 테두리 */
   text-align: center; /* 🔴 숫자 중앙 정렬 */
   font-size: 24px; /* 🔴 글씨 크기 */
 }
-/* 사진 */
+/* ✅ 사진 */
 .inner_up {
-  border: 1px solid gray; /* 🔴 각 칸 테두리 */
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
   text-align: center; /* 🔴 숫자 중앙 정렬 */
   font-size: 10px; /* 🔴 글씨 크기 */
   height: 400px;
 }
-/* 상품 이름 , 가격격 */
+
+.inner_up_img {
+  height: 400px;
+  width: 400px;
+  object-fit: cover;
+  border-top-left-radius: 30px;
+  border-top-right-radius: 30px;
+}
+/*✅  상품 이름 , 가격 */
 .inner_down {
-  border: 1px solid gray; /* 🔴 각 칸 테두리 */
   padding: 55px; /* 🔴 크기 조절 */
+  border-bottom-left-radius: 30px;
+  border-bottom-right-radius: 30px;
   text-align: center; /* 🔴 숫자 중앙 정렬 */
   font-size: 15px; /* 🔴 글씨 크기 */
   height: 70px;
@@ -107,12 +124,18 @@ main {
   flex-direction: column; /* 🔴 세로 방향 정렬 */
   justify-content: space-between; /* 🔴 위-아래로 분산 배치 */
   position: relative; /* 🔴 자식 absolute 위치 기준 */
+  background-color: #fff;
 }
 .inner_left_text {
   text-align: left;
-  margin-top: -50px;
+  margin-top: -40px;
 }
-/* 찜 버튼 */
+
+.inner_left_text2 {
+  font-size: 35px;
+  font-weight: 600;
+}
+/* ✅  찜 버튼 */
 .inner_left_button {
   background-color: #f1eada;
   border-radius: 20px;

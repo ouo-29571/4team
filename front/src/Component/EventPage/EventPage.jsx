@@ -168,27 +168,27 @@ function EventPage() {
             </div>
           </div>
           <div className="vt-imgbox">
-            <img className="vt-img" src="/img/salebg.png"></img>
+            <img
+              className="vt-img"
+              src="/img/salebg.png"
+              alt="sale background"
+            />
           </div>
         </div>
       </section>
 
-      {/* ✅할인 쿠폰 받기 */}
+      {/* ✅ 할인 쿠폰 받기 */}
       <section className="coupon-section">
         <p className="cp-banner">할인 쿠폰에 포인트까지!</p>
 
         <div className="cp-title">
-          {" "}
-          {/* 신규회원 혜택 */}
           <h6>신규 회원 혜택</h6>
           <h3>쿠폰 받기</h3>
         </div>
 
         <div className="cp-items">
-          {" "}
-          {/* 쿠폰사진 */}{" "}
           <div className="couponzip-box">
-            <img className="couponzipimg" src="/img/쿠폰집.png"></img>
+            <img className="couponzipimg" src="/img/쿠폰집.png" alt="coupon" />
           </div>
         </div>
         <div className="cpbtn-wrapper">
@@ -229,9 +229,19 @@ function EventPage() {
         <p className="stamp-counter">
           도장 {days.length} / {GOAL}
         </p>
+        <h3 className="vt-p-start">
+          <br />
+          신규 회원 가입 혜택, <br />
+          빈티지 하우스와 새롭게 시작해보세요.
+        </h3>
+        <p className="vt-p-event">
+          event 1. 첫 구매 시 99% 할인 <br />
+          event 2. 신규 가입 시 10,000원 즉시 할인
+          <br />
+          event 3. 출석체크 시 포인트 지급
+        </p>
       </section>
     </div>
   );
 }
-
 export default EventPage;
