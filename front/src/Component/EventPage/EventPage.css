@@ -8,262 +8,322 @@
 } */
 
 .eventpage-bigbox {
-  width: 1920px;
-  height: 3250px;
-  border: 1px solid #333;
-  background-color: #f1eada;
-  margin: -110px 0 0 0;
-  padding: 0;
+    width: 1920px;
+    border: 1px solid #333;
+    background-color: #f1eada;
+    margin: -110px 0 0 0;
+    padding: 0;
 }
 
 /* ✅ 썸머 페스타 */
 .vintage-section {
-  background-color: #f1eada;
-  width: 1920px;
-  height: 1080px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    background-color: #f1eada;
+    width: 1920px;
+    height: 1080px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .vt-textbox {
-  background-color: #cec1a8;
-  width: 1200px;
-  height: 600px;
-  display: flex;
-  justify-content: space-between;
-  align-items: stretch;
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-  top: 300px;
+    background-color: #cec1a8;
+    width: 1200px;
+    height: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+    border-radius: 20px;
+    overflow: hidden;
+    position: relative;
+    top: 300px;
 }
 
 .vt-text {
-  /* 첫 혜택 텍스트 */
-  width: 50%;
-  padding: 30px;
-  color: #333;
-  text-align: left;
-  box-sizing: border-box;
-  font-size: 22px;
+    /* 첫 혜택 텍스트 */
+    width: 50%;
+    padding: 30px;
+    color: #333;
+    text-align: left;
+    box-sizing: border-box;
+    font-size: 22px;
 }
 
 .vt-p-start {
-  font-size: 20px;
+    font-size: 20px;
 }
 
 .vt-p-event {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 .vt-text-logo {
-  font-family: "Zen Old Mincho", serif, culsive !important;
-  font-weight: 500;
-  font-size: 28px;
-  font-style: bold;
-  color: #584738;
-  position: relative;
-  top: 20px;
+    font-family: "Zen Old Mincho", serif, culsive !important;
+    font-weight: 500;
+    font-size: 28px;
+    font-style: bold;
+    color: #584738;
+    position: relative;
+    top: 20px;
 }
 
 .vt-imgbox {
-  width: 780px;
-  height: 600px;
-  background-color: thistle;
+    width: 780px;
+    height: 600px;
+    background-color: thistle;
 
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
-  position: relative;
-  top: -300px;
-  left: 420px;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    position: relative;
+    top: -300px;
+    left: 420px;
 }
 
 .vt-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
 }
 
 /* ✅ 쿠폰 */
 .coupon-section {
-  background-color: #f1eada;
-  width: 1920px;
-  height: 1080px;
-  text-align: center;
-  margin-bottom: 20px;
-  display: block;
-  margin: 0;
+    background-color: #f1eada;
+    width: 1920px;
+    text-align: center;
+    display: block;
+    margin-bottom: 100px;
 }
 
 .cp-banner {
-  /* 할인 쿠폰에 포인트까지! 배너 */
+    /* 할인 쿠폰에 포인트까지! 배너 */
 
-  background-color: #584738;
-  width: 1920px;
-  height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: #fff;
-  text-align: center;
-  padding: 0;
-  margin: 0;
+    background-color: #584738;
+    width: 1920px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: #fff;
+    text-align: center;
+    padding: 0;
+    margin: 0;
 }
 
 .cp-title,
 .at-title {
-  font-size: 40px;
-  color: #333;
-  text-align: center;
-  margin: 0px;
-  position: relative;
-  top: 100px;
+    font-size: 40px;
+    color: #333;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 60px;
 }
 
 .cp-items {
-  /* 쿠폰사진 틀 */
-  width: 1920px;
-  height: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: relative;
-  top: 200px;
+    /* 쿠폰사진 틀 */
+    width: 1920px;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 .couponzipimg {
-  /* 쿠폰사진 */
-  width: 1370px;
-  height: 370px;
+    /* 쿠폰사진 */
+    width: 1370px;
+    height: 370px;
 }
 
 .cpbtn-wrapper {
-  /* 쿠폰한번에받기 버튼 틀 */
-  display: inline-block;
-  width: 400px;
-  height: 50px;
-  justify-content: center;
-  justify-items: center;
-  align-items: center;
-  text-align: center;
-  position: relative;
-  top: 300px;
+    /* 쿠폰한번에받기 버튼 틀 */
+    display: inline-block;
+    width: 400px;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 40px;
 }
 
 .cp-button {
-  /* 쿠폰한번에받기 버튼 */
-  display: inline-block;
-  text-align: center;
-  background-color: #584738;
-  color: #fff;
-  padding: 16px 24px;
-  border-radius: 30px;
+    /* 쿠폰한번에받기 버튼 */
+    display: inline-block;
+    text-align: center;
+    background-color: #584738;
+    color: #fff;
+    padding: 16px 24px;
+    border-radius: 30px;
 }
 
 /* ✅ 출석체크 */
 .attendance-section {
-  background-color: #f1eada;
-  width: 1920px;
-  height: 1080px;
-  display: block;
-  justify-content: center;
-  text-align: center;
-  align-items: center;
-  border: 1px solid #333;
-  margin: 0;
-  padding: 0;
+    background-color: #f1eada;
+    width: 1920px;
+    display: block;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    border: 1px solid #333;
+    padding: 40px 0;
+    gap: 16px;
 }
 
 .at-date-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 .at-date {
-  position: relative;
-  bottom: -100px;
-  font-size: 24px;
-  width: 200px;
-  height: 40px;
-  border-radius: 20px;
-  align-items: center;
-  text-align: center;
-  background-color: #584738;
-  color: #fff;
+    position: relative;
+    bottom: -100px;
+    font-size: 24px;
+    width: 200px;
+    height: 40px;
+    border-radius: 20px;
+    align-items: center;
+    text-align: center;
+    background-color: #584738;
+    color: #fff;
 }
 
 .at-boxline {
-  border-radius: 20px;
-  background-color: white;
-  width: 1000px;
-  height: 600px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  top: 150px;
+    border-radius: 20px;
+    background-color: white;
+    width: 1000px;
+    height: 600px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    top: 150px;
 }
 .at-textbox {
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  background-color: #b19a7a;
-  color: #fff;
-  width: 1000px;
-  height: 80px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  position: relative;
-  bottom: 130px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    background-color: #b19a7a;
+    color: #fff;
+    width: 1000px;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    bottom: 130px;
 }
 
 .at-daybox {
-  display: grid;
-  gap: 30px;
-  grid-template-columns: repeat(3, 1fr); /* 3칸 만들기 */
+    display: grid;
+    gap: 30px;
+    grid-template-columns: repeat(3, 1fr); /* 3칸 만들기 */
 }
 
 .at-day {
-  background-color: #b19a7a;
-  text-align: center;
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  gap: 20x;
+    background-color: #b19a7a;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    gap: 20x;
 }
 
 .at-button {
-  display: inline-block;
-  text-align: center;
-  background-color: #584738;
-  color: #fff;
-  padding: 16px 24px;
-  border-radius: 30px;
-  margin-top: 40px;
-  position: relative;
-  top: 160px;
+    display: inline-block;
+    text-align: center;
+    background-color: #584738;
+    color: #fff;
+    padding: 16px 24px;
+    border-radius: 30px;
+    margin-top: 40px;
+    position: relative;
+
+    width: auto;
+    max-width: 240px;
+    align-items: center;
 }
 
 .cp-title h6,
 .at-title h6 {
-  margin: 0;
-  font-size: 24px;
-  color: #333;
+    margin: 0;
+    font-size: 24px;
+    color: #333;
 }
 
 .cp-title h3,
 .at-title h3 {
-  margin: 4px 0 20px 0;
-  font-size: 40px;
-  color: #333;
+    margin: 4px 0 20px 0;
+    font-size: 40px;
+    color: #333;
+}
+
+/* ───── 달력 및 도장 스타일 ───── */
+.attend-calendar,
+.attend-calendar .react-calendar {
+    width: 50% !important;
+    margin: 0 auto;
+    background-color: #f1eada;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+    font-size: 25px;
+}
+
+.react-calendar__tile--attended {
+    background: #ffd44e; /* 도장색 */
+    color: #000;
+    border-radius: 50%;
+}
+
+.calendar-saturday,
+.calendar-saturday abbr {
+    color: blue !important;
+}
+
+.stamp-icon {
+    font-size: 1.2rem;
+}
+
+/* ① 7등분한 그리드 + gap */
+.react-calendar__month-view__days {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+/* ② 타일을 정사각형으로 만드는 핵심 */
+.react-calendar__tile {
+    aspect-ratio: 1 / 1; /* 가로 : 세로 = 1:1 */
+    padding: 0; /* 내부 패딩 제거(원하면 자유 조정) */
+    display: flex; /* 숫자 가운데 */
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.react-calendar__tile.next-month.saturday,
+.react-calendar__tile.next-month.sunday {
+    color: #bbb !important; /* 흐린 회색 */
+    opacity: 0.5; /* 더 흐리게 (선택) */
+    font-weight: normal;
+}
+
+/* 버튼 세트 간격 */
+.attend-action {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 날짜 카운터 위치 */
+.stamp-counter {
+    margin-top: 12px;
 }

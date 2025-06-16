@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Cart.css";
+import images from "../Menu/Product/productimg.jsx";
 
 function Cart() {
   const navigate = useNavigate();
@@ -155,7 +156,7 @@ function Cart() {
 
   return (
     <>
-      <main className="cart-Main" n>
+      <main className="cart-Main">
         <section>
           <div className="cart">
             <h2>장바구니</h2>
@@ -172,6 +173,7 @@ function Cart() {
               <button
                 type="button"
                 onClick={selected_Delete}
+                className="TotalDel_btn"
                 style={{ marginLeft: "auto" }}
               >
                 선택삭제
@@ -191,35 +193,45 @@ function Cart() {
                   />
                 </form>
                 <div className="imgBox">
-                  <img src="#" alt="상품 이미지" />
+                  <img
+                    src={images[item.product_id]}
+                    alt={item.product_name}
+                    height="50"
+                    width="50"
+                  />
                 </div>
               </div>
               <div className="centerBox">
                 <br />
-                <input 
+                <input
                   value={item.name}
                   className="	Product-input"
                   placeholder="상품명"
-                  readOnly
+                  disabled
                 />
 
                 <input
-                  value={item.quantity || ""}
+                  value={`${item.quantity || ""}EX`}
                   className="Quantity-input"
                   placeholder="수량"
-                  readOnly
+                  disabled
                 />
-              
 
                 <input
-                  value={item.price || ""}
+                  value={
+                    item.price
+                      ? Number(item.price).toLocaleString() + " 원" // 🔴 천 단위 콤마 찍기
+                      : ""
+                  }
                   className="Amount-input"
                   placeholder="금액"
-                  readOnly
+                  disabled
                 />
               </div>
               <div className="rightBox">
-                <button onClick={() => del_btn(item.id)}>삭제</button>
+                <button className="del_btn" onClick={() => del_btn(item.id)}>
+                  삭제
+                </button>
               </div>
             </div>
           ))}
@@ -230,10 +242,14 @@ function Cart() {
             <form>
               <p>총 상품가격</p>
               <input
-                value={summary.totalPrice}
+                value={
+                  summary.totalPrice
+                    ? Number(summary.totalPrice).toLocaleString() + " 원" // 🔴 콤마와 원 표시 추가
+                    : ""
+                }
                 type="text"
                 className="small-input"
-                readOnly
+                disabled
               />
 
               <p>+ 배송비(3만원이상 구매시 배송비 무료)</p>
@@ -241,7 +257,7 @@ function Cart() {
                 value={summary.delivery}
                 type="text"
                 className="small-input"
-                readOnly
+                disabled
               />
             </form>
             <br />
@@ -249,23 +265,28 @@ function Cart() {
             <div className="confirmBox">
               <p>구매물품 수량</p>
               <input
-                value={summary.totalQuantity}
-                readOnly
+                value={`${summary.totalQuantity}EX`}
+                disabled
                 style={{ margin: "0px 10px" }}
+                className="small-input"
               />
               <p>예상 결제금액</p>
               <input
-                value={summary.finalPrice}
+                value={
+                  summary.finalPrice
+                    ? Number(summary.finalPrice).toLocaleString() + " 원" // 🔴 콤마 추가
+                    : ""
+                }
                 placeholder="총 금액"
                 style={{ marginLeft: "10px" }}
-                readOnly
+                className="small-input"
+                disabled
               />
-              <p>원</p>
             </div>
             <div>
               <button
+                className="Buy-button"
                 onClick={() => placeOrder(navigate)}
-                style={{ width: "600px", border: "1px solid #333" }}
               >
                 구매하기
               </button>

@@ -49,6 +49,9 @@ import Image209_2 from "../Product/Object_Image/Image209_2.png";
 import "./DetailPage.css";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+
+import OrderPopupModal from "../../PopupModal/order_PopupModal";
+
 function DetailPage() {
   const [count, setCount] = useState(1);
   const { id } = useParams();
@@ -61,6 +64,9 @@ function DetailPage() {
   const userId = rawUser ? JSON.parse(rawUser).id : null;
   const navigate = useNavigate();
   const [mainImageIndex, setMainImageIndex] = useState(0);
+
+  //장바구니 팝업창
+  const [showModal, setShowModal] = useState(false);
 
   const images = {
     1: [Image1],
@@ -164,17 +170,22 @@ function DetailPage() {
         .then((res) => {
           if (!res.ok) throw new Error("장바구니 담기 실패");
           setInCart(false);
-          alert(
-            `✅장바구니에 추가되었습니다! \n` +
-              `품명: ${productName}\n` +
-              `수량: ${count}개\n` +
-              `가격: ${productPrice.toLocaleString()}원\n` +
-              `===========================\n` +
-              `합계: ${(count * productPrice).toLocaleString()}원`
-          );
+          setShowModal(true);
+          // alert(
+          //   `✅장바구니에 추가되었습니다! \n`+
+          //   `품명: ${productName}\n`+
+          //   `수량: ${count}개\n`+
+          //   `가격: ${productPrice.toLocaleString()}원\n`+
+          //   `===========================\n`+
+          //   `합계: ${(count*productPrice).toLocaleString()}원`
+          // );
         })
         .catch((err) => alert(err.message));
     }
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   const buyNow = () => {
@@ -197,6 +208,117 @@ function DetailPage() {
     );
   }
 
+  return (
+    <>
+      {showModal && (
+        <OrderPopupModal
+          productName={product.product_name}
+          count={count}
+          productPrice={product.price}
+          closeModal={closeModal}
+        />
+      )}
+      <div className="Product_Top">
+        <div className="Product_Box">
+          {/*이미지----------------------------------------------------------------------------*/}
+          <div className="Product_Image">
+            {product.product_id && images[product.product_id] ? (
+              <img
+                src={images[product.product_id][mainImageIndex]} // mainImageIndex를 사용하여 이미지 변경
+                alt={product.product_name}
+                style={{ width: "600px", height: "600px" }}
+              />
+            ) : (
+              //----------------------------------------
+              <span>이미지 없음</span>
+            )}
+          </div>
+          {/*클릭시 이미지 변경-------------------------------------------------------------*/}
+          <div className="Product_Scroll" style={{ cursor: "pointer" }}>
+            {images[product.product_id]?.map((imgSrc, index) => (
+              <div
+                className="Thumb"
+                key={index}
+                onClick={() => setMainImageIndex(index)}
+              >
+                <img
+                  src={imgSrc}
+                  alt={`제품 썸네일 ${index + 1}`}
+                  style={{ width: "100px", height: "100px" }}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="Product_Info">
+          <div className="Product_Name">{product.product_name}</div>
+          <div className="Product_Price-Box">
+            <div className="Product_Price">
+              <span>가격:</span>
+              <span>{(product.price * count).toLocaleString()}</span>
+            </div>
+            <div className="Product_Quantity">
+              수량:
+              <div className="Product_Quantity_buttons">
+                <button onClick={() => setCount(Math.max(count - 1, 1))}>
+                  -
+                </button>
+                <span>{count}</span>
+                <button onClick={() => setCount(count + 1)}>+</button>
+              </div>
+            </div>
+          </div>
+          <div className="Product_Buttons">
+            <button onClick={toggleCart}>
+              {inCart ? "장바구니 빼기" : "장바구니 담기"}
+            </button>
+            <button onClick={() => buyNow(navigate)}>바로구매</button>
+          </div>
+        </div>
+      </div>
+      <div className="Product_DetailPage">
+        <div className="Product_Coupon">
+          첫 구매 시 99% 할인
+          <button style={{ width: "100px" }}>쿠폰</button>
+        </div>
+        <div
+          style={{
+            fontSize: "80px",
+            fontWeight: 900,
+            marginBottom: "40px",
+            textAlign: "center",
+          }}
+        >
+          {product.product_name}
+        </div>
+        <div
+          style={{
+            fontSize: "50px",
+            fontWeight: 500,
+            marginBottom: "80px",
+          }}
+        >
+          “어디서도 볼 수 없는 특별한 디자인.”
+        </div>
+        <div style={{ marginBottom: "40px" }}>
+          {product.product_id &&
+          images[product.product_id] &&
+          images[product.product_id][0] ? (
+            <img
+              src={images[product.product_id][0]} // 배열의 첫 번째 이미지
+              alt={product.product_name}
+              style={{ width: "900px", height: "900px" }}
+            />
+          ) : (
+            <span>이미지 없음</span>
+          )}
+        </div>
+        <div className="Product_Detail">{product.field1}</div>
+        <div className="Product_Detail">{product.field2}</div>
+        <div className="Product_Detail">{product.field3}</div>
+      </div>
+    </>
+  );
   return (
     <>
       <div className="Product_Top">
