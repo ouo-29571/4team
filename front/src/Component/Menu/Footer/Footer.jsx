@@ -35,6 +35,7 @@ const Footer = () => {
             >
               오시는길
             </button>
+
           </div>
         </div>
 
@@ -66,13 +67,19 @@ const Footer = () => {
         className="goTopButton"
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       >
-        ⬆️
+
+        <img className="gotopimg" src="/img/화살표-위.png" alt="위화살표" />
       </button>
       <button
-        className="godownButton"
+        className="goDownButton"
         onClick={() => window.scrollTo({ top: 6000, behavior: "smooth" })}
       >
-        ⬇️
+        <img
+          className="godownimg"
+          src="/img/화살표-아래.png"
+          alt="ᄋ아래화살표"
+        />
+
       </button>
     </div>
   );
