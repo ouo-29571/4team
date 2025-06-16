@@ -121,6 +121,7 @@ function Order() {
 
     return (
         <>
+        <div className="Order-Main">
             <h2>결제하기</h2>
 
             {/* 주소찾기 */}
@@ -133,9 +134,9 @@ function Order() {
                             id="sample3_postcode"
                             placeholder="우편번호"
                             readOnly
-                            style={{ width: "200px", height: "30px" }}
+                            style={{ width: "200px", height: "37px" }}
                         />
-                        <button onClick={handlePostcode}>우편번호 찾기</button>
+                        <button className="ZipCode" onClick={handlePostcode}>우편번호 찾기</button>
                     </div>
                     <input
                         type="text"
@@ -291,6 +292,7 @@ function Order() {
                         구매하기
                     </button>
                 </div>
+            </div>
             </div>
         </>
     );
