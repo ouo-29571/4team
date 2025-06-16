@@ -139,14 +139,14 @@ function Order() {
               type="text"
               id="sample3_address"
               placeholder="주소"
-              className="row-input"
+              className="row-input-map"
               disabled
             />
             <input
               type="text"
               id="sample3_detailAddress"
               placeholder="상세주소"
-              className="row-input"
+              className="row-input-map"
             />
 
             {wrapVisible && (
