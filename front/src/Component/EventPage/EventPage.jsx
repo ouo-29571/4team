@@ -111,13 +111,30 @@ function EventPage() {
     };
 
     // 달력에 도장 찍기
-    const tileClassName = ({ date, view }) =>
-        view === "month" && days.includes(date.toISOString().slice(0, 10))
-            ? "react=calendar__tile--attended"
-            : null;
+    const toLocalDateString = (date = new Date()) => {
+        const tz = date.getTimezoneOffset() * 60000;
+        const local = new Date(date.getTime() - tz);
+        return local.toISOString().slice(0, 10);
+    };
+
+    const tileClassName = ({ date, view }) => {
+        if (view !== "month") return;
+
+        const dateStr = toLocalDateString(date);
+        const classes = [];
+
+        // ✅ 출석 도장
+        if (days.includes(dateStr))
+            classes.push("react-calendar__tile--attended");
+
+        // ✅ 토요일이면 파란색
+        if (date.getDay() === 6) classes.push("calendar-saturday");
+
+        return classes.join(" ");
+    };
 
     const tileContent = ({ date, view }) =>
-        view === "month" && days.includes(date.toISOString().slice(0, 10)) ? (
+        view === "month" && days.includes(toLocalDateString(date)) ? (
             <span className="stamp-icon">✅</span>
         ) : null;
 
@@ -195,6 +212,7 @@ function EventPage() {
 
                 <Calendar
                     className="attend-calendar"
+                    calendarType="gregory"
                     locale="ko"
                     tileClassName={tileClassName}
                     tileContent={tileContent}

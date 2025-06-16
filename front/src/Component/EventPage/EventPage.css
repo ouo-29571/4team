@@ -277,6 +277,12 @@
     color: #000;
     border-radius: 50%;
 }
+
+.calendar-saturday,
+.calendar-saturday abbr {
+    color: blue !important;
+}
+
 .stamp-icon {
     font-size: 1.2rem;
 }
