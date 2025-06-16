@@ -208,8 +208,9 @@ function EventPage() {
 
             {/* ✅ 출석체크하고 할인 받기 */}
             <section className="attendance-section">
-                <h3>출석 체크 달력</h3>
-
+                <div className="cp-title">
+                    <h3>출석체크 하고 쿠폰 받기</h3>
+                </div>
                 <Calendar
                     className="attend-calendar"
                     calendarType="gregory"
@@ -218,20 +219,20 @@ function EventPage() {
                     tileContent={tileContent}
                     value={new Date()}
                 />
+                <div className="attend-action">
+                    <button className="at-button" onClick={checkToday}>
+                        오늘 출석 체크 하기
+                    </button>
 
-                <button className="at-button" onClick={checkToday}>
-                    오늘 출석 체크 하기
-                </button>
-
-                <p>
+                    {claimable && (
+                        <button className="cp-button" onClick={claimCoupon}>
+                            출석 쿠폰 받기
+                        </button>
+                    )}
+                </div>
+                <p className="stamp-counter">
                     도장 {days.length} / {GOAL}
                 </p>
-
-                {claimable && (
-                    <button className="cp-button" onClick={claimCoupon}>
-                        출석 쿠폰 받기
-                    </button>
-                )}
             </section>
         </div>
     );

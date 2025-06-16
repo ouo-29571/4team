@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap");
+
 /* html, body {
   height: 100%;
   margin: 0;
@@ -7,7 +9,6 @@
 
 .eventpage-bigbox {
     width: 1920px;
-    height: 3250px;
     border: 1px solid #333;
     background-color: #f1eada;
     margin: -110px 0 0 0;
@@ -54,7 +55,6 @@
 .vt-p-event {
     font-size: 14px;
 }
-@import url("https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap");
 
 .vt-text-logo {
     font-family: "Zen Old Mincho", serif, culsive !important;
@@ -90,11 +90,9 @@
 .coupon-section {
     background-color: #f1eada;
     width: 1920px;
-    height: 1080px;
     text-align: center;
-    margin-bottom: 20px;
     display: block;
-    margin: 0;
+    margin-bottom: 100px;
 }
 
 .cp-banner {
@@ -118,9 +116,8 @@
     font-size: 40px;
     color: #333;
     text-align: center;
-    margin: 0px;
-    position: relative;
-    top: 100px;
+    margin-top: 20px;
+    margin-bottom: 60px;
 }
 
 .cp-items {
@@ -131,7 +128,6 @@
     justify-content: center;
     align-items: center;
     position: relative;
-    top: 200px;
 }
 
 .couponzipimg {
@@ -144,13 +140,11 @@
     /* 쿠폰한번에받기 버튼 틀 */
     display: inline-block;
     width: 400px;
-    height: 50px;
     justify-content: center;
     justify-items: center;
     align-items: center;
     text-align: center;
-    position: relative;
-    top: 300px;
+    margin-top: 40px;
 }
 
 .cp-button {
@@ -167,14 +161,13 @@
 .attendance-section {
     background-color: #f1eada;
     width: 1920px;
-    height: 1080px;
     display: block;
     justify-content: center;
     text-align: center;
     align-items: center;
     border: 1px solid #333;
-    margin: 0;
-    padding: 0;
+    padding: 40px 0;
+    gap: 16px;
 }
 
 .at-date-wrapper {
@@ -250,7 +243,10 @@
     border-radius: 30px;
     margin-top: 40px;
     position: relative;
-    top: 160px;
+
+    width: auto;
+    max-width: 240px;
+    align-items: center;
 }
 
 .cp-title h6,
@@ -268,10 +264,17 @@
 }
 
 /* ───── 달력 및 도장 스타일 ───── */
-.attend-calendar {
-    width: 320px;
+.attend-calendar,
+.attend-calendar .react-calendar {
+    width: 50% !important;
     margin: 0 auto;
+    background-color: #f1eada;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 1);
+    font-size: 25px;
 }
+
 .react-calendar__tile--attended {
     background: #ffd44e; /* 도장색 */
     color: #000;
@@ -285,4 +288,42 @@
 
 .stamp-icon {
     font-size: 1.2rem;
+}
+
+/* ① 7등분한 그리드 + gap */
+.react-calendar__month-view__days {
+    display: grid !important;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 6px;
+}
+
+/* ② 타일을 정사각형으로 만드는 핵심 */
+.react-calendar__tile {
+    aspect-ratio: 1 / 1; /* 가로 : 세로 = 1:1 */
+    padding: 0; /* 내부 패딩 제거(원하면 자유 조정) */
+    display: flex; /* 숫자 가운데 */
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.react-calendar__tile.next-month.saturday,
+.react-calendar__tile.next-month.sunday {
+    color: #bbb !important; /* 흐린 회색 */
+    opacity: 0.5; /* 더 흐리게 (선택) */
+    font-weight: normal;
+}
+
+/* 버튼 세트 간격 */
+.attend-action {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+}
+
+/* 날짜 카운터 위치 */
+.stamp-counter {
+    margin-top: 12px;
 }
