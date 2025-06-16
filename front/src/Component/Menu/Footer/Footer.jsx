@@ -77,5 +77,5 @@ const Footer = () => {
     </div>
   );
 };
-
+// 에고
 export default Footer;
