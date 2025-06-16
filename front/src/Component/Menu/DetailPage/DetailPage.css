@@ -64,6 +64,7 @@ body {
   font-size: 20px;
   text-align: center;
   font-size: 50px;
+  font-weight: 600;
 }
 
 .Product_Price_Box {
@@ -74,7 +75,7 @@ body {
 
 .Product_Price {
   width: 600px;
-  font-size: 50px;
+  font-size: 40px;
   display: flex;
   justify-content: space-between;
 }
@@ -140,8 +141,8 @@ body {
 
 .Product_Coupon {
   background-color: rgba(163, 111, 32, 0.404);
-  height: 180px;
-  width: 1800px;
+  height: 80px;
+  width: 1920px;
   display: flex;
   justify-content: center; /* 가로 가운데 */
   align-items: center; /* 가로축 중앙 */
@@ -152,12 +153,10 @@ body {
   border-bottom: 3px solid black;
 }
 .Product_Coupon_Button {
-  height: 100px;
-  width: 400px;
+  height: 80px;
+  width: 1920px;
   text-align: center;
-  font-size: 70px;
-  line-height: 100px; /* 세로 텍스트 정렬 height와 같게 */
-  border-radius: 35px; ;
+  font-size: 40px;
 }
 
 .Product_Detail {
@@ -166,10 +165,9 @@ body {
   display: flex;
   justify-content: center;
   background: white;
-  font-size: 45px;
-  font-weight: 1000;
+  font-size: 40px;
+  font-weight: 300;
   margin-bottom: 40px; /* div 밑에 16px 간격 */
   background-color: transparent;
   text-align: center;
-  
 }
