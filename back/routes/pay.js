@@ -291,15 +291,38 @@ router.post("/cart", async (req, res) => {
 router.get("/attendance/count", async (req, res) => {
     const user_id = req.query.user_id;
     const conn = await pool.getConnection();
-    const [result] = await conn.query(
-        `
-    SELECT COUNT(*) AS count
-    FROM user_attendance
-    WHERE user_id = ? AND MONTH(date) = MONTH(NOW()) AND YEAR(date) = YEAR(NOW())`,
-        [user_id]
-    );
-    conn.release();
-    res.json({ count: result.count });
+
+    try {
+        // 1. 해당 월 출석 날짜 가져오기
+        const rows = await conn.query(
+            `SELECT DATE_FORMAT(date,'%Y-%m-%d') AS day
+            FROM user_attendance
+            WHERE user_id = ?
+            AND YEAR(date) = YEAR(NOW())
+            AND MONTH(date) = MONTH(NOW())`,
+            [user_id]
+        );
+
+        // 2. 쿠폰 발급 여부 확인 (선택: 쿠폰 ID가 정해져 있을 경우)
+        const [couponRow] = await conn.query(
+            `
+            SELECT COUNT(*) AS used
+            FROM user_coupon
+            WHERE user_id = ? AND discount_id = 3 AND status = 'used'
+            `,
+            [user_id]
+        );
+
+        const days = rows.map((r) => r.day);
+        const couponClaimed = couponRow.used > 0;
+
+        res.json({ days, couponClaimed });
+    } catch (err) {
+        console.error("출석 기록 조회 오류:", err);
+        res.status(500).json({ error: "서버 오류" });
+    } finally {
+        conn.release();
+    }
 });
 
 // 출석 저장
