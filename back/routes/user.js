@@ -187,27 +187,6 @@ router.post("/Mypage_userName", async (req, res) => {
     res.json({ User_Name });
 });
 
-//쿠폰 수 가져오기
-async function find_couponcount(user_id) {
-    const conn = await pool.getConnection();
-    const row = conn.query(
-        "SELECT COUNT(*) AS count FROM user_coupon WHERE status = 'active' AND user_id = ?",
-        [user_id]
-    );
-    conn.release();
-    return row;
-}
-router.post("/Mypage_couponcount", async (req, res) => {
-    const { user_id } = req.body;
-    const rows = await find_couponcount(user_id);
-    count = rows[0].count;
-    // BigInt 처리 (toString 또는 Number로 변환)
-    if (typeof count === "bigint") {
-        count = Number(count); // 또는 count.toString()
-    }
-    res.json({ count });
-});
-
 //쿠폰 데이터 가져오기
 router.post("/Mypage_coupondata", async (req, res) => {
     const { user_id } = req.body;
@@ -313,10 +292,6 @@ router.post("/Mypage_wish_init", async (req, res) => {
 //찜목록
 router.post("/Mypage_Wish", async (req, res) => {
     const { user_id, product_id, likedItems } = req.body;
-    //확인용
-    console.log(likedItems);
-    console.log(product_id);
-
     const conn = await pool.getConnection();
     let rows;
     if (likedItems === true) {
