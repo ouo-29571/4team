@@ -267,3 +267,23 @@
   font-size: 40px;
   color: #333;
 }
+
+/* ───── 달력 및 도장 스타일 ───── */
+.attend-calendar {
+    width: 320px;
+    margin: 0 auto;
+}
+.react-calendar__tile--attended {
+    background: #ffd44e; /* 도장색 */
+    color: #000;
+    border-radius: 50%;
+}
+
+.calendar-saturday,
+.calendar-saturday abbr {
+    color: blue !important;
+}
+
+.stamp-icon {
+    font-size: 1.2rem;
+}
