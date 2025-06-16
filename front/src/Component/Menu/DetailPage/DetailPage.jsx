@@ -250,7 +250,7 @@ function DetailPage() {
             </div>
           </div>
           <div className="Product_Buttons">
-            <button>찜</button>
+  
             <button onClick={toggleCart}>
               {inCart ? "장바구니 빼기" : "장바구니 담기"}
             </button>

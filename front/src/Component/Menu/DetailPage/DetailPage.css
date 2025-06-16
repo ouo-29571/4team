@@ -111,9 +111,16 @@ body {
   gap: 10px;
 }
 .Product_Buttons button {
-  width: 200px;
+  width: 300px;
   height: 100px;
   font-size: 40px;
+  background-color: #584738;
+  border-radius: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  cursor: pointer;
 }
 
 .Product_Buttons Button {
