@@ -5,6 +5,7 @@
   align-items: center;
   background-color: #f1eada;
   width: 1920px;
+  height: 700px;
   margin-top: -120px;
 }
 
@@ -98,7 +99,10 @@
 
 .product-details {
   flex: 1;
+<<<<<<< HEAD
   width: 600px;
+=======
+>>>>>>> parent of 0c74b29 ( 제발 끝 히스토리)
 }
 
 .product-name {
