@@ -4,13 +4,13 @@ import { useNavigate } from "react-router-dom"; // ✅ 리액트 라우터 훅 i
 // ✅ 이미지 배열
 const images = [
   {
-    src: "/img/bg.png",
+    src: "/img/mainb--g.jpg",
     text: "신규 회원 \n 혜택 받기",
     button: "혜택 확인하기",
     link: "/EventPage", // ✅ 다른 페이지도 가능
   },
   {
-    src: "/img/main_bg2.png",
+    src: "/img/main-bg.jpg",
     text: "출석체크 하고 \n 쿠폰 받기",
     button: "출석 체크 하러 가기",
     link: "/EventPage", // ✅ 다른 페이지도 가능

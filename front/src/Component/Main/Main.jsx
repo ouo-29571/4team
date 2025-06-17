@@ -43,7 +43,7 @@ function Main() {
             <Link to="/menu?category=furniture">
               <div className="bs-box">
                 <div className="bs-img img-furniture"></div>
-                <div className="bs-button">#가구</div>
+                <div className="bs-button"># 가구</div>
               </div>
             </Link>
           </div>
@@ -53,7 +53,7 @@ function Main() {
           >
             <div className="bs-img img-kitchen"></div>
             <Link to="/menu?category=kitchen">
-              <button className="bs-button">#주방용품</button>
+              <button className="bs-button"># 주방용품</button>
             </Link>
           </div>
           <div
@@ -62,7 +62,7 @@ function Main() {
           >
             <div className="bs-img img-interiorobj"></div>
             <Link to="/menu?category=interiorobj">
-              <button className="bs-button">#인테리어 오브제</button>
+              <button className="bs-button"># 인테리어 오브제</button>
             </Link>
           </div>
         </div>
@@ -88,7 +88,7 @@ function Main() {
       <div className="interiorbox">
         {" "}
         {/*✅아티클 - 인테리어(감각적인..)*/}
-        <h2 className="itr-text">감각적인 _______를 만나보세요.</h2>
+        <h2 className="itr-text">감각적인 공간들을 만나보세요.</h2>
         <p className="itr-text2">실제 인테리어를 적용한 모습을 확인하세요!</p>
         <h3 className="itr-a-h3">vintage haus와 함께하는 섬세한 하루</h3>
         <h6 className="itr-a-h6">

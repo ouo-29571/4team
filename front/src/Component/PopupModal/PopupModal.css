@@ -11,19 +11,20 @@
   z-index: 9999;
 }
 
-.popup-modal {                                      /*✅ 팝업 큰 틀 */
-  background: #CEC1AB; 
+.popup-modal {
+  /*✅ 팝업 큰 틀 */
+  background: #cec1ab;
   padding: 30px;
   border-radius: 12px;
-  width:260px;
+  width: 260px;
   height: 410px;
   position: relative;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   text-align: center;
-
 }
 
-.popup-close-button {                        /*✅  닫기 버튼 */
+.popup-close-button {
+  /*✅  닫기 버튼 */
   position: absolute;
   top: 10px;
   right: 10px;
@@ -33,22 +34,33 @@
   cursor: pointer;
 }
 
-.popup-content {                             /* ✅ 팝업 내용 */
+.popup-content {
+  /* ✅ 팝업 내용 */
   margin-top: 20px;
 }
 
-.checkimg{                                    /*  ✅ 췤~! png */
+.checkimg {
+  /*  ✅ 췤~! png */
   width: 20px;
   height: 20px;
 }
- 
-.checkbox{                               /* ✅ 팝업 창 안에 출석췤 틀 */
+
+.checkbox {
+  /* ✅ 팝업 창 안에 출석췤 틀 */
   width: 200px;
   height: 250px;
-  border: 0.1px solid #333;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border-radius: 20px;
   margin: 0 auto;
   background-color: #b59e7d;
+}
+
+.checktext {
+  margin-top: -20px;
+  
 }
 
 .checking {
@@ -59,17 +71,19 @@
   margin: 0 auto;
 }
 
-.checkingimg{                                 /*  ✅ 출석도장 */
+.checkingimg {
+  /*  ✅ 출석도장 */
   position: relative;
   top: 20px;
   width: 30px;
   height: auto;
 }
 
-.ck-button{                                   /*  ✅ 출석도장 버튼 */
+.ck-button {
+  /*  ✅ 출석도장 버튼 */
   border-radius: 20px;
   background-color: #584738;
-  color:#fff;
+  color: #fff;
   padding: 10px 20px;
   font-size: 10px;
   display: inline-block;

@@ -23,11 +23,14 @@ const ArrivalMap = () => {
             </div>
           </div>
           <div className="Am-Box_QnA2">
-            <div className="Am-QnA2_map" >
-                <div className="Am-QnA2_map_ping"> <img src="../../../../img/Location.png" alt="" />  </div>
-                <div>
-              <h2> 경기도 화성시 떡전골로 97</h2>
-              <h3> 병점역 1번 출구 바로앞</h3>
+            <div className="Am-QnA2_map">
+              <div className="Am-QnA2_map_ping">
+                {" "}
+                <img src="../../../../img/Location.png" alt="" />{" "}
+              </div>
+              <div>
+                <h2> 경기도 화성시 떡전골로 97</h2>
+                <h3> 병점역 1번 출구 바로앞</h3>
               </div>
             </div>
             <div style={{ display: "flex", flexDirection: "row" }}>

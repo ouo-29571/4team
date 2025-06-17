@@ -9,7 +9,7 @@
 
 .eventpage-bigbox {
   width: 1920px;
-  border: 1px solid #333;
+
   background-color: #f1eada;
   margin: -110px 0 0 0;
   padding: 0;
@@ -165,7 +165,7 @@
   justify-content: center;
   text-align: center;
   align-items: center;
-  border: 1px solid #333;
+
   padding: 40px 0;
   gap: 16px;
 }
@@ -288,6 +288,11 @@
 
 .stamp-icon {
   font-size: 1.2rem;
+}
+
+.stampimg {
+  width: 30px;
+  height: 30px;
 }
 
 /* ① 7등분한 그리드 + gap */

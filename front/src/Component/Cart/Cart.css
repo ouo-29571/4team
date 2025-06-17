@@ -2,7 +2,7 @@
 .cart-Main {
   margin-top: -120px;
   height: 100%;
-  overflow: visible
+  overflow: visible;
 }
 .className:cart {
   margin-top: -100px;
@@ -10,7 +10,7 @@
 .choiceBox {
   width: 800px;
   display: flex;
-  border: 1px solid #000;
+
   gap: 10px;
   padding: 10px;
   align-items: center;
@@ -23,22 +23,24 @@
   height: 30px;
   border: none;
   background-color: #584738;
-  border-radius: 10px;
+  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
+  font-size: 13px;
 }
 .del_btn {
   width: 60px;
   height: 30px;
   border: none;
   background-color: #584738;
-  border-radius: 10px;
+  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
   color: white;
+  font-size: 13px;
 }
 
 .choiceBox form {
@@ -55,7 +57,6 @@
 
 /* ✅ 장바구니 목록 아이템 전체 박스 */
 .cartList {
-  border: 1px solid #000;
   width: 760px;
   margin: 30px;
   padding: 10px;
@@ -92,7 +93,7 @@
   position: sticky;
   bottom: 0;
   z-index: 1000;
-  border: 1px solid #000;
+
   width: 800px;
   margin: 30px;
   padding: 10px;
@@ -104,7 +105,7 @@
 .purchaseBox form {
   display: flex;
   padding-bottom: 20px;
-  border-bottom: 1px solid #000;
+
   justify-content: center;
 }
 
@@ -137,17 +138,17 @@
   margin-top: 20px;
   margin-left: 300px;
   width: 200px;
+  height: 30px;
   color: white;
   background-color: #584738;
-  border-radius: 10px;
-  
+  border-radius: 30px;
+  font-size: 13px;
 }
 
 .rightBox {
   display: flex;
   justify-content: center;
   align-items: center;
-  
 }
 
 .leftBox {
@@ -155,5 +156,4 @@
   justify-content: center;
   align-items: center;
   gap: 15px;
-  
 }

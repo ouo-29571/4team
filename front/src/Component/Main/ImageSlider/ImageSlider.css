@@ -4,11 +4,9 @@
   height: auto;
 }
 
-
-.itr-box{     
-  width:500px;
-  height:700px;
-  border:1px solid #333;
+.itr-box {
+  width: 500px;
+  height: 700px;
   border-top-left-radius: 500px;
   border-top-right-radius: 500px;
   display: flex;
@@ -17,11 +15,9 @@
   align-items: center;
   margin: 0 auto;
   margin-top: -280px;
+}
 
-} 
-
-
- .itr-img {
+.itr-img {
   width: 100%;
   height: 100%;
   object-fit: cover;

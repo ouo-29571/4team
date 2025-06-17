@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import './PopupModal.css';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
+import "./PopupModal.css";
+import { useNavigate } from "react-router-dom";
 
 const PopupModal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,28 +19,46 @@ const PopupModal = () => {
 
   return (
     <div className="popup-overlay">
-      <div className="popup-modal">       {/* 팝업 큰 틀 */}
-        <button className="popup-close-button" onClick={handleClose}>X</button>
-        <div className="popup-content">   {/* 팝업 내용 */}
-          <h2>출석체크하고 <br/> 포인트 받기</h2>
-
-          <div className="checkbox">      {/* 팝업틀 - 출석 틀 */}
-            <p>출석 check~! <img className="checkimg" src="/img/체크.png"/></p>
-            
-            <div className="checking">                                {/* 출석틀 - 출석도장 */}
-              <img className="checkingimg" src="/img/출석도장.png"/>
-              <img className="checkingimg" src="/img/출석도장.png"/>
-              <img className="checkingimg" src="/img/출석도장.png"/>
-              <img className="checkingimg" src="/img/출석도장.png"/> 
-              <img className="checkingimg" src="/img/출석도장.png"/>
-              <img className="checkingimg" src="/img/출석도장.png"/>
-              <img className="checkingimg" src="/img/출석도장.png"/>
-              <img className="checkingimg" src="/img/출석도장.png"/>
-              <img className="checkingimg" src="/img/출석도장.png"/>
+      <div className="popup-modal">
+        {" "}
+        {/* 팝업 큰 틀 */}
+        <button className="popup-close-button" onClick={handleClose}>
+          X
+        </button>
+        <div className="popup-content">
+          {" "}
+          {/* 팝업 내용 */}
+          <h2>
+            출석체크하고 <br /> 쿠폰 받기
+          </h2>
+          <div className="checkbox">
+            {" "}
+            {/* 팝업틀 - 출석 틀 */}
+            <p className="checktext">
+              출석 check~! <img className="checkimg" src="/img/체크.png" />
+            </p>
+            <div className="checking">
+              {" "}
+              {/* 출석틀 - 출석도장 */}
+              <img className="checkingimg" src="/img/stamp.png" />
+              <img className="checkingimg" src="/img/stamp.png" />
+              <img className="checkingimg" src="/img/stamp.png" />
+              <img className="checkingimg" src="/img/stamp.png" />
+              <img className="checkingimg" src="/img/stamp.png" />
+              <img className="checkingimg" src="/img/stamp.png" />
+              <img className="checkingimg" src="/img/stamp.png" />
+              <img className="checkingimg" src="/img/stamp.png" />
+              <img className="checkingimg" src="/img/stamp.png" />
             </div>
           </div>
-
-          <button onClick={()=>{navigate("/EventPage")}} className="ck-button">출석 체크 하러 가기</button>
+          <button
+            onClick={() => {
+              navigate("/EventPage");
+            }}
+            className="ck-button"
+          >
+            출석 체크 하러 가기
+          </button>
         </div>
       </div>
     </div>

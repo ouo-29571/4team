@@ -124,7 +124,8 @@ function Order() {
           <p>배송지입력</p>
           <div className="order-item-box">
             <div className="row">
-              <input className="row-input"
+              <input
+                className="row-input"
                 type="text"
                 id="sample3_postcode"
                 placeholder="우편번호"
@@ -135,7 +136,7 @@ function Order() {
                 우편번호 찾기
               </button>
             </div>
-            <input 
+            <input
               type="text"
               id="sample3_address"
               placeholder="주소"
@@ -232,7 +233,7 @@ function Order() {
             <div className="item-row">
               <label>구매금액</label>
               <input
-                value={summary.totalPrice.toLocaleString() + '원'}
+                value={summary.totalPrice.toLocaleString() + "원"}
                 disabled
                 className="item-box-input"
               />
@@ -240,7 +241,7 @@ function Order() {
             <div className="item-row">
               <label>할인금액</label>
               <input
-                value={summary.discount.toLocaleString() + '원'}
+                value={summary.discount.toLocaleString() + "원"}
                 disabled
                 className="item-box-input"
               />
@@ -248,7 +249,7 @@ function Order() {
             <div className="item-row">
               <label>배송비</label>
               <input
-                value={summary.delivery.toLocaleString() + '원'}
+                value={summary.delivery.toLocaleString() + "원"}
                 disabled
                 className="item-box-input"
               />
@@ -257,13 +258,12 @@ function Order() {
             <div className="item-row">
               <label style={{ fontWeight: "bold" }}>총 결제금액</label>
               <input
-                value={summary.finalPrice.toLocaleString() + '원'}
+                value={summary.finalPrice.toLocaleString() + "원"}
                 disabled
                 className="item-box-input"
               />
             </div>
-            <button className="ItemBuy-button"
-             onClick={handleOrder}>
+            <button className="ItemBuy-button" onClick={handleOrder}>
               구매하기
             </button>
           </div>

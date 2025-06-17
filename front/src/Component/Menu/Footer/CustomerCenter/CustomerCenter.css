@@ -13,16 +13,14 @@
 .cc-Text {
   position: relative;
   color: #333;
-  font-size: 40px;
+  font-size: 26px;
   text-align: left;
-
 }
 
 .cc-Box {
   width: 100%;
   display: flex;
   gap: 100px;
-
 }
 .cc-Box_QnA1 {
   height: auto;
@@ -48,7 +46,6 @@
   border-radius: 70px;
   background-color: #fff;
   gap: 70px;
-  
 }
 
 .cc-QnA1 {

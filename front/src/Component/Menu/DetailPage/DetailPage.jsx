@@ -278,27 +278,35 @@ function DetailPage() {
       </div>
       <div className="Product_DetailPage">
         <div className="Product_Coupon">
-          첫 구매 시 99% 할인
-          <button style={{ width: "100px" }}>쿠폰</button>
+          <button
+            style={{
+              width: "1920px",
+              fontSize: "20px",
+            }}
+          >
+            첫 구매 시<br />
+            99% 할인 쿠폰
+          </button>
         </div>
         <div
           style={{
-            fontSize: "80px",
-            fontWeight: 900,
-            marginBottom: "40px",
+            fontSize: "40px",
+            fontWeight: 600,
+            marginTop: "120px",
+            marginBottom: "80px",
             textAlign: "center",
           }}
         >
-          {product.product_name}
+          {product.product_name} {/*상품이름*/}
         </div>
         <div
           style={{
-            fontSize: "50px",
-            fontWeight: 500,
-            marginBottom: "80px",
+            fontSize: "20px",
+            fontWeight: 400,
+            marginBottom: "40px",
           }}
         >
-          “어디서도 볼 수 없는 특별한 디자인.”
+          어디서도 볼 수 없는 특별한 디자인
         </div>
         <div style={{ marginBottom: "40px" }}>
           {product.product_id &&
@@ -313,9 +321,10 @@ function DetailPage() {
             <span>이미지 없음</span>
           )}
         </div>
-        <div className="Product_Detail">{product.field1}</div>
+        <div className="Product_Detail">{product.field1}</div> {/*상품설명*/}
         <div className="Product_Detail">{product.field2}</div>
         <div className="Product_Detail">{product.field3}</div>
+        <br />
       </div>
     </>
   );

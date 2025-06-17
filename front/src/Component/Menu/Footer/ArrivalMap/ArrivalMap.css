@@ -13,7 +13,7 @@
 .Am-Text {
   position: relative;
   color: #333;
-  font-size: 40px;
+  font-size: 26px;
   text-align: left;
 }
 
@@ -28,7 +28,6 @@
   border-radius: 70px;
 }
 .Am-Box_QnA2 {
-
   height: 480px;
   width: 500px;
   display: flex;
@@ -41,17 +40,17 @@
 
   gap: 70px;
 }
-.Am-QnA2_map{
-    margin-top: 30px;
-    margin-left: 20px; 
+.Am-QnA2_map {
+  margin-top: 30px;
+  margin-left: 20px;
   display: flex;
   flex-direction: row;
 }
-.Am-QnA2_map_ping{
-    margin-top: 20px;
-    width: 80px;
-    height: 80px;
-    margin-right: 10px
+.Am-QnA2_map_ping {
+  margin-top: 20px;
+  width: 80px;
+  height: 80px;
+  margin-right: 10px;
 }
 .Am-QnA2_map_ping img {
   width: 100%; /* div의 크기에 맞게 이미지 크기 조정 */

@@ -32,7 +32,7 @@ main {
   width: 95%; /* 🔴 big_Box의 95% 너비 */
   height: 5%; /* 🔴 big_Box의 20% 높이 */
   margin-top: 100px; /* 🔴 너무 위로 밀려서 겹칠 위험 있음 (❗추천하지 않음) */
-  gap: 80px;
+  gap: 280px;
   font-size: 40px;
 }
 .up_Box_button {
@@ -45,7 +45,7 @@ main {
   border: none;
   cursor: pointer;
   display: inline-block;
-  transform: translateY(60px);
+  transform: translateY(-50px);
 }
 
 .up_Box_button:focus {
@@ -55,7 +55,7 @@ main {
 }
 /*✅ 드롭다운 찜순 , 낮은 가격순 , 높은 가격순 */
 .sortDropdown {
-  font-size: 18px;
+  font-size: 14px;
   margin-left: 1240px; /* 오른쪽으로 이동 */
   margin-top: 50px; /* 아래로 이동 */
   transform: translateY(-30px);

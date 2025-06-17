@@ -1,6 +1,19 @@
+.historybox {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f1eada;
+  width: 1920px;
+  height: 700px;
+  margin-top: -120px;
+}
+
 .card-container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: 24px;
   padding: 20px;
   width: 800px;
@@ -15,16 +28,15 @@
 }
 
 .order-card {
-  border: 1px solid #ccc;
   border-radius: 12px;
   padding: 16px;
   background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
 }
 
 .card-header {
   display: flex;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: flex-start;
   margin-bottom: 10px;
 }
@@ -105,7 +117,7 @@
 .detail-link {
   display: block;
   margin-bottom: 8px;
-  color: #0077cc;
+  color: #584738;
   text-decoration: none;
 }
 
@@ -115,10 +127,12 @@
 }
 
 .card-buttons button {
+  text-align: center;
   margin-right: 8px;
   margin-bottom: 8px;
   padding: 6px 12px;
-  background-color: #f0f0f0;
+  background-color: #584738;
+  color: #fff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
