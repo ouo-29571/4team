@@ -1,0 +1,69 @@
+.signup_page {
+    width: 100%;
+    height: 1100px;
+    padding-top: 150px;
+    margin-top: -110px;
+    display: flex;
+    justify-content: center; /*가로정렬*/
+    background-color: #f1eada;
+    margin-bottom: unset;
+}
+
+/*메인*/
+*/ .signupcontainer {
+    max-width: 500px;
+    padding: 0 30px;
+}
+
+/*상단 로고*/
+.signup_logo > img {
+    width: 200px;
+    height: auto; /*비율맞추도록*/
+    margin-left: 30%;
+    border-radius: 50px;
+}
+.signup_logo_text {
+    text-align: center;
+    font-size: 50px;
+    font-weight: bolder;
+    margin-bottom: 50px;
+    color: #584738;
+}
+
+/*입력창*/
+.input-container {
+    margin-bottom: 15px;
+    font-weight: bolder;
+}
+
+.input-container > div > input {
+    width: 400px;
+    height: 40px;
+    border-radius: 10px;
+    padding-right: 10px;
+    margin-top: 10px;
+    padding-left: 10px;
+}
+
+/*input type number인 우측 스클롤 삭제*/
+.Signup_tel_input::-webkit-outer-spin-button,
+.Signup_tel_input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.signup_button {
+    width: 100%;
+    height: 50px;
+    margin-top: 20px;
+    border-radius: 10px;
+    font-weight: bolder;
+    background-color: #584738;
+    color: #f1eada;
+    line-height: 50px; /* 🔥 텍스트 세로 중앙 정렬 */
+    text-align: center; /* 🔥 텍스트 가로 중앙 정렬 */
+}
+
+.signup_button:hover {
+    cursor: pointer;
+}

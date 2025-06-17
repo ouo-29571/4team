@@ -1,0 +1,34 @@
+@import url("https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap");
+
+.marquee-wrapper {
+  position: relative;
+  top: -270px; /* 위쪽 */
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  background-color: #584738;
+  color: #fff;
+}
+
+.marquee-track {
+  display: flex;
+  width: fit-content;
+  animation: scroll-left 20s linear infinite;
+  font-family: "Zen Old Mincho", serif, culsive !important;
+  font-style: italic;
+}
+
+.marquee-track span {
+  white-space: nowrap;
+  padding-right: 4vw;
+  display: inline-block;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}

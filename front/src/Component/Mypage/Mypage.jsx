@@ -1,0 +1,256 @@
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+import images from "../Menu/Product/productimg.jsx";
+import "./Mypage.css";
+
+const mypage = () => {
+    const navigate = useNavigate();
+
+    //사용자 정보
+    const [userName, setUserName] = useState(""); //사용자이름
+
+    //사용자 주문
+    const [user_order, setUser_order] = useState({
+        payment: 0,
+        delivery_ing: 0,
+        delivery: 0,
+    });
+
+    //쿠폰 상세정보
+    const [couponlist, setCouponlist] = useState([]);
+
+    //위시리스트 상세정보
+    const [wishlist, setWishlist] = useState([]);
+
+    //사용자 이름 가져오기
+    async function get_Username(email) {
+        const response = await fetch("http://localhost:8080/Mypage_userName", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ User_email: email }),
+        });
+
+        const data = await response.json();
+        if (data.User_Name && response.ok) {
+            setUserName(data.User_Name);
+        } else {
+            console.log("이름이 없습니다.");
+        }
+    }
+
+    //사용자 주문, 배송상태 가져오기
+    async function get_Userorder(id) {
+        const response = await fetch("http://localhost:8080/Mypage_userorder", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id: id }),
+        });
+        const data = await response.json();
+        setUser_order({
+            payment: data.paymentcount,
+            delivery_ing: data.delivery_ingcount,
+            delivery: data.deliverycount,
+        });
+    }
+
+    //찜 정보 가져오기
+    function get_wishdata(id) {
+        fetch("http://localhost:8080/Mypage_wishdata", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id: id }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setWishlist(data);
+            });
+    }
+
+    //마이페이지 클릭시 로그인상태가 아닐경우 로그인 페이지로
+    useEffect(() => {
+        const user = JSON.parse(sessionStorage.getItem("user"));
+
+        if (!user || !user.token) {
+            navigate("/Login");
+        } else {
+            get_Username(user.name);
+            get_Userorder(user.id);
+            get_Coupondata(user.id);
+            get_wishdata(user.id);
+        }
+    }, []);
+
+    //사용자주문 상세정보 열기
+    const Click_userorder = () => {
+        navigate("/History");
+    };
+
+    //쿠폰 정보 가져오기
+    function get_Coupondata(id) {
+        fetch("http://localhost:8080/Mypage_coupondata", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ user_id: id }),
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                setCouponlist(data);
+            });
+    }
+
+    return (
+        <>
+            <div className="Mypage_page">
+                {/* 사용자 정보및 회원정보 수정 */}
+                <div className="userinfo_box">
+                    <div className="username_box">
+                        {/* 대충 사용자 이미지 */}
+                        <div className="userinfo_box_img">
+                            <img src="/img/logo1.png" />
+                        </div>
+                        <div className="user_name">
+                            <div>
+                                <span className="DB_input_username">
+                                    {userName}
+                                </span>
+                                <span>님</span>
+                            </div>
+                            <div className="Userinfo_fix_Link">
+                                <Link to="/Userinfofix">
+                                    <span>회원정보 수정</span>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div></div>
+                <div className="user_order_menu">
+                    {/* 주문 / 배송조회 */}
+                    <div className="user_oder_table_subject">
+                        <span>주문 / 배송조회</span>
+                    </div>
+                    <div className="order_box">
+                        <div>
+                            <div>
+                                <span>{user_order.payment}</span>
+                            </div>
+                            <div>결제완료</div>
+                        </div>
+                        <div className="user_order_img">
+                            <img src="../img/free-icon-right-arrow-271228.png" />
+                        </div>
+                        <div>
+                            <div>
+                                <span>{user_order.delivery_ing}</span>
+                            </div>
+                            <div>배송 중</div>
+                        </div>
+                        <div className="user_order_img">
+                            <img src="../img/free-icon-right-arrow-271228.png" />
+                        </div>
+                        <div>
+                            <div>
+                                <span>{user_order.delivery}</span>
+                            </div>
+                            <div>배송완료</div>
+                        </div>
+                    </div>
+                    <div className="use_order" onClick={Click_userorder}>
+                        <span>더보기</span>
+                    </div>
+
+                    {/* 쿠폰상세정보 */}
+                    <div className="user_info_details">
+                        <div className="user_info_details_header">
+                            <span>쿠폰</span>
+                        </div>
+                        <div>
+                            {couponlist.length === 0 ? (
+                                <div className="list_empty">
+                                    <span>사용 가능한 쿠폰이 없습니다.</span>
+                                </div>
+                            ) : (
+                                couponlist.map((coupon) => (
+                                    <div
+                                        key={coupon.discount_id}
+                                        className="detailbox"
+                                    >
+                                        <div className="coupon_subject">
+                                            {coupon.name}
+                                        </div>
+                                        <div className="coupon_content">
+                                            {coupon.discount.toLocaleString()}
+                                            <span>
+                                                {coupon.discount_type ===
+                                                "percent"
+                                                    ? "%"
+                                                    : "원"}
+                                            </span>
+                                        </div>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </div>
+
+                    {/* 찜목록 상세정보 */}
+                    <div className="user_info_details">
+                        <div className="user_info_details_header">
+                            <span>찜 목록</span>
+                        </div>
+                        <div>
+                            {wishlist.length === 0 ? (
+                                <div className="list_empty">
+                                    <span>찜 목록이 없습니다.</span>
+                                </div>
+                            ) : (
+                                wishlist.map((wish) => (
+                                    <div
+                                        key={wish.product_id}
+                                        className="detailbox"
+                                    >
+                                        <Link
+                                            to={`/DetailPage/${wish.product_id}`}
+                                        >
+                                            <div className="wishbox">
+                                                <img
+                                                    src={
+                                                        images[wish.product_id]
+                                                    }
+                                                    alt={wish.product_name}
+                                                    height="200"
+                                                    width="200"
+                                                />
+                                                <div className="wish_content">
+                                                    <span className="wish_productname">
+                                                        {wish.product_name}
+                                                    </span>
+                                                    <span className="wish_productprice">
+                                                        {wish.price.toLocaleString()}
+                                                        원
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </Link>
+                                    </div>
+                                ))
+                            )}
+                        </div>
+                    </div>
+                </div>
+                {/* 쿠폰 상세 내용 */}
+            </div>
+        </>
+    );
+};
+
+export default mypage;

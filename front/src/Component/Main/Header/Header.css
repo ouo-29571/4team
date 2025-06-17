@@ -1,0 +1,106 @@
+@import url("https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap");
+
+.logo {
+    font-family: "Zen Old Mincho", serif, culsive !important;
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* 모든 button에 적용 */
+button {
+    all: unset; /* 기본 스타일 모두 제거 */
+    cursor: pointer; /* 커서 포인터로 변경 (선택 사항) */
+}
+
+.headerbox {
+    /*✅헤더 틀*/
+    width: 1920px;
+    height: 90px;
+    background-color: #f1eada;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    position: absolute;
+    top: -1px;
+}
+.navbox {
+    /* ✅네비 큰 틀 */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+    height: 160px;
+    background-color: #584738;
+    padding: 0 30px;
+    box-sizing: border-box;
+    top: -110px;
+}
+.nav-left {
+    /*ㄴ>네비 왼(메뉴) */
+    width: 20%;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.icon-user,
+.icon-cart,
+.icon-menu {
+    /* ✅아이콘 (회원가입,로그인) */
+    width: 20px;
+    height: 20px;
+}
+.nav-center {
+    /*ㄴ>네비 센터(로고) */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.nav-right {
+    /* ㄴ>네비 오(로그인,회원가입,마이페이지,장바구니) */
+    display: flex;
+    gap: 25px;
+    margin-left: auto;
+    padding-right: 40px;
+}
+
+.login-btn {
+    border: 0.5px solid #fff;
+    border-radius: 10px;
+    width: 60px;
+    height: 20px;
+    padding: 10px 20px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+}
+
+.signup-btn {
+    border: 0.5px solid #fff;
+    border-radius: 10px;
+    width: 60px;
+    height: 20px;
+    padding: 10px 20px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* 로그인시 사용자 이름 */
+.headername {
+    color: #fff;
+    letter-spacing: 1px;
+    align-content: center;
+}
+
+.logout-btn {
+    border: 0.5px solid #fff;
+    border-radius: 10px;
+    width: 60px;
+    height: 20px;
+    padding: 10px 20px;
+    color: #fff;
+    cursor: pointer;
+    text-align: center;
+}
