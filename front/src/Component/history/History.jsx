@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./History.css";
 import { Link, useNavigate } from "react-router-dom";
-import images from "../Menu/Product/productimg";
+
 const History = () => {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
@@ -87,8 +87,8 @@ const History = () => {
                 {order.items.map((item, idx) => (
                   <div key={idx} className="product-info">
                     <img
-                      src={images[item.product_id]}
-                      alt={item.product_name}
+                      src={item.image_url || "#"}
+                      alt="상품이미지"
                       className="product-img"
                     />
                     <div className="product-details">
