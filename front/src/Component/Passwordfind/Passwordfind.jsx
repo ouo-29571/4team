@@ -32,7 +32,7 @@ const Passwordfind = () => {
                 const userData = {
                     email: Passwordfind_email,
                 };
-                sessionStorage.setItem("user", JSON.stringify(userData));
+                sessionStorage.setItem("email", JSON.stringify(userData));
                 navigate("/Passwordfix");
             } else {
                 alert("입력하신 이메일로 비밀번호를 찾을 수 없습니다.");

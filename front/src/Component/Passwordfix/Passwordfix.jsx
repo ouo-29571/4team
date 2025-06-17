@@ -30,7 +30,7 @@ const passwordfix = () => {
         } else if (Passwordfix != Passwordfix_confirm) {
             setPasswordfix_error("비밀번호가 일치하지 않습니다.");
         } else {
-            const user = sessionStorage.getItem("user");
+            const user = sessionStorage.getItem("email");
             const user_json = JSON.parse(user);
             const user_email = user_json.email;
 
@@ -45,7 +45,7 @@ const passwordfix = () => {
             const data = await response.json();
             if (data.Passwordfix_result == true) {
                 //비밀번호 수정 페이지 연결
-                sessionStorage.removeItem("user");
+                sessionStorage.removeItem("email");
                 navigate("/Login");
             }
         }

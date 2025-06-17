@@ -55,6 +55,7 @@ const Login = () => {
                     token: login_form.login_password,
                 };
                 sessionStorage.setItem("user", JSON.stringify(userData));
+                sessionStorage.removeItem("email");
 
                 navigate("/");
                 //새로고침
