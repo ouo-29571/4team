@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-
+import CryptoJS from "crypto-js";
 import "./Login.css";
 
 const Login = () => {
@@ -37,6 +37,12 @@ const Login = () => {
         } else {
             //에러문구 삭제후 DB 값 전달
             setLogin_error("");
+
+            // 비밀번호 해싱 (SHA-256 사용)
+            const hashedPassword = CryptoJS.SHA256(
+                login_form.login_password
+            ).toString(CryptoJS.enc.Base64);
+
             const response = await fetch("http://localhost:8080/login_submit", {
                 method: "POST",
                 headers: {
@@ -52,7 +58,7 @@ const Login = () => {
                 const userData = {
                     id: data.login_userid,
                     name: login_form.login_email,
-                    token: login_form.login_password,
+                    token: hashedPassword,
                 };
                 sessionStorage.setItem("user", JSON.stringify(userData));
                 sessionStorage.removeItem("email");

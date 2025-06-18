@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const mariadb = require("mariadb");
+const bcrypt = require("bcrypt");
 
 // DB 연결 풀
 const pool = mariadb.createPool({
@@ -58,6 +59,13 @@ router.post("/check_email", async (req, res) => {
     res.json({ email_exit });
 });
 
+//비밀번호 암호화
+async function hashPassword(password) {
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(password, saltRounds);
+    return hashedPassword;
+}
+
 //회원가입 정보 저장
 async function signup_data(
     Signup_email,
@@ -66,9 +74,12 @@ async function signup_data(
     Signup_tel
 ) {
     const conn = await pool.getConnection();
+
+    const hashedPassword = await hashPassword(Signup_password);
+
     const rows = await conn.query(
         "INSERT INTO user(email, password, name, tel) VALUES(?, ?, ?, ?)",
-        [Signup_email, Signup_password, Signup_name, Signup_tel]
+        [Signup_email, hashedPassword, Signup_name, Signup_tel]
     );
     conn.release();
     return rows;
@@ -95,34 +106,63 @@ router.post("/signup", async (req, res) => {
 async function login_data(login_email, login_password) {
     const conn = await pool.getConnection();
     const [rows] = await conn.query(
-        "SELECT COUNT(*) AS count FROM user WHERE email= ? AND PASSWORD= ?",
-        [login_email, login_password]
+        "SELECT password FROM user WHERE email= ?",
+        [login_email]
     );
     conn.release();
-    return [rows];
+
+    if (rows.length === 0) {
+        return {
+            success: false,
+            message: "이메일 또는 비밀번호가 잘못되었습니다.",
+        };
+    } else {
+        console.log(rows.password);
+        const hashPassword = rows.password;
+        //bcrypt로 비밀번호 비교
+        const match = await bcrypt.compare(login_password, hashPassword);
+        if (match) {
+            return { success: true };
+        } else {
+            return {
+                success: false,
+                message: "이메일 또는 비밀번호가 잘못되었습니다.",
+            };
+        }
+    }
 }
 //user_id가져오기
-async function login_data_userid(login_email, login_password) {
+async function login_data_userid(login_email) {
     const conn = await pool.getConnection();
     const [rows] = await conn.query(
-        "SELECT user_id FROM user WHERE email = ? AND password = ?",
-        [login_email, login_password]
+        "SELECT user_id FROM user WHERE email = ?",
+        [login_email]
     );
     conn.release();
-    return rows;
+
+    if (rows.length === 0) {
+        return { success: false, message: "사용자 정보를 찾을 수 없습니다." };
+    }
+
+    return { success: true, user_id: rows.user_id };
 }
 router.post("/login_submit", async (req, res) => {
     const { login_email, login_password } = req.body;
-    const rows = await login_data(login_email, login_password);
-
-    login_check = false;
-    login_userid = "";
-    if (rows[0].count > 0) {
-        login_check = true;
-        const user_id = await login_data_userid(login_email, login_password);
-        login_userid = user_id.user_id;
+    const loginResult = await login_data(login_email, login_password);
+    if (!loginResult.success) {
+        return res.json({ login_check: false });
     }
-    res.json({ login_check, login_userid });
+
+    // 비밀번호가 맞으면 user_id 가져오기
+    const userResult = await login_data_userid(login_email);
+    if (!userResult.success) {
+        return res.json({ login_check: false });
+    }
+
+    res.json({
+        login_check: true,
+        login_userid: userResult.user_id,
+    });
 });
 
 //비밀번호 찾기
@@ -150,9 +190,10 @@ router.post("/Passwordfind", async (req, res) => {
 //비밀번호 수정
 async function Update_passwordfix(Passwordfix, user_email) {
     const conn = await pool.getConnection();
+    const hashedPassword = await hashPassword(Passwordfix);
     const rows = await conn.query(
         "UPDATE user SET password = ? WHERE email = ?",
-        [Passwordfix, user_email]
+        [hashedPassword, user_email]
     );
     conn.release();
     return rows;
@@ -366,13 +407,14 @@ async function Update_signup_data(
     user_name
 ) {
     const conn = await pool.getConnection();
+    const hashedPassword = await hashPassword(Userinfofix_password);
     let rows;
     if (Userinfofix_password !== "") {
         const result = await conn.query(
             "UPDATE user SET email = ?, password = ?, name = ?, tel = ? WHERE email = ?",
             [
                 Userinfofix_email,
-                Userinfofix_password,
+                hashedPassword,
                 Userinfofix_name,
                 Userinfofix_tel,
                 user_name,
