@@ -50,7 +50,7 @@ import "./DetailPage.css";
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-import OrderPopupModal from "../../PopupModal/order_PopupModal";
+import CartPopupModal from "../../PopupModal/cart_PopupModal/cart_PopupModal";
 
 function DetailPage() {
   const [count, setCount] = useState(1);
@@ -211,7 +211,7 @@ function DetailPage() {
   return (
     <>
       {showModal && (
-        <OrderPopupModal
+        <CartPopupModal
           productName={product.product_name}
           count={count}
           productPrice={product.price}

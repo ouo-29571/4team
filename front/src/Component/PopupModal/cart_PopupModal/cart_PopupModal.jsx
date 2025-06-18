@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import "./order_PopupModal.css";
+import "./cart_PopupModal.css";
 import { useNavigate } from "react-router-dom";
 
-const order_PopupModal = ({ productName, count, productPrice, closeModal }) => {
+const cart_PopupModal = ({ productName, count, productPrice, closeModal }) => {
     const navigate = useNavigate();
 
     const handleClose = () => {
@@ -46,4 +46,4 @@ const order_PopupModal = ({ productName, count, productPrice, closeModal }) => {
     );
 };
 
-export default order_PopupModal;
+export default cart_PopupModal;
