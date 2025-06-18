@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap");
+
 .bigbox {
   /* ✅큰 틀*/
   margin-top: -110px;
@@ -274,8 +276,6 @@
   position: relative;
   bottom: 150px;
 }
-
-@import url("https://fonts.googleapis.com/css2?family=Zen+Old+Mincho&display=swap");
 
 .ab-text {
   /*어바웃어스 텍스트*/

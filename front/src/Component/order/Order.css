@@ -148,3 +148,8 @@
   border-radius: 10px;
   font-size: 13px;
 }
+
+.full-input {
+  width: 95%;
+  text-align: center;
+}
