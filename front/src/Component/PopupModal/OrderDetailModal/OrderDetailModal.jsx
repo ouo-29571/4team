@@ -1,5 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./OrderDetailModal.css";
+
+function getTimeLeft(estimatedDateStr) {
+    if (!estimatedDateStr) return null;
+    const now = new Date();
+    const estimated = new Date(estimatedDateStr);
+    const diff = estimated - now;
+    if (diff <= 0) return null;
+    return Math.floor(diff / 60000);
+}
 
 const OrderDetailModal = ({ order, onClose }) => {
     if (!order) return null;
@@ -7,6 +16,24 @@ const OrderDetailModal = ({ order, onClose }) => {
         (sum, item) => sum + item.price * item.quantity,
         0
     );
+
+    const [timeLefts, setTimeLefts] = useState({});
+
+    useEffect(() => {
+        const updateTimes = () => {
+            const times = {};
+            order.items.forEach((item, idx) => {
+                if (item.estimated_date && item.delivery !== "배송완료") {
+                    const mins = getTimeLeft(item.estimated_date);
+                    times[idx] = mins;
+                }
+            });
+            setTimeLefts(times);
+        };
+        updateTimes();
+        const timer = setInterval(updateTimes, 60000);
+        return () => clearInterval(timer);
+    }, [order]);
 
     return (
         <div className="modal-overlay">
@@ -51,8 +78,30 @@ const OrderDetailModal = ({ order, onClose }) => {
                                 </div>
                             </div>
                             <div className="product-info-row">
-                                <span className="detail-label">배송 예정:</span>
-                                {item.estimated_date?.substring(0, 10)}
+                                도착예정:{" "}
+                                {item.estimated_date?.substring(0, 16)}
+                                {item.delivery !== "배송완료" &&
+                                    item.estimated_date &&
+                                    (timeLefts[idx] != null &&
+                                    timeLefts[idx] > 0 ? (
+                                        <span
+                                            style={{
+                                                marginLeft: "8px",
+                                                color: "#ff9800",
+                                            }}
+                                        >
+                                            ({timeLefts[idx]}분 남음)
+                                        </span>
+                                    ) : (
+                                        <span
+                                            style={{
+                                                marginLeft: "8px",
+                                                color: "#2196f3",
+                                            }}
+                                        >
+                                            (곧 도착 예정!)
+                                        </span>
+                                    ))}
                             </div>
                         </div>
                     ))}
