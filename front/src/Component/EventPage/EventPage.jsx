@@ -135,7 +135,13 @@ function EventPage() {
 
     const tileContent = ({ date, view }) =>
         view === "month" && days.includes(toLocalDateString(date)) ? (
-            <span className="stamp-icon">✅</span>
+            <span className="stamp-icon">
+                <img
+                    src="/img/출석도장.png"
+                    alt="도장"
+                    style={{ width: "80%" }}
+                />
+            </span>
         ) : null;
 
     return (
