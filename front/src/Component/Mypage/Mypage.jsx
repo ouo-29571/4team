@@ -213,36 +213,40 @@ const mypage = () => {
                                     <span>찜 목록이 없습니다.</span>
                                 </div>
                             ) : (
-                                wishlist.map((wish) => (
-                                    <div
-                                        key={wish.product_id}
-                                        className="detailbox"
-                                    >
-                                        <Link
-                                            to={`/DetailPage/${wish.product_id}`}
+                                <div className="detailbox_scroll">
+                                    {wishlist.map((wish) => (
+                                        <div
+                                            key={wish.product_id}
+                                            className="detailbox"
                                         >
-                                            <div className="wishbox">
-                                                <img
-                                                    src={
-                                                        images[wish.product_id]
-                                                    }
-                                                    alt={wish.product_name}
-                                                    height="200"
-                                                    width="200"
-                                                />
-                                                <div className="wish_content">
-                                                    <span className="wish_productname">
-                                                        {wish.product_name}
-                                                    </span>
-                                                    <span className="wish_productprice">
-                                                        {wish.price.toLocaleString()}
-                                                        원
-                                                    </span>
+                                            <Link
+                                                to={`/DetailPage/${wish.product_id}`}
+                                            >
+                                                <div className="wishbox">
+                                                    <img
+                                                        src={
+                                                            images[
+                                                                wish.product_id
+                                                            ]
+                                                        }
+                                                        alt={wish.product_name}
+                                                        height="200"
+                                                        width="200"
+                                                    />
+                                                    <div className="wish_content">
+                                                        <span className="wish_productname">
+                                                            {wish.product_name}
+                                                        </span>
+                                                        <span className="wish_productprice">
+                                                            {wish.price.toLocaleString()}
+                                                            원
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </Link>
-                                    </div>
-                                ))
+                                            </Link>
+                                        </div>
+                                    ))}
+                                </div>
                             )}
                         </div>
                     </div>
