@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./History.css";
 import { Link, useNavigate } from "react-router-dom";
 import OrderDetailModal from "../PopupModal/OrderDetailModal/OrderDetailModal";
+import images from "../Menu/Product/productimg";
 
 function getTimeLeft(estimatedDateStr) {
     if (!estimatedDateStr) return null;
@@ -125,7 +126,7 @@ const History = () => {
                                     {order.items.map((item, idx) => (
                                         <div key={idx} className="product-info">
                                             <img
-                                                src={item.image_url || "#"}
+                                                src={images[item.product_id]}
                                                 alt="상품이미지"
                                                 className="product-img"
                                             />
