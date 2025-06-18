@@ -81,7 +81,7 @@ router.get("/discounts", async (req, res) => {
         WHERE
             uc.user_id = ?
             AND uc.status = 'active'`,
-            [user.id]
+            [user_id]
         );
         res.json(rows);
     } catch (err) {
@@ -107,7 +107,7 @@ router.get("/users/:userId/coupons", async (req, res) => {
             [userId]
         );
         res.json(rows);
-    } catch (er) {
+    } catch (err) {
         console.error("쿠폰 조회 실패:", err);
         res.status(500).json({ error: "server error" });
     } finally {
@@ -158,10 +158,11 @@ router.post("/coupon", async (req, res) => {
 });
 
 // 주문내역 db저장
+let conn;
 router.post("/history", async (req, res) => {
     try {
         const { userId } = req.body;
-        const conn = await pool.getConnection();
+        conn = await pool.getConnection();
         const rows = await conn.query(
             `
         SELECT
@@ -376,8 +377,6 @@ router.post("/order", async (req, res) => {
         );
 
         // order_detail 테이블에 삽입
-        const estimatedDate = new Date();
-        estimatedDate.setDate(estimatedDate.getDate() + 2);
 
         for (const item of items) {
             const subtotal = item.price * item.quantity;
@@ -386,15 +385,8 @@ router.post("/order", async (req, res) => {
                 `INSERT INTO order_detail
                 (quantity, price, delivery, subtotal, 
                 product_id, order_id, estimated_date)
-                VALUES (?, ?, '배송준비', ?, ?, ?, ?)`,
-                [
-                    item.quantity,
-                    item.price,
-                    subtotal,
-                    item.product_id,
-                    order_id,
-                    estimatedDate,
-                ]
+                VALUES (?, ?, '배송준비', ?, ?, ?, DATE_ADD(NOW(), INTERVAL 10 MINUTE))`,
+                [item.quantity, item.price, subtotal, item.product_id, order_id]
             );
         }
 

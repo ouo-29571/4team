@@ -3,9 +3,18 @@ import "./History.css";
 import { Link, useNavigate } from "react-router-dom";
 import OrderDetailModal from "../PopupModal/OrderDetailModal/OrderDetailModal";
 
+function getTimeLeft(estimatedDateStr) {
+    if (!estimatedDateStr) return null;
+    const now = new Date();
+    const estimated = new Date(estimatedDateStr);
+    const diff = estimated - now;
+    if (diff <= 0) return null;
+    return Math.floor(diff / 60000);
+}
 const History = () => {
     const [orders, setOrders] = useState([]);
     const [modalOrder, setModalOrder] = useState(null);
+    const [timeLefts, setTimeLefts] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -52,6 +61,28 @@ const History = () => {
         });
         return Object.values(map);
     };
+
+    // 실시간 남은분 업데이트
+    useEffect(() => {
+        if (!orders.length) return;
+        const updateTimes = () => {
+            const allTimes = {};
+            orders.forEach((order) => {
+                order.items.forEach((item, idx) => {
+                    if (item.estimated_date && item.delivery !== "배송완료") {
+                        if (!allTimes[order.order_id])
+                            allTimes[order.order_id] = {};
+                        const mins = getTimeLeft(item.estimated_date);
+                        allTimes[order.order_id][idx] = mins;
+                    }
+                });
+            });
+            setTimeLefts(allTimes);
+        };
+        updateTimes();
+        const timer = setInterval(updateTimes, 60000); // 1분마다
+        return () => clearInterval(timer);
+    }, [orders]);
 
     return (
         <>
@@ -109,11 +140,46 @@ const History = () => {
                                             </p>
                                             {item.estimated_date && (
                                                 <p className="product-name">
-                                                    {item.estimated_date?.substring(
+                                                    {item.estimated_date.substring(
                                                         0,
-                                                        10
+                                                        16
                                                     )}{" "}
                                                     도착 예정
+                                                    {item.delivery !==
+                                                        "배송완료" &&
+                                                        (timeLefts[
+                                                            order.order_id
+                                                        ]?.[idx] != null &&
+                                                        timeLefts[
+                                                            order.order_id
+                                                        ][idx] > 0 ? (
+                                                            <span
+                                                                style={{
+                                                                    marginLeft:
+                                                                        "8px",
+                                                                    color: "#ff9800",
+                                                                }}
+                                                            >
+                                                                (
+                                                                {
+                                                                    timeLefts[
+                                                                        order
+                                                                            .order_id
+                                                                    ][idx]
+                                                                }
+                                                                분 남음)
+                                                            </span>
+                                                        ) : (
+                                                            <span
+                                                                style={{
+                                                                    marginLeft:
+                                                                        "8px",
+                                                                    color: "#2196f3",
+                                                                }}
+                                                            >
+                                                                (곧 도착 예정!)
+                                                            </span>
+                                                        ))}
                                                 </p>
                                             )}
                                         </div>
