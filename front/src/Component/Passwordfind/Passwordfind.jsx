@@ -2,12 +2,16 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import "./Passwordfind.css";
+import PasswordPopupModal from "../PopupModal/password_PopupModal/password_PopupModal";
 
 const Passwordfind = () => {
     const navigate = useNavigate();
 
     const [Passwordfind_email, setPasswordfind_email] = useState("");
     const [Passwordfind_error, setPasswordfind_error] = useState("");
+
+    //오류 팝업창
+    const [showpasswordModal, setShowpasswordModal] = useState(false);
 
     const handleChang_Passwordfind = (e) => {
         setPasswordfind_error("");
@@ -35,15 +39,22 @@ const Passwordfind = () => {
                 sessionStorage.setItem("email", JSON.stringify(userData));
                 navigate("/Passwordfix");
             } else {
-                alert("입력하신 이메일로 비밀번호를 찾을 수 없습니다.");
+                setShowpasswordModal(true);
             }
         } else {
             setPasswordfind_error("이메일을 입력해주세요");
         }
     };
 
+    const password_closeModal = () => {
+        setShowpasswordModal(false);
+    };
+
     return (
         <>
+            {showpasswordModal && (
+                <PasswordPopupModal closeModal={password_closeModal} />
+            )}
             <div className="Passwordfind_page">
                 <div className="Passwordfind_main">
                     <div>
